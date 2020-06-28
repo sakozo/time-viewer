@@ -8,7 +8,7 @@ RUN apt-get update -qq && \
 RUN mkdir /time-viewer
 
 
-ENV APP_ROOT /app_name 
+ENV APP_ROOT /time-viewer
 WORKDIR $APP_ROOT
 
 ADD ./Gemfile $APP_ROOT/Gemfile
