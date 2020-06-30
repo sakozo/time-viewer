@@ -1,0 +1,197 @@
+<h1>Time Viewer</h1>
+
+<head>
+  <meta charset="utf-8" />
+  <title>jQuery UI Selectable - Serialize</title>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
+
+  <style>
+  #feedback { font-size: 1.4em; }
+  #selectable .ui-selecting { background: #FECA40; }
+  #selectable .ui-selected { background: #F39814; color: white; }
+  #selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+  #selectable li { margin: 0px; padding: 0.4em; font-size: 1em; height: 4.0px; }
+  </style>
+  <script>
+  var color = 0;
+
+  $(function() {
+    $( "#selectable" ).selectable({
+      stop: function() {
+        var result = $( "#select-result" ).empty();
+        $( ".ui-selected", this ).each(function() {
+          var index = $( "#selectable li" ).index( this );
+          result.append( " #" + ( index + 1 ) );
+        });
+        //ここで選択箇所の色を上書き、他を選択しても消えないようにする
+        //TODO:重要度×緊急度のマトリクスの説明
+        //選択項目と同じ要領で合計時間を直後に右側に表示
+        //TODO:メソッド切り出しで処理を共通化 javascriptファイルに処理を持っていく
+      if(color == 0){
+        $( ".ui-selected", this ).css('background-color','red');
+        $( ".ui-selected", this ).removeClass(function(index, className) {
+            return (className.match(/\btime_\S+/g) || []).join(' ');
+        });
+        $( ".ui-selected", this ).addClass('time_0');
+      }else if(color == 1){
+        $( ".ui-selected", this ).css('background-color','blue');
+        $( ".ui-selected", this ).removeClass(function(index, className) {
+            return (className.match(/\btime_\S+/g) || []).join(' ');
+        });
+        $( ".ui-selected", this ).addClass('time_1');
+      }else if(color == 2){
+        $( ".ui-selected", this ).css('background-color','green');
+        $( ".ui-selected", this ).removeClass(function(index, className) {
+            return (className.match(/\btime_\S+/g) || []).join(' ');
+        });
+        $( ".ui-selected", this ).addClass('time_2');
+      }else if(color == 3){
+        $( ".ui-selected", this ).css('background-color','yellow');
+        $( ".ui-selected", this ).removeClass(function(index, className) {
+            return (className.match(/\btime_\S+/g) || []).join(' ');
+        });
+        $( ".ui-selected", this ).addClass('time_3');
+      }
+      var result_show = $( "#result-show" ).empty();
+      var red_count = 0;
+      var blue_count = 0;
+      var green_count = 0;
+      var yellow_count = 0;
+      $(".ui-selectee").each(function(index, value){
+        if($(value).attr("class").includes("time_0")){
+          red_count = red_count + 1;
+          $(".red_record").val(red_count/4);
+          }
+        else if ($(value).attr("class").includes("time_1")){
+          blue_count = blue_count + 1;
+          $(".blue_record").val(blue_count/4);
+          }
+        else if ($(value).attr("class").includes("time_2")){
+          green_count = green_count + 1;
+          $(".green_record").val(green_count/4);
+          }
+        else if ($(value).attr("class").includes("time_3")){
+          yellow_count = yellow_count + 1;
+          $(".yellow_record").val(yellow_count/4);
+          }
+        })
+        result_show.append( "red:"+ red_count + "blue:" + blue_count + "green:" + green_count + "yellow:" + yellow_count );
+        console.log('選択終了')
+      }
+    });
+
+    $('#reset').on("click", function(){
+        $( ".ui-selectee").css('background-color','#fff');
+    });
+
+    $('#red').on("click", function(){
+      color = "0";
+      //alert(color);
+    });
+    $('#blue').on("click", function(){
+      color = "1";
+      //alert(color);
+    });
+    $('#green').on("click", function(){
+      color = "2";
+      //alert(color);
+    });
+    $('#yellow').on("click", function(){
+      color = "3";
+      //alert(color);
+    });
+  });
+
+
+
+
+  </script>
+</head>
+<body>
+
+<br>
+<button id = "reset">リセット</button>
+
+<br>
+<button id = "red">赤</button>
+<br>
+<button id = "blue">青</button>
+<br>
+<button id = "green">緑</button>
+<br>
+<button id = "yellow">黄</button>
+<br>
+<%
+=begin%>
+ <%= form_for @record do |form| %>
+  <div class="input_time">
+  <%= form.text_field :time, class: "red_record", placeholder: "3.5", type: "number", min:"0" %>時間</br>
+  <%= form.text_field :time, class: "blue_record", placeholder: "3.5", type: "number", min:"0" %>時間</br>
+  <%= form.text_field :time, class: "green_record", placeholder: "3.5", type: "number", min:"0" %>時間</br>
+  </div>
+  <div ><%= form.submit "記録する", class: "submit_button"%></div>
+<% end %> 
+<%
+=end%>
+
+<p id="feedback">
+<span>選択項目:</span> <span id="select-result">無し</span>.
+</p>
+
+<div id = "result-show"></div>
+<body>
+<ol id="selectable">
+  <li class="ui-widget-content 0600">6:00</li>
+  <li class="ui-widget-content 0615">6:15</li>
+  <li class="ui-widget-content 0630">6:30</li>
+  <li class="ui-widget-content 0645">6:45</li>
+  <li class="ui-widget-content 0700">7:00</li>
+  <li class="ui-widget-content 0715">7:15</li>
+  <li class="ui-widget-content 0730">7:30</li>
+  <li class="ui-widget-content 0745">7:45</li>
+  <li class="ui-widget-content 0800">8:00</li>
+  <li class="ui-widget-content 0815"></li>
+  <li class="ui-widget-content 0830"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content"></li>
+</ol>
