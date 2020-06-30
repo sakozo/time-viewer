@@ -68,28 +68,26 @@
           }
         })
         result_show.append( "red:"+ red_count + "blue:" + blue_count + "green:" + green_count );
-      });
-
         console.log('選択終了')
       }
     });
 
-  $('#reset').on("click", function(){
-      $( ".ui-selectee").css('background-color','#fff');
-  });
+    $('#reset').on("click", function(){
+        $( ".ui-selectee").css('background-color','#fff');
+    });
 
-  $('#red').on("click", function(){
-    color = "0";
-    //alert(color);
-  });
-  $('#blue').on("click", function(){
-    color = "1";
-    //alert(color);
-  });
-  $('#green').on("click", function(){
-    color = "2";
-    //alert(color);
-  });
+    $('#red').on("click", function(){
+      color = "0";
+      //alert(color);
+    });
+    $('#blue').on("click", function(){
+      color = "1";
+      //alert(color);
+    });
+    $('#green').on("click", function(){
+      color = "2";
+      //alert(color);
+    });
 
   });
 
