@@ -1,0 +1,2 @@
+class ResultTime < ApplicationRecord
+end

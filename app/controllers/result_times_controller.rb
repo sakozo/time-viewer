@@ -1,0 +1,2 @@
+class ResultTimesController < ApplicationController
+end
