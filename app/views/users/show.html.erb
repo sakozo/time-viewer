@@ -210,6 +210,18 @@
       <%= form.submit "登録する", class: "submit_button"%>
     </div>
   <% end %>
+
+  <%= form_with model: @result_time do |form|  %>
+    <div class="">
+      <%= form.text_field :own_time_id, placeholder: "own_time_id" %>
+      <%= form.text_field :record_date, placeholder: "record_date" %>
+      <%= form.text_field :block, placeholder: "block" %>
+    </div>
+
+    <div >
+      <%= form.submit "登録する", class: "submit_button"%>
+    </div>
+  <% end %>
 </div> 
 
 
