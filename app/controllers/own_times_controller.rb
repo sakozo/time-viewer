@@ -1,9 +1,8 @@
 class OwnTimesController < ApplicationController
   def create
     own_time = OwnTime.new(own_time_params)
-    result = own_time.save
 
-    if result
+    if own_time.save
       redirect_to user_path(current_user.id)
     else
       # TODO:処理
