@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_04_070000) do
+ActiveRecord::Schema.define(version: 2020_07_04_092923) do
 
   create_table "own_times", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "user_id", null: false
-    t.integer "type", null: false
+    t.integer "time_type", null: false
     t.integer "shareFlg", null: false
     t.integer "publicLevel", null: false
     t.datetime "created_at", null: false
