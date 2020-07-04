@@ -1,0 +1,2 @@
+class OwnTimesController < ApplicationController
+end
