@@ -2,8 +2,13 @@ version: '3'
 services:
   db:
     image: mysql:5.7
-    env_file:
-      - ./.my.env
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      MYSQL_USER: root
+      MYSQL_DATABASE: root
+    # env_file:
+    #   - ./.my.env
     ports:
       - "4306:3306"
     volumes:
