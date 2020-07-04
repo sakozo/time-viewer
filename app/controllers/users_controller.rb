@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @own_time = OwnTime.new
     @result_time = ResultTime.new
-
+    @project = Project.new
     # TODO:天気自動記録機能の実装
     #環境変数をJSに渡す
     #gon.wheather_api_key = ENV['OPEN_WEATHER_API_KEY']
