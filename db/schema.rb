@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_28_101033) do
+ActiveRecord::Schema.define(version: 2020_07_04_115316) do
+
+  create_table "own_times", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "user_id", null: false
+    t.integer "time_type", null: false
+    t.integer "shareFlg", null: false
+    t.integer "publicLevel", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_own_times_on_user_id"
+  end
+
+  create_table "result_times", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "own_time_id", null: false
+    t.integer "block", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "record_date", null: false
+    t.index ["own_time_id"], name: "index_result_times_on_own_time_id"
+    t.index ["user_id"], name: "index_result_times_on_user_id"
+  end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -26,4 +48,7 @@ ActiveRecord::Schema.define(version: 2020_06_28_101033) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "own_times", "users"
+  add_foreign_key "result_times", "own_times"
+  add_foreign_key "result_times", "users"
 end
