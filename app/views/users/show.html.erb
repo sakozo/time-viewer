@@ -162,16 +162,16 @@
 =end%>
 
 <p id="feedback">
-<span>選択項目:</span> <span id="select-result">無し</span>.
+<span>選択項目:</span> <span id="select-result">無し</span>
 </p>
 
 <div id = "result-show"></div>
 <body>
 <ol id="selectable">
-  <li class="ui-widget-content tooltip1" title="5:00">05:00</li>
-  <li class="ui-widget-content" title="5:15">05:15</li>
-  <li class="ui-widget-content" title="5:30">05:30</li>
-  <li class="ui-widget-content" title="5:45">05:45</li>
+  <li class="ui-widget-content 0500" title="5:00">05:00</li>
+  <li class="ui-widget-content 0515" title="5:15">05:15</li>
+  <li class="ui-widget-content 0530" title="5:30">05:30</li>
+  <li class="ui-widget-content 0545" title="5:45">05:45</li>
   <li class="ui-widget-content 0600" title="6:00">06:00</li>
   <li class="ui-widget-content 0615" title="6:15">06:15</li>
   <li class="ui-widget-content 0630" title="6:30">06:30</li>
@@ -183,87 +183,87 @@
   <li class="ui-widget-content 0800" title="8:00">08:00</li>
   <li class="ui-widget-content 0815" title="8:15">08:15</li>
   <li class="ui-widget-content 0830" title="8:30">08:30</li>
-  <li class="ui-widget-content" title="8:45">08:45</li>
-  <li class="ui-widget-content" title="9:00">09:00</li>
-  <li class="ui-widget-content" title="9:15">09:15</li>
-  <li class="ui-widget-content" title="9:30">09:30</li>
-  <li class="ui-widget-content" title="9:45">09:45</li>
-  <li class="ui-widget-content" title="10:00">10:00</li>
-  <li class="ui-widget-content" title="10:15">10:15</li>
-  <li class="ui-widget-content" title="10:30">10:30</li>
-  <li class="ui-widget-content" title="10:45">10:45</li>
-  <li class="ui-widget-content" title="11:00">11:00</li>
-  <li class="ui-widget-content" title="11:15">11:15</li>
-  <li class="ui-widget-content" title="11:30">11:30</li>
-  <li class="ui-widget-content" title="11:45">11:45</li>
-  <li class="ui-widget-content" title="12:00">12:00</li>
-  <li class="ui-widget-content" title="12:15">12:15</li>
-  <li class="ui-widget-content" title="12:30">12:30</li>
-  <li class="ui-widget-content" title="12:45">12:45</li>
-  <li class="ui-widget-content" title="13:00">13:00</li>
-  <li class="ui-widget-content" title="13:15">13:15</li>
-  <li class="ui-widget-content" title="13:30">13:30</li>
-  <li class="ui-widget-content" title="13:45">13:45</li>
-  <li class="ui-widget-content" title="14:00">14:00</li>
-  <li class="ui-widget-content" title="14:15">14:15</li>
-  <li class="ui-widget-content" title="14:30">14:30</li>
-  <li class="ui-widget-content" title="14:45">14:45</li>
-  <li class="ui-widget-content" title="15:00">15:00</li>
-  <li class="ui-widget-content" title="15:15">15:15</li>
-  <li class="ui-widget-content" title="15:30">15:30</li>
-  <li class="ui-widget-content" title="15:45">15:45</li>
-  <li class="ui-widget-content" title="16:00">16:00</li>
-  <li class="ui-widget-content" title="16:15">16:15</li>
-  <li class="ui-widget-content" title="16:30">16:30</li>
-  <li class="ui-widget-content" title="16:45">16:45</li>
-  <li class="ui-widget-content" title="17:00">17:00</li>
-  <li class="ui-widget-content" title="17:15">17:15</li>
-  <li class="ui-widget-content" title="17:30">17:30</li>
-  <li class="ui-widget-content" title="17:45">17:45</li>
-  <li class="ui-widget-content" title="18:00">18:00</li>
-  <li class="ui-widget-content" title="18:15">18:15</li>
-  <li class="ui-widget-content" title="18:30">18:30</li>
-  <li class="ui-widget-content" title="18:45">18:45</li>
-  <li class="ui-widget-content" title="19:00">19:00</li>
-  <li class="ui-widget-content" title="19:15">19:15</li>
-  <li class="ui-widget-content" title="19:30">19:30</li>
-  <li class="ui-widget-content" title="19:45">19:45</li>
-  <li class="ui-widget-content" title="20:00">20:00</li>
-  <li class="ui-widget-content" title="20:15">20:15</li>
-  <li class="ui-widget-content" title="20:30">20:30</li>
-  <li class="ui-widget-content" title="20:45">20:45</li>
-  <li class="ui-widget-content" title="21:00">21:00</li>
-  <li class="ui-widget-content" title="21:15">21:15</li>
-  <li class="ui-widget-content" title="21:30">21:30</li>
-  <li class="ui-widget-content" title="21:45">21:45</li>
-  <li class="ui-widget-content" title="22:00">22:00</li>
-  <li class="ui-widget-content" title="22:15">22:15</li>
-  <li class="ui-widget-content" title="22:30">22:30</li>
-  <li class="ui-widget-content" title="22:45">22:45</li>
-  <li class="ui-widget-content" title="23:00">23:00</li>
-  <li class="ui-widget-content" title="23:15">23:15</li>
-  <li class="ui-widget-content" title="23:30">23:30</li>
-  <li class="ui-widget-content" title="23:45">23:45</li>
-  <li class="ui-widget-content" title="24:00">24:00</li>
-  <li class="ui-widget-content" title="24:15">24:15</li>
-  <li class="ui-widget-content" title="24:30">24:30</li>
-  <li class="ui-widget-content" title="24:45">24:45</li>
-  <li class="ui-widget-content" title="1:00">01:00</li>
-  <li class="ui-widget-content" title="1:15">01:15</li>
-  <li class="ui-widget-content" title="1:30">01:30</li>
-  <li class="ui-widget-content" title="1:45">01:45</li>
-  <li class="ui-widget-content" title="2:00">02:00</li>
-  <li class="ui-widget-content" title="2:15">02:15</li>
-  <li class="ui-widget-content" title="2:30">02:30</li>
-  <li class="ui-widget-content" title="2:45">02:45</li>
-  <li class="ui-widget-content" title="3:00">03:00</li>
-  <li class="ui-widget-content" title="3:15">03:15</li>
-  <li class="ui-widget-content" title="3:30">03:30</li>
-  <li class="ui-widget-content" title="3:45">03:45</li>
-  <li class="ui-widget-content" title="4:00">04:00</li>
-  <li class="ui-widget-content" title="4:15">04:15</li>
-  <li class="ui-widget-content" title="4:30">04:30</li>
-  <li class="ui-widget-content" title="4:45">04:45</li>
+  <li class="ui-widget-content 0845" title="8:45">08:45</li>
+  <li class="ui-widget-content 0900" title="9:00">09:00</li>
+  <li class="ui-widget-content 0915" title="9:15">09:15</li>
+  <li class="ui-widget-content 0930" title="9:30">09:30</li>
+  <li class="ui-widget-content 0945" title="9:45">09:45</li>
+  <li class="ui-widget-content 1000" title="10:00">10:00</li>
+  <li class="ui-widget-content 1015" title="10:15">10:15</li>
+  <li class="ui-widget-content 1030" title="10:30">10:30</li>
+  <li class="ui-widget-content 1045" title="10:45">10:45</li>
+  <li class="ui-widget-content 1100" title="11:00">11:00</li>
+  <li class="ui-widget-content 1115" title="11:15">11:15</li>
+  <li class="ui-widget-content 1130" title="11:30">11:30</li>
+  <li class="ui-widget-content 1145" title="11:45">11:45</li>
+  <li class="ui-widget-content 1200" title="12:00">12:00</li>
+  <li class="ui-widget-content 1215" title="12:15">12:15</li>
+  <li class="ui-widget-content 1230" title="12:30">12:30</li>
+  <li class="ui-widget-content 1245" title="12:45">12:45</li>
+  <li class="ui-widget-content 1300" title="13:00">13:00</li>
+  <li class="ui-widget-content 1315" title="13:15">13:15</li>
+  <li class="ui-widget-content 1330" title="13:30">13:30</li>
+  <li class="ui-widget-content 1345" title="13:45">13:45</li>
+  <li class="ui-widget-content 1400" title="14:00">14:00</li>
+  <li class="ui-widget-content 1415" title="14:15">14:15</li>
+  <li class="ui-widget-content 1430" title="14:30">14:30</li>
+  <li class="ui-widget-content 1445" title="14:45">14:45</li>
+  <li class="ui-widget-content 1500" title="15:00">15:00</li>
+  <li class="ui-widget-content 1515" title="15:15">15:15</li>
+  <li class="ui-widget-content 1530" title="15:30">15:30</li>
+  <li class="ui-widget-content 1545" title="15:45">15:45</li>
+  <li class="ui-widget-content 1600" title="16:00">16:00</li>
+  <li class="ui-widget-content 1615" title="16:15">16:15</li>
+  <li class="ui-widget-content 1630" title="16:30">16:30</li>
+  <li class="ui-widget-content 1645" title="16:45">16:45</li>
+  <li class="ui-widget-content 1700" title="17:00">17:00</li>
+  <li class="ui-widget-content 1715" title="17:15">17:15</li>
+  <li class="ui-widget-content 1730" title="17:30">17:30</li>
+  <li class="ui-widget-content 1745" title="17:45">17:45</li>
+  <li class="ui-widget-content 1800" title="18:00">18:00</li>
+  <li class="ui-widget-content 1815" title="18:15">18:15</li>
+  <li class="ui-widget-content 1830" title="18:30">18:30</li>
+  <li class="ui-widget-content 1845" title="18:45">18:45</li>
+  <li class="ui-widget-content 1900" title="19:00">19:00</li>
+  <li class="ui-widget-content 1915" title="19:15">19:15</li>
+  <li class="ui-widget-content 1930" title="19:30">19:30</li>
+  <li class="ui-widget-content 1945" title="19:45">19:45</li>
+  <li class="ui-widget-content 2000" title="20:00">20:00</li>
+  <li class="ui-widget-content 2015" title="20:15">20:15</li>
+  <li class="ui-widget-content 2030" title="20:30">20:30</li>
+  <li class="ui-widget-content 2045" title="20:45">20:45</li>
+  <li class="ui-widget-content 2100" title="21:00">21:00</li>
+  <li class="ui-widget-content 2115" title="21:15">21:15</li>
+  <li class="ui-widget-content 2130" title="21:30">21:30</li>
+  <li class="ui-widget-content 2145" title="21:45">21:45</li>
+  <li class="ui-widget-content 2200" title="22:00">22:00</li>
+  <li class="ui-widget-content 2215" title="22:15">22:15</li>
+  <li class="ui-widget-content 2230" title="22:30">22:30</li>
+  <li class="ui-widget-content 2245" title="22:45">22:45</li>
+  <li class="ui-widget-content 2300" title="23:00">23:00</li>
+  <li class="ui-widget-content 2315" title="23:15">23:15</li>
+  <li class="ui-widget-content 2330" title="23:30">23:30</li>
+  <li class="ui-widget-content 2345" title="23:45">23:45</li>
+  <li class="ui-widget-content 2400" title="24:00">24:00</li>
+  <li class="ui-widget-content 2415" title="24:15">24:15</li>
+  <li class="ui-widget-content 2430" title="24:30">24:30</li>
+  <li class="ui-widget-content 2445" title="24:45">24:45</li>
+  <li class="ui-widget-content 0100" title="1:00">01:00</li>
+  <li class="ui-widget-content 0115" title="1:15">01:15</li>
+  <li class="ui-widget-content 0130" title="1:30">01:30</li>
+  <li class="ui-widget-content 0145" title="1:45">01:45</li>
+  <li class="ui-widget-content 0200" title="2:00">02:00</li>
+  <li class="ui-widget-content 0215" title="2:15">02:15</li>
+  <li class="ui-widget-content 0230" title="2:30">02:30</li>
+  <li class="ui-widget-content 0245" title="2:45">02:45</li>
+  <li class="ui-widget-content 0300" title="3:00">03:00</li>
+  <li class="ui-widget-content 0315" title="3:15">03:15</li>
+  <li class="ui-widget-content 0330" title="3:30">03:30</li>
+  <li class="ui-widget-content 0345" title="3:45">03:45</li>
+  <li class="ui-widget-content 0400" title="4:00">04:00</li>
+  <li class="ui-widget-content 0415" title="4:15">04:15</li>
+  <li class="ui-widget-content 0430" title="4:30">04:30</li>
+  <li class="ui-widget-content 0445" title="4:45">04:45</li>
 </ol>
 
 
