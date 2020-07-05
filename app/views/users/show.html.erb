@@ -1,5 +1,8 @@
-<h1>Time Viewer</h1>
-
+<%
+=begin%>
+ TODO: ホバー したときのカーソル ホバー したときのブロックのエフェクト　同じ色を選択した場合キャンセルできる　リセットボタンでクラスと色を取り除く
+<%
+=end%>
 <head>
   <meta charset="utf-8" />
   <title>jQuery UI Selectable - Serialize</title>
@@ -9,23 +12,22 @@
   <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
 
   <style>
-  #feedback { font-size: 1.4em; }
-  #selectable .ui-selecting { background: #FECA40; }
-  #selectable .ui-selected { background: #F39814; color: white; }
-  #selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-  #selectable li { margin: 0px; padding: 0.4em; font-size: 1em; height: 4.0px; }
+  #feedback { font-size: 1em; }
+  /* #selectable .ui-selecting { background: #FECA40; } */
+  /* #selectable .ui-selected { background: #F39814; color: white; } */
+  #selectable { list-style-type: none; margin: 0; padding: 0; width: 10%; display: flex}
+  #selectable li { margin: 0px; padding: 0.1em; font-size: 0.6em; font-weight: bold; height: 150px; width: 15%; text-align: center; writing-mode: vertical-rl; cursor: default;}
+  /* .ui-widget-content { height: 0.1px} */
+
   </style>
   <script>
   var color = 0;
 
   $(function() {
+
     $( "#selectable" ).selectable({
       stop: function() {
-        var result = $( "#select-result" ).empty();
-        $( ".ui-selected", this ).each(function() {
-          var index = $( "#selectable li" ).index( this );
-          result.append( " #" + ( index + 1 ) );
-        });
+
         //ここで選択箇所の色を上書き、他を選択しても消えないようにする
         //TODO:重要度×緊急度のマトリクスの説明
         //選択項目と同じ要領で合計時間を直後に右側に表示
@@ -80,11 +82,21 @@
         })
         result_show.append( "red:"+ red_count + "blue:" + blue_count + "green:" + green_count + "yellow:" + yellow_count );
         console.log('選択終了')
+
+        var result = $( "#select-result" ).empty();
+        $( ".ui-selected", this ).each(function() {
+          var index = $( "#selectable li" ).index( this );
+          result.append( " #" + ( index + 1 ) );
+          var block_id = "#block_" + index;
+          $( block_id ).val(color);
+        });
+
       }
     });
 
+
     $('#reset').on("click", function(){
-        $( ".ui-selectee").css('background-color','#fff');
+      $( ".ui-selectee").css('background-color','#fff');
     });
 
     $('#red').on("click", function(){
@@ -104,11 +116,21 @@
       //alert(color);
     });
   });
-
-
-
-
   </script>
+  <script>
+  $( function() {
+    $( ".ui-widget-content" ).tooltip({
+      show: false,
+      hide: false,
+      position: {
+        my: 'left', at: 'top', collision: 'none'
+      },
+    });
+  });
+  </script>
+  <style>
+
+  </style>
 </head>
 <body>
 
@@ -137,68 +159,119 @@
 <%
 =end%>
 
-<p id="feedback">
-<span>選択項目:</span> <span id="select-result">無し</span>.
-</p>
+<%
+=begin%>
+ <p id="feedback">
+<span>選択項目:</span> <span id="select-result">無し</span>
+</p> 
+<%
+=end%>
 
 <div id = "result-show"></div>
 <body>
 <ol id="selectable">
-  <li class="ui-widget-content 0600">6:00</li>
-  <li class="ui-widget-content 0615">6:15</li>
-  <li class="ui-widget-content 0630">6:30</li>
-  <li class="ui-widget-content 0645">6:45</li>
-  <li class="ui-widget-content 0700">7:00</li>
-  <li class="ui-widget-content 0715">7:15</li>
-  <li class="ui-widget-content 0730">7:30</li>
-  <li class="ui-widget-content 0745">7:45</li>
-  <li class="ui-widget-content 0800">8:00</li>
-  <li class="ui-widget-content 0815"></li>
-  <li class="ui-widget-content 0830"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
-  <li class="ui-widget-content"></li>
+  <li class="ui-widget-content 0500" title="5:00">05:00</li>
+  <li class="ui-widget-content 0515" title="5:15">05:15</li>
+  <li class="ui-widget-content 0530" title="5:30">05:30</li>
+  <li class="ui-widget-content 0545" title="5:45">05:45</li>
+  <li class="ui-widget-content 0600" title="6:00">06:00</li>
+  <li class="ui-widget-content 0615" title="6:15">06:15</li>
+  <li class="ui-widget-content 0630" title="6:30">06:30</li>
+  <li class="ui-widget-content 0645" title="6:45">06:45</li>
+  <li class="ui-widget-content 0700" title="7:00">07:00</li>
+  <li class="ui-widget-content 0715" title="7:15">07:15</li>
+  <li class="ui-widget-content 0730" title="7:30">07:30</li>
+  <li class="ui-widget-content 0745" title="7:45">07:45</li>
+  <li class="ui-widget-content 0800" title="8:00">08:00</li>
+  <li class="ui-widget-content 0815" title="8:15">08:15</li>
+  <li class="ui-widget-content 0830" title="8:30">08:30</li>
+  <li class="ui-widget-content 0845" title="8:45">08:45</li>
+  <li class="ui-widget-content 0900" title="9:00">09:00</li>
+  <li class="ui-widget-content 0915" title="9:15">09:15</li>
+  <li class="ui-widget-content 0930" title="9:30">09:30</li>
+  <li class="ui-widget-content 0945" title="9:45">09:45</li>
+  <li class="ui-widget-content 1000" title="10:00">10:00</li>
+  <li class="ui-widget-content 1015" title="10:15">10:15</li>
+  <li class="ui-widget-content 1030" title="10:30">10:30</li>
+  <li class="ui-widget-content 1045" title="10:45">10:45</li>
+  <li class="ui-widget-content 1100" title="11:00">11:00</li>
+  <li class="ui-widget-content 1115" title="11:15">11:15</li>
+  <li class="ui-widget-content 1130" title="11:30">11:30</li>
+  <li class="ui-widget-content 1145" title="11:45">11:45</li>
+  <li class="ui-widget-content 1200" title="12:00">12:00</li>
+  <li class="ui-widget-content 1215" title="12:15">12:15</li>
+  <li class="ui-widget-content 1230" title="12:30">12:30</li>
+  <li class="ui-widget-content 1245" title="12:45">12:45</li>
+  <li class="ui-widget-content 1300" title="13:00">13:00</li>
+  <li class="ui-widget-content 1315" title="13:15">13:15</li>
+  <li class="ui-widget-content 1330" title="13:30">13:30</li>
+  <li class="ui-widget-content 1345" title="13:45">13:45</li>
+  <li class="ui-widget-content 1400" title="14:00">14:00</li>
+  <li class="ui-widget-content 1415" title="14:15">14:15</li>
+  <li class="ui-widget-content 1430" title="14:30">14:30</li>
+  <li class="ui-widget-content 1445" title="14:45">14:45</li>
+  <li class="ui-widget-content 1500" title="15:00">15:00</li>
+  <li class="ui-widget-content 1515" title="15:15">15:15</li>
+  <li class="ui-widget-content 1530" title="15:30">15:30</li>
+  <li class="ui-widget-content 1545" title="15:45">15:45</li>
+  <li class="ui-widget-content 1600" title="16:00">16:00</li>
+  <li class="ui-widget-content 1615" title="16:15">16:15</li>
+  <li class="ui-widget-content 1630" title="16:30">16:30</li>
+  <li class="ui-widget-content 1645" title="16:45">16:45</li>
+  <li class="ui-widget-content 1700" title="17:00">17:00</li>
+  <li class="ui-widget-content 1715" title="17:15">17:15</li>
+  <li class="ui-widget-content 1730" title="17:30">17:30</li>
+  <li class="ui-widget-content 1745" title="17:45">17:45</li>
+  <li class="ui-widget-content 1800" title="18:00">18:00</li>
+  <li class="ui-widget-content 1815" title="18:15">18:15</li>
+  <li class="ui-widget-content 1830" title="18:30">18:30</li>
+  <li class="ui-widget-content 1845" title="18:45">18:45</li>
+  <li class="ui-widget-content 1900" title="19:00">19:00</li>
+  <li class="ui-widget-content 1915" title="19:15">19:15</li>
+  <li class="ui-widget-content 1930" title="19:30">19:30</li>
+  <li class="ui-widget-content 1945" title="19:45">19:45</li>
+  <li class="ui-widget-content 2000" title="20:00">20:00</li>
+  <li class="ui-widget-content 2015" title="20:15">20:15</li>
+  <li class="ui-widget-content 2030" title="20:30">20:30</li>
+  <li class="ui-widget-content 2045" title="20:45">20:45</li>
+  <li class="ui-widget-content 2100" title="21:00">21:00</li>
+  <li class="ui-widget-content 2115" title="21:15">21:15</li>
+  <li class="ui-widget-content 2130" title="21:30">21:30</li>
+  <li class="ui-widget-content 2145" title="21:45">21:45</li>
+  <li class="ui-widget-content 2200" title="22:00">22:00</li>
+  <li class="ui-widget-content 2215" title="22:15">22:15</li>
+  <li class="ui-widget-content 2230" title="22:30">22:30</li>
+  <li class="ui-widget-content 2245" title="22:45">22:45</li>
+  <li class="ui-widget-content 2300" title="23:00">23:00</li>
+  <li class="ui-widget-content 2315" title="23:15">23:15</li>
+  <li class="ui-widget-content 2330" title="23:30">23:30</li>
+  <li class="ui-widget-content 2345" title="23:45">23:45</li>
+  <li class="ui-widget-content 2400" title="24:00">24:00</li>
+  <li class="ui-widget-content 2415" title="24:15">24:15</li>
+  <li class="ui-widget-content 2430" title="24:30">24:30</li>
+  <li class="ui-widget-content 2445" title="24:45">24:45</li>
+  <li class="ui-widget-content 0100" title="1:00">01:00</li>
+  <li class="ui-widget-content 0115" title="1:15">01:15</li>
+  <li class="ui-widget-content 0130" title="1:30">01:30</li>
+  <li class="ui-widget-content 0145" title="1:45">01:45</li>
+  <li class="ui-widget-content 0200" title="2:00">02:00</li>
+  <li class="ui-widget-content 0215" title="2:15">02:15</li>
+  <li class="ui-widget-content 0230" title="2:30">02:30</li>
+  <li class="ui-widget-content 0245" title="2:45">02:45</li>
+  <li class="ui-widget-content 0300" title="3:00">03:00</li>
+  <li class="ui-widget-content 0315" title="3:15">03:15</li>
+  <li class="ui-widget-content 0330" title="3:30">03:30</li>
+  <li class="ui-widget-content 0345" title="3:45">03:45</li>
+  <li class="ui-widget-content 0400" title="4:00">04:00</li>
+  <li class="ui-widget-content 0415" title="4:15">04:15</li>
+  <li class="ui-widget-content 0430" title="4:30">04:30</li>
+  <li class="ui-widget-content 0445" title="4:45">04:45</li>
 </ol>
 
 
 <div class="input_area">
-  <%= form_with model: @own_time do |form|  %>
+
+ <%= form_with model: @own_time do |form|  %>
     <div class="">
       <%= form.text_field :name, placeholder: "name" %>
       <%= form.text_field :time_type, placeholder: "type" %>
@@ -209,13 +282,107 @@
     <div >
       <%= form.submit "登録する", class: "submit_button"%>
     </div>
-  <% end %>
+  <% end %> 
 
   <%= form_with model: @result_time do |form|  %>
     <div class="">
-      <%= form.text_field :own_time_id, placeholder: "own_time_id" %>
       <%= form.text_field :record_date, placeholder: "record_date" %>
-      <%= form.text_field :block, placeholder: "block" %>
+      <%= form.text_field :blocks, name: "block[][0]" , id: :block_0 %>
+      <%= form.text_field :blocks, name: "block[][1]" , id: :block_1 %>
+      <%= form.text_field :blocks, name: "block[][2]" , id: :block_2 %>
+      <%= form.text_field :blocks, name: "block[][3]" , id: :block_3 %>
+      <%= form.text_field :blocks, name: "block[][4]" , id: :block_4 %>
+      <%= form.text_field :blocks, name: "block[][5]" , id: :block_5 %>
+      <%= form.text_field :blocks, name: "block[][6]" , id: :block_6 %>
+      <%= form.text_field :blocks, name: "block[][7]" , id: :block_7 %>
+      <%= form.text_field :blocks, name: "block[][8]" , id: :block_8 %>
+      <%= form.text_field :blocks, name: "block[][9]" , id: :block_9 %>
+      <%= form.text_field :blocks, name: "block[][10]" , id: :block_10 %>
+      <%= form.text_field :blocks, name: "block[][11]" , id: :block_11 %>
+      <%= form.text_field :blocks, name: "block[][12]" , id: :block_12 %>
+      <%= form.text_field :blocks, name: "block[][13]" , id: :block_13 %>
+      <%= form.text_field :blocks, name: "block[][14]" , id: :block_14 %>
+      <%= form.text_field :blocks, name: "block[][15]" , id: :block_15 %>
+      <%= form.text_field :blocks, name: "block[][16]" , id: :block_16 %>
+      <%= form.text_field :blocks, name: "block[][17]" , id: :block_17 %>
+      <%= form.text_field :blocks, name: "block[][18]" , id: :block_18 %>
+      <%= form.text_field :blocks, name: "block[][19]" , id: :block_19 %>
+      <%= form.text_field :blocks, name: "block[][20]" , id: :block_20 %>
+      <%= form.text_field :blocks, name: "block[][21]" , id: :block_21 %>
+      <%= form.text_field :blocks, name: "block[][22]" , id: :block_22 %>
+      <%= form.text_field :blocks, name: "block[][23]" , id: :block_23 %>
+      <%= form.text_field :blocks, name: "block[][24]" , id: :block_24 %>
+      <%= form.text_field :blocks, name: "block[][25]" , id: :block_25 %>
+      <%= form.text_field :blocks, name: "block[][26]" , id: :block_26 %>
+      <%= form.text_field :blocks, name: "block[][27]" , id: :block_27 %>
+      <%= form.text_field :blocks, name: "block[][28]" , id: :block_28 %>
+      <%= form.text_field :blocks, name: "block[][29]" , id: :block_29 %>
+      <%= form.text_field :blocks, name: "block[][30]" , id: :block_30 %>
+      <%= form.text_field :blocks, name: "block[][31]" , id: :block_31 %>
+      <%= form.text_field :blocks, name: "block[][32]" , id: :block_32 %>
+      <%= form.text_field :blocks, name: "block[][33]" , id: :block_33 %>
+      <%= form.text_field :blocks, name: "block[][34]" , id: :block_34 %>
+      <%= form.text_field :blocks, name: "block[][35]" , id: :block_35 %>
+      <%= form.text_field :blocks, name: "block[][36]" , id: :block_36 %>
+      <%= form.text_field :blocks, name: "block[][37]" , id: :block_37 %>
+      <%= form.text_field :blocks, name: "block[][38]" , id: :block_38 %>
+      <%= form.text_field :blocks, name: "block[][39]" , id: :block_39 %>
+      <%= form.text_field :blocks, name: "block[][40]" , id: :block_40 %>
+      <%= form.text_field :blocks, name: "block[][41]" , id: :block_41 %>
+      <%= form.text_field :blocks, name: "block[][42]" , id: :block_42 %>
+      <%= form.text_field :blocks, name: "block[][43]" , id: :block_43 %>
+      <%= form.text_field :blocks, name: "block[][44]" , id: :block_44 %>
+      <%= form.text_field :blocks, name: "block[][45]" , id: :block_45 %>
+      <%= form.text_field :blocks, name: "block[][46]" , id: :block_46 %>
+      <%= form.text_field :blocks, name: "block[][47]" , id: :block_47 %>
+      <%= form.text_field :blocks, name: "block[][48]" , id: :block_48 %>
+      <%= form.text_field :blocks, name: "block[][49]" , id: :block_49 %>
+      <%= form.text_field :blocks, name: "block[][50]" , id: :block_50 %>
+      <%= form.text_field :blocks, name: "block[][51]" , id: :block_51 %>
+      <%= form.text_field :blocks, name: "block[][52]" , id: :block_52 %>
+      <%= form.text_field :blocks, name: "block[][53]" , id: :block_53 %>
+      <%= form.text_field :blocks, name: "block[][54]" , id: :block_54 %>
+      <%= form.text_field :blocks, name: "block[][55]" , id: :block_55 %>
+      <%= form.text_field :blocks, name: "block[][56]" , id: :block_56 %>
+      <%= form.text_field :blocks, name: "block[][57]" , id: :block_57 %>
+      <%= form.text_field :blocks, name: "block[][58]" , id: :block_58 %>
+      <%= form.text_field :blocks, name: "block[][59]" , id: :block_59 %>
+      <%= form.text_field :blocks, name: "block[][60]" , id: :block_60 %>
+      <%= form.text_field :blocks, name: "block[][61]" , id: :block_61 %>
+      <%= form.text_field :blocks, name: "block[][62]" , id: :block_62 %>
+      <%= form.text_field :blocks, name: "block[][63]" , id: :block_63 %>
+      <%= form.text_field :blocks, name: "block[][64]" , id: :block_64 %>
+      <%= form.text_field :blocks, name: "block[][65]" , id: :block_65 %>
+      <%= form.text_field :blocks, name: "block[][66]" , id: :block_66 %>
+      <%= form.text_field :blocks, name: "block[][67]" , id: :block_67 %>
+      <%= form.text_field :blocks, name: "block[][68]" , id: :block_68 %>
+      <%= form.text_field :blocks, name: "block[][69]" , id: :block_69 %>
+      <%= form.text_field :blocks, name: "block[][70]" , id: :block_70 %>
+      <%= form.text_field :blocks, name: "block[][71]" , id: :block_71 %>
+      <%= form.text_field :blocks, name: "block[][72]" , id: :block_72 %>
+      <%= form.text_field :blocks, name: "block[][73]" , id: :block_73 %>
+      <%= form.text_field :blocks, name: "block[][74]" , id: :block_74 %>
+      <%= form.text_field :blocks, name: "block[][75]" , id: :block_75 %>
+      <%= form.text_field :blocks, name: "block[][76]" , id: :block_76 %>
+      <%= form.text_field :blocks, name: "block[][77]" , id: :block_77 %>
+      <%= form.text_field :blocks, name: "block[][78]" , id: :block_78 %>
+      <%= form.text_field :blocks, name: "block[][79]" , id: :block_79 %>
+      <%= form.text_field :blocks, name: "block[][80]" , id: :block_80 %>
+      <%= form.text_field :blocks, name: "block[][81]" , id: :block_81 %>
+      <%= form.text_field :blocks, name: "block[][82]" , id: :block_82 %>
+      <%= form.text_field :blocks, name: "block[][83]" , id: :block_83 %>
+      <%= form.text_field :blocks, name: "block[][84]" , id: :block_84 %>
+      <%= form.text_field :blocks, name: "block[][85]" , id: :block_85 %>
+      <%= form.text_field :blocks, name: "block[][86]" , id: :block_86 %>
+      <%= form.text_field :blocks, name: "block[][87]" , id: :block_87 %>
+      <%= form.text_field :blocks, name: "block[][88]" , id: :block_88 %>
+      <%= form.text_field :blocks, name: "block[][89]" , id: :block_89 %>
+      <%= form.text_field :blocks, name: "block[][90]" , id: :block_90 %>
+      <%= form.text_field :blocks, name: "block[][91]" , id: :block_91 %>
+      <%= form.text_field :blocks, name: "block[][92]" , id: :block_92 %>
+      <%= form.text_field :blocks, name: "block[][93]" , id: :block_93 %>
+      <%= form.text_field :blocks, name: "block[][94]" , id: :block_94 %>
+      <%= form.text_field :blocks, name: "block[][95]" , id: :block_95 %>
     </div>
 
     <div >
@@ -223,9 +390,10 @@
     </div>
   <% end %>
 
+ 
   <%= form_with model: @project do |form|  %>
     <div class="">
-      <%= form.text_field :name, placeholder: "name" %>
+      <%= form.text_field :name, placeholder: "name"%>
       <%= form.text_field :limit_date, placeholder: "limit_date" %>
     </div>
 
@@ -251,6 +419,112 @@
   </div>
 
   <div >
-    <%= form.submit "登録する", class: "submit_button"%>
+    <%= form.submit "登録する", class: "btn btn-primary"%>
   </div>
-<% end %>
+<% end %> 
+
+
+
+
+<%
+=begin%>
+ <ol id="selectable">
+  <li class="ui-widget-content">05:00</li>
+  <li class="ui-widget-content">05:15</li>
+  <li class="ui-widget-content">05:30</li>
+  <li class="ui-widget-content">05:45</li>
+  <li class="ui-widget-content 0600">06:00</li>
+  <li class="ui-widget-content 0615">06:15</li>
+  <li class="ui-widget-content 0630">06:30</li>
+  <li class="ui-widget-content 0645">06:45</li>
+  <li class="ui-widget-content 0700">07:00</li>
+  <li class="ui-widget-content 0715">07:15</li>
+  <li class="ui-widget-content 0730">07:30</li>
+  <li class="ui-widget-content 0745">07:45</li>
+  <li class="ui-widget-content 0800">08:00</li>
+  <li class="ui-widget-content 0815">08:15</li>
+  <li class="ui-widget-content 0830">08:30</li>
+  <li class="ui-widget-content">08:45</li>
+  <li class="ui-widget-content">09:00</li>
+  <li class="ui-widget-content">09:15</li>
+  <li class="ui-widget-content">09:30</li>
+  <li class="ui-widget-content">09:45</li>
+  <li class="ui-widget-content">10:00</li>
+  <li class="ui-widget-content">10:15</li>
+  <li class="ui-widget-content">10:30</li>
+  <li class="ui-widget-content">10:45</li>
+  <li class="ui-widget-content">11:00</li>
+  <li class="ui-widget-content">11:15</li>
+  <li class="ui-widget-content">11:30</li>
+  <li class="ui-widget-content">11:45</li>
+  <li class="ui-widget-content">12:00</li>
+  <li class="ui-widget-content">12:15</li>
+  <li class="ui-widget-content">12:30</li>
+  <li class="ui-widget-content">12:45</li>
+  <li class="ui-widget-content">13:00</li>
+  <li class="ui-widget-content">13:15</li>
+  <li class="ui-widget-content">13:30</li>
+  <li class="ui-widget-content">13:45</li>
+  <li class="ui-widget-content">14:00</li>
+  <li class="ui-widget-content">14:15</li>
+  <li class="ui-widget-content">14:30</li>
+  <li class="ui-widget-content">14:45</li>
+  <li class="ui-widget-content">15:00</li>
+  <li class="ui-widget-content">15:15</li>
+  <li class="ui-widget-content">15:30</li>
+  <li class="ui-widget-content">15:45</li>
+  <li class="ui-widget-content">16:00</li>
+  <li class="ui-widget-content">16:15</li>
+  <li class="ui-widget-content">16:30</li>
+  <li class="ui-widget-content">16:45</li>
+  <li class="ui-widget-content">17:00</li>
+  <li class="ui-widget-content">17:15</li>
+  <li class="ui-widget-content">17:30</li>
+  <li class="ui-widget-content">17:45</li>
+  <li class="ui-widget-content">18:00</li>
+  <li class="ui-widget-content">18:15</li>
+  <li class="ui-widget-content">18:30</li>
+  <li class="ui-widget-content">18:45</li>
+  <li class="ui-widget-content">19:00</li>
+  <li class="ui-widget-content">19:15</li>
+  <li class="ui-widget-content">19:30</li>
+  <li class="ui-widget-content">19:45</li>
+  <li class="ui-widget-content">20:00</li>
+  <li class="ui-widget-content">20:15</li>
+  <li class="ui-widget-content">20:30</li>
+  <li class="ui-widget-content">20:45</li>
+  <li class="ui-widget-content">21:00</li>
+  <li class="ui-widget-content">21:15</li>
+  <li class="ui-widget-content">21:30</li>
+  <li class="ui-widget-content">21:45</li>
+  <li class="ui-widget-content">22:00</li>
+  <li class="ui-widget-content">22:15</li>
+  <li class="ui-widget-content">22:30</li>
+  <li class="ui-widget-content">22:45</li>
+  <li class="ui-widget-content">23:00</li>
+  <li class="ui-widget-content">23:15</li>
+  <li class="ui-widget-content">23:30</li>
+  <li class="ui-widget-content">23:45</li>
+  <li class="ui-widget-content">24:00</li>
+  <li class="ui-widget-content">24:15</li>
+  <li class="ui-widget-content">24:30</li>
+  <li class="ui-widget-content">24:45</li>
+  <li class="ui-widget-content">01:00</li>
+  <li class="ui-widget-content">01:15</li>
+  <li class="ui-widget-content">01:30</li>
+  <li class="ui-widget-content">01:45</li>
+  <li class="ui-widget-content">02:00</li>
+  <li class="ui-widget-content">02:15</li>
+  <li class="ui-widget-content">02:30</li>
+  <li class="ui-widget-content">02:45</li>
+  <li class="ui-widget-content">03:00</li>
+  <li class="ui-widget-content">03:15</li>
+  <li class="ui-widget-content">03:30</li>
+  <li class="ui-widget-content">03:45</li>
+  <li class="ui-widget-content">04:00</li>
+  <li class="ui-widget-content">04:15</li>
+  <li class="ui-widget-content">04:30</li>
+  <li class="ui-widget-content">04:45</li>
+</ol> 
+<%
+=end%>
