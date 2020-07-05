@@ -239,4 +239,18 @@
 <%= current_user.projects.last.name %>
 <%= current_user.projects.last.limit_date %>
 
+<% if @user.icon.attached? %>
+  <%= image_tag @user.icon, height: 100, width: 100 %>
+<% else %>
+  <%= image_tag "icon/icon.jpg", height: 100, width: 100 %>
+<% end %>
 
+<%= form_with model: @user do |form|  %>
+  <div class="">
+    <%= form.file_field :icon %>
+  </div>
+
+  <div >
+    <%= form.submit "登録する", class: "submit_button"%>
+  </div>
+<% end %>

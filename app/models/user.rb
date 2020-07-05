@@ -6,4 +6,5 @@ class User < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   has_many :projects
+  has_one_attached :icon
 end
