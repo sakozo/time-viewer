@@ -1,5 +1,6 @@
 class ResultTimesController < ApplicationController
   def create
+    # binding.pry
     result_time = ResultTime.new(result_time_params)
 
     if result_time.save
