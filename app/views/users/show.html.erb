@@ -90,7 +90,6 @@
           var block_id = "#block_" + index;
           $( block_id ).val(color);
         });
-
       }
     });
 
@@ -286,7 +285,7 @@
 
   <%= form_with model: @result_time do |form|  %>
     <div class="">
-      <%= form.text_field :record_date, placeholder: "record_date" %>
+      <%= form.text_field :record_date, placeholder: "record_date", id: :record_date %>
       <%= form.text_field :blocks, name: "block[][0]" , id: :block_0 %>
       <%= form.text_field :blocks, name: "block[][1]" , id: :block_1 %>
       <%= form.text_field :blocks, name: "block[][2]" , id: :block_2 %>
