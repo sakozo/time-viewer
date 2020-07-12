@@ -21,19 +21,29 @@
 
   </style>
   <script>
-  function setTime(id, type){
-    var time_id = 'time_' + id
-    //色をつける
-    var draw_color = [ 'red', 'blue', 'green', 'yellow', 'gray'][type];
-    $( ".ui-selected", this ).css('background-color', draw_color);
-    //time_idクラスを削除する
-    $( ".ui-selected", this ).removeClass(function(index, className) {
-      return (className.match(/\btime_\S+/g) || []).join(' ');
-    });
+    // function setTime(id, type){
+    //   var time_id = 'time_' + id
+    //   //色をつける
+    //   var draw_color = [ 'red', 'blue', 'green', 'yellow', 'gray'][type];
+    //   $( ".ui-selected", this ).css('background-color', draw_color);
+    //   //time_idクラスを削除する
+    //   $( ".ui-selected", this ).removeClass(function(index, className) {
+    //     return (className.match(/\btime_\S+/g) || []).join(' ');
+    //   });
 
-    $( ".ui-selected", this ).addClass(time_id);
-  }
-
+    //   $( ".ui-selected", this ).addClass(time_id);
+    // }
+    var setColor = function(type){
+      var draw_color = [ 'red', 'blue', 'green', 'yellow', 'gray'][type];
+      return draw_color;
+    }
+    var setId = function(id){
+      var time_id = 'time_' + id;
+      return time_id;
+      //$( ".ui-selected", this ).addClass(time_id);
+    }
+  </script>
+  <script>
   var color = 0;
 
   $(function() {
@@ -46,29 +56,29 @@
         //選択項目と同じ要領で合計時間を直後に右側に表示
         //TODO:メソッド切り出しで処理を共通化 javascriptファイルに処理を持っていく
       if(color == 0){
-        $( ".ui-selected", this ).css('background-color','red');
+        $( ".ui-selected", this ).css('background-color',setColor(0));
         $( ".ui-selected", this ).removeClass(function(index, className) {
             return (className.match(/\btime_\S+/g) || []).join(' ');
         });
-        $( ".ui-selected", this ).addClass('time_0');
+        $( ".ui-selected", this ).addClass(setId(1));
       }else if(color == 1){
-        $( ".ui-selected", this ).css('background-color','blue');
+        $( ".ui-selected", this ).css('background-color',setColor(1));
         $( ".ui-selected", this ).removeClass(function(index, className) {
             return (className.match(/\btime_\S+/g) || []).join(' ');
         });
-        $( ".ui-selected", this ).addClass('time_1');
+        $( ".ui-selected", this ).addClass(setId(2));
       }else if(color == 2){
-        $( ".ui-selected", this ).css('background-color','green');
+        $( ".ui-selected", this ).css('background-color',setColor(2));
         $( ".ui-selected", this ).removeClass(function(index, className) {
             return (className.match(/\btime_\S+/g) || []).join(' ');
         });
-        $( ".ui-selected", this ).addClass('time_2');
+        $( ".ui-selected", this ).addClass(setId(3));
       }else if(color == 3){
-        $( ".ui-selected", this ).css('background-color','yellow');
+        $( ".ui-selected", this ).css('background-color',setColor(3));
         $( ".ui-selected", this ).removeClass(function(index, className) {
             return (className.match(/\btime_\S+/g) || []).join(' ');
         });
-        $( ".ui-selected", this ).addClass('time_3');
+        $( ".ui-selected", this ).addClass(setId(4));
       }
       var result_show = $( "#result-show" ).empty();
       var red_count = 0;
@@ -101,8 +111,11 @@
           var index = $( "#selectable li" ).index( this );
           result.append( " #" + ( index + 1 ) );
           var block_id = "#block_" + index;
-          $( block_id ).val(color);
+          var class_name = $( "#selectable li" ).attr('class');
+          var time_id = class_name.match(/\btime_\S+/g).toString().substr(-1);
+          $( block_id ).val(time_id);
         });
+
       }
     });
 
@@ -180,7 +193,6 @@
 =end%>
 
 <div id = "result-show"></div>
-<div id = "day-show"></div>
 <body>
 <ol id="selectable">
   <li class="ui-widget-content 0500" title="5:00">05:00</li>
@@ -296,11 +308,10 @@
       <%= form.submit "登録する", class: "submit_button"%>
     </div>
   <% end %> 
-<button id = "previous" , class: "btn btn-primary"><</button>
-<button id = "next" , class: "btn btn-primary">></button>
+
   <%= form_with model: @result_time do |form|  %>
     <div class="">
-      <%= form.text_field :record_date, placeholder: "record_date", id: :record_date %>
+      <%= form.text_field :record_date, placeholder: "record_date" %>
       <%= form.text_field :blocks, name: "block[][0]" , id: :block_0 %>
       <%= form.text_field :blocks, name: "block[][1]" , id: :block_1 %>
       <%= form.text_field :blocks, name: "block[][2]" , id: :block_2 %>
