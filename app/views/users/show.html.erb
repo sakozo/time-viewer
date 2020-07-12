@@ -15,7 +15,6 @@
   #selectable { list-style-type: none; margin: 0; padding: 0; width: 10%; display: flex}
   #selectable li { margin: 0px; padding: 0.1em; font-size: 0.6em; font-weight: bold; height: 150px; width: 15%; text-align: center; writing-mode: vertical-rl; cursor: default;}
   /* .ui-widget-content { height: 0.1px} */
-
   </style>
   <script>
     // function setTime(id, type){
@@ -42,6 +41,7 @@
   </script>
   <script>
   var color = 0;
+  var own_time_id = 2;
 
   $(function() {
 
@@ -56,7 +56,7 @@
       $( ".ui-selected", this ).removeClass(function(index, className) {
           return (className.match(/\btime_\S+/g) || []).join(' ');
       });
-      $( ".ui-selected", this ).addClass(setId( Number(color)+1));
+      $( ".ui-selected", this ).addClass(setId( own_time_id ));
 
       var result_show = $( "#result-show" ).empty();
       var red_count = 0;
@@ -113,22 +113,35 @@
 
     $('#red').on("click", function(){
       color = "0";
+      var val = $('#own_time_select_time_1').val();
+      own_time_id = val;
+      alert(val);
       //alert(color);
     });
     $('#blue').on("click", function(){
       color = "1";
+      var val = $('#own_time_select_time_2').val();
+      own_time_id = val;
+      alert(val);
       //alert(color);
     });
     $('#green').on("click", function(){
       color = "2";
+      var val = $('#own_time_select_time_3').val();
+      own_time_id = val;
+      alert(val);
       //alert(color);
     });
     $('#yellow').on("click", function(){
       color = "3";
+      var val = $('#own_time_select_time_4').val();
+      own_time_id = val;
+      alert(val);
       //alert(color);
     });
     $('#grey').on("click", function(){
       color = "4";
+      own_time_id = 5;
       //alert(color);
     });
   });
@@ -144,9 +157,6 @@
     });
   });
   </script>
-  <style>
-
-  </style>
 </head>
 <body>
 
@@ -290,11 +300,16 @@
 <div class="input_area">
 
  <%= form_with model: @own_time do |form|  %>
-    <%= form.collection_select :origin_id, @all_select_time, :id, :name %>
-    <%= form.collection_select :origin_id, @select_time1, :id, :name %>
-    <%= form.collection_select :origin_id, @select_time2, :id, :name %>
-    <%= form.collection_select :origin_id, @select_time3, :id, :name %>
-    <%= form.collection_select :origin_id, @select_time4, :id, :name %>
+    <%
+=begin%>
+ <%= form.collection_select :origin_id, @all_select_time, :id, :name, {prompt: ""}, {class: ""}%> 
+<%
+=end%>
+    <%= form.collection_select :select_time_0, @all_select_time, :id, :name %>
+    <%= form.collection_select :select_time_1, @select_time1, :id, :name %>
+    <%= form.collection_select :select_time_2, @select_time2, :id, :name %>
+    <%= form.collection_select :select_time_3, @select_time3, :id, :name %>
+    <%= form.collection_select :select_time_4, @select_time4, :id, :name %>
 
     <div class="">
       <%= form.text_field :name, placeholder: "name" %>
@@ -415,7 +430,7 @@
     </div>
   <% end %>
 
- 
+
   <%= form_with model: @project do |form|  %>
     <div class="">
       <%= form.text_field :name, placeholder: "name"%>
@@ -426,7 +441,7 @@
       <%= form.submit "登録する", class: "submit_button"%>
     </div>
   <% end %>
-</div> 
+</div>
 
 <%= current_user.name %>
 <% if current_user.projects.exists? %>
@@ -448,4 +463,5 @@
   <div >
     <%= form.submit "登録する", class: "btn btn-primary"%>
   </div>
-<% end %> 
+<% end %>
+
