@@ -111,7 +111,7 @@
           var index = $( "#selectable li" ).index( this );
           result.append( " #" + ( index + 1 ) );
           var block_id = "#block_" + index;
-          var class_name = $( "#selectable li" ).attr('class');
+          var class_name = $( ".ui-selected" ).attr('class');
           var time_id = class_name.match(/\btime_\S+/g).toString().substr(-1);
           $( block_id ).val(time_id);
         });
