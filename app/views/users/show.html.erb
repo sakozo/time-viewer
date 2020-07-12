@@ -79,7 +79,14 @@
             return (className.match(/\btime_\S+/g) || []).join(' ');
         });
         $( ".ui-selected", this ).addClass(setId(4));
+      }else if(color == 4){
+        $( ".ui-selected", this ).css('background-color',setColor(4));
+        $( ".ui-selected", this ).removeClass(function(index, className) {
+            return (className.match(/\btime_\S+/g) || []).join(' ');
+        });
+        $( ".ui-selected", this ).addClass(setId(5));
       }
+
       var result_show = $( "#result-show" ).empty();
       var red_count = 0;
       var blue_count = 0;
@@ -122,6 +129,10 @@
 
     $('#reset').on("click", function(){
       $( ".ui-selectee").css('background-color','#fff');
+      $( ".ui-selectee").removeClass(function(index, className) {
+          return (className.match(/\btime_\S+/g) || []).join(' ');
+      });
+      $( '[id^="block_"]' ).val('');
     });
 
     $('#red').on("click", function(){
@@ -138,6 +149,10 @@
     });
     $('#yellow').on("click", function(){
       color = "3";
+      //alert(color);
+    });
+    $('#grey').on("click", function(){
+      color = "4";
       //alert(color);
     });
   });
@@ -162,15 +177,16 @@
 <br>
 <button id = "reset">リセット</button>
 
-<br>
 <button id = "red">赤</button>
-<br>
+
 <button id = "blue">青</button>
-<br>
+
 <button id = "green">緑</button>
-<br>
+
 <button id = "yellow">黄</button>
-<br>
+
+<button id = "grey">灰</button>
+
 <%
 =begin%>
  <%= form_for @record do |form| %>
