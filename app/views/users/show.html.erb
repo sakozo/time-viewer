@@ -4,9 +4,6 @@
 <%
 =end%>
 <head>
-  <meta charset="utf-8" />
-  <title>jQuery UI Selectable - Serialize</title>
-
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
   <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
@@ -55,62 +52,73 @@
         //TODO:重要度×緊急度のマトリクスの説明
         //選択項目と同じ要領で合計時間を直後に右側に表示
         //TODO:メソッド切り出しで処理を共通化 javascriptファイルに処理を持っていく
-      if(color == 0){
-        $( ".ui-selected", this ).css('background-color',setColor(0));
-        $( ".ui-selected", this ).removeClass(function(index, className) {
-            return (className.match(/\btime_\S+/g) || []).join(' ');
-        });
-        $( ".ui-selected", this ).addClass(setId(1));
-      }else if(color == 1){
-        $( ".ui-selected", this ).css('background-color',setColor(1));
-        $( ".ui-selected", this ).removeClass(function(index, className) {
-            return (className.match(/\btime_\S+/g) || []).join(' ');
-        });
-        $( ".ui-selected", this ).addClass(setId(2));
-      }else if(color == 2){
-        $( ".ui-selected", this ).css('background-color',setColor(2));
-        $( ".ui-selected", this ).removeClass(function(index, className) {
-            return (className.match(/\btime_\S+/g) || []).join(' ');
-        });
-        $( ".ui-selected", this ).addClass(setId(3));
-      }else if(color == 3){
-        $( ".ui-selected", this ).css('background-color',setColor(3));
-        $( ".ui-selected", this ).removeClass(function(index, className) {
-            return (className.match(/\btime_\S+/g) || []).join(' ');
-        });
-        $( ".ui-selected", this ).addClass(setId(4));
-      }else if(color == 4){
-        $( ".ui-selected", this ).css('background-color',setColor(4));
-        $( ".ui-selected", this ).removeClass(function(index, className) {
-            return (className.match(/\btime_\S+/g) || []).join(' ');
-        });
-        $( ".ui-selected", this ).addClass(setId(5));
-      }
+      // if(color == 0){
+      //   $( ".ui-selected", this ).css('background-color',setColor(0));
+      //   $( ".ui-selected", this ).removeClass(function(index, className) {
+      //       return (className.match(/\btime_\S+/g) || []).join(' ');
+      //   });
+      //   $( ".ui-selected", this ).addClass(setId(1));
+      // }else if(color == 1){
+      //   $( ".ui-selected", this ).css('background-color',setColor(1));
+      //   $( ".ui-selected", this ).removeClass(function(index, className) {
+      //       return (className.match(/\btime_\S+/g) || []).join(' ');
+      //   });
+      //   $( ".ui-selected", this ).addClass(setId(2));
+      // }else if(color == 2){
+      //   $( ".ui-selected", this ).css('background-color',setColor(2));
+      //   $( ".ui-selected", this ).removeClass(function(index, className) {
+      //       return (className.match(/\btime_\S+/g) || []).join(' ');
+      //   });
+      //   $( ".ui-selected", this ).addClass(setId(3));
+      // }else if(color == 3){
+      //   $( ".ui-selected", this ).css('background-color',setColor(3));
+      //   $( ".ui-selected", this ).removeClass(function(index, className) {
+      //       return (className.match(/\btime_\S+/g) || []).join(' ');
+      //   });
+      //   $( ".ui-selected", this ).addClass(setId(4));
+      // }else if(color == 4){
+      //   $( ".ui-selected", this ).css('background-color',setColor(4));
+      //   $( ".ui-selected", this ).removeClass(function(index, className) {
+      //       return (className.match(/\btime_\S+/g) || []).join(' ');
+      //   });
+      //   $( ".ui-selected", this ).addClass(setId(5));
+      // }
+
+      $( ".ui-selected", this ).css('background-color',setColor(color));
+      $( ".ui-selected", this ).removeClass(function(index, className) {
+          return (className.match(/\btime_\S+/g) || []).join(' ');
+      });
+      $( ".ui-selected", this ).addClass(setId( Number(color)+1));
 
       var result_show = $( "#result-show" ).empty();
       var red_count = 0;
       var blue_count = 0;
       var green_count = 0;
       var yellow_count = 0;
+      var grey_count = 0;
       $(".ui-selectee").each(function(index, value){
-        if($(value).attr("class").includes("time_0")){
+        if($(value).attr("class").includes("time_1")){
           red_count = red_count + 1;
           $(".red_record").val(red_count/4);
           }
-        else if ($(value).attr("class").includes("time_1")){
+        else if ($(value).attr("class").includes("time_2")){
           blue_count = blue_count + 1;
           $(".blue_record").val(blue_count/4);
           }
-        else if ($(value).attr("class").includes("time_2")){
+        else if ($(value).attr("class").includes("time_3")){
           green_count = green_count + 1;
           $(".green_record").val(green_count/4);
           }
-        else if ($(value).attr("class").includes("time_3")){
+        else if ($(value).attr("class").includes("time_4")){
           yellow_count = yellow_count + 1;
           $(".yellow_record").val(yellow_count/4);
           }
+        else if ($(value).attr("class").includes("time_5")){
+          grey_count = grey_count + 1;
+          $(".grey_record").val(grey_count/4);
+          }
         })
-        result_show.append( "red:"+ red_count + "blue:" + blue_count + "green:" + green_count + "yellow:" + yellow_count );
+        result_show.append( "red:"+ red_count + "blue:" + blue_count + "green:" + green_count + "yellow:" + yellow_count + "grey" + grey_count);
         console.log('選択終了')
 
         var result = $( "#select-result" ).empty();
