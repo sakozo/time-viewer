@@ -21,6 +21,19 @@
 
   </style>
   <script>
+  function setTime(id, type){
+    var time_id = 'time_' + id
+    //色をつける
+    var draw_color = [ 'red', 'blue', 'green', 'yellow', 'gray'][type];
+    $( ".ui-selected", this ).css('background-color', draw_color);
+    //time_idクラスを削除する
+    $( ".ui-selected", this ).removeClass(function(index, className) {
+      return (className.match(/\btime_\S+/g) || []).join(' ');
+    });
+
+    $( ".ui-selected", this ).addClass(time_id);
+  }
+
   var color = 0;
 
   $(function() {
