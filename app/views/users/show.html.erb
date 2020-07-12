@@ -4,9 +4,6 @@
 <%
 =end%>
 <head>
-  <meta charset="utf-8" />
-  <title>jQuery UI Selectable - Serialize</title>
-
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
   <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
@@ -21,6 +18,29 @@
 
   </style>
   <script>
+    // function setTime(id, type){
+    //   var time_id = 'time_' + id
+    //   //色をつける
+    //   var draw_color = [ 'red', 'blue', 'green', 'yellow', 'gray'][type];
+    //   $( ".ui-selected", this ).css('background-color', draw_color);
+    //   //time_idクラスを削除する
+    //   $( ".ui-selected", this ).removeClass(function(index, className) {
+    //     return (className.match(/\btime_\S+/g) || []).join(' ');
+    //   });
+
+    //   $( ".ui-selected", this ).addClass(time_id);
+    // }
+    var setColor = function(type){
+      var draw_color = [ 'red', 'blue', 'green', 'yellow', 'gray'][type];
+      return draw_color;
+    }
+    var setId = function(id){
+      var time_id = 'time_' + id;
+      return time_id;
+      //$( ".ui-selected", this ).addClass(time_id);
+    }
+  </script>
+  <script>
   var color = 0;
 
   $(function() {
@@ -32,55 +52,73 @@
         //TODO:重要度×緊急度のマトリクスの説明
         //選択項目と同じ要領で合計時間を直後に右側に表示
         //TODO:メソッド切り出しで処理を共通化 javascriptファイルに処理を持っていく
-      if(color == 0){
-        $( ".ui-selected", this ).css('background-color','red');
-        $( ".ui-selected", this ).removeClass(function(index, className) {
-            return (className.match(/\btime_\S+/g) || []).join(' ');
-        });
-        $( ".ui-selected", this ).addClass('time_0');
-      }else if(color == 1){
-        $( ".ui-selected", this ).css('background-color','blue');
-        $( ".ui-selected", this ).removeClass(function(index, className) {
-            return (className.match(/\btime_\S+/g) || []).join(' ');
-        });
-        $( ".ui-selected", this ).addClass('time_1');
-      }else if(color == 2){
-        $( ".ui-selected", this ).css('background-color','green');
-        $( ".ui-selected", this ).removeClass(function(index, className) {
-            return (className.match(/\btime_\S+/g) || []).join(' ');
-        });
-        $( ".ui-selected", this ).addClass('time_2');
-      }else if(color == 3){
-        $( ".ui-selected", this ).css('background-color','yellow');
-        $( ".ui-selected", this ).removeClass(function(index, className) {
-            return (className.match(/\btime_\S+/g) || []).join(' ');
-        });
-        $( ".ui-selected", this ).addClass('time_3');
-      }
+      // if(color == 0){
+      //   $( ".ui-selected", this ).css('background-color',setColor(0));
+      //   $( ".ui-selected", this ).removeClass(function(index, className) {
+      //       return (className.match(/\btime_\S+/g) || []).join(' ');
+      //   });
+      //   $( ".ui-selected", this ).addClass(setId(1));
+      // }else if(color == 1){
+      //   $( ".ui-selected", this ).css('background-color',setColor(1));
+      //   $( ".ui-selected", this ).removeClass(function(index, className) {
+      //       return (className.match(/\btime_\S+/g) || []).join(' ');
+      //   });
+      //   $( ".ui-selected", this ).addClass(setId(2));
+      // }else if(color == 2){
+      //   $( ".ui-selected", this ).css('background-color',setColor(2));
+      //   $( ".ui-selected", this ).removeClass(function(index, className) {
+      //       return (className.match(/\btime_\S+/g) || []).join(' ');
+      //   });
+      //   $( ".ui-selected", this ).addClass(setId(3));
+      // }else if(color == 3){
+      //   $( ".ui-selected", this ).css('background-color',setColor(3));
+      //   $( ".ui-selected", this ).removeClass(function(index, className) {
+      //       return (className.match(/\btime_\S+/g) || []).join(' ');
+      //   });
+      //   $( ".ui-selected", this ).addClass(setId(4));
+      // }else if(color == 4){
+      //   $( ".ui-selected", this ).css('background-color',setColor(4));
+      //   $( ".ui-selected", this ).removeClass(function(index, className) {
+      //       return (className.match(/\btime_\S+/g) || []).join(' ');
+      //   });
+      //   $( ".ui-selected", this ).addClass(setId(5));
+      // }
+
+      $( ".ui-selected", this ).css('background-color',setColor(color));
+      $( ".ui-selected", this ).removeClass(function(index, className) {
+          return (className.match(/\btime_\S+/g) || []).join(' ');
+      });
+      $( ".ui-selected", this ).addClass(setId( Number(color)+1));
+
       var result_show = $( "#result-show" ).empty();
       var red_count = 0;
       var blue_count = 0;
       var green_count = 0;
       var yellow_count = 0;
+      var grey_count = 0;
       $(".ui-selectee").each(function(index, value){
-        if($(value).attr("class").includes("time_0")){
+        if($(value).attr("class").includes("time_1")){
           red_count = red_count + 1;
           $(".red_record").val(red_count/4);
           }
-        else if ($(value).attr("class").includes("time_1")){
+        else if ($(value).attr("class").includes("time_2")){
           blue_count = blue_count + 1;
           $(".blue_record").val(blue_count/4);
           }
-        else if ($(value).attr("class").includes("time_2")){
+        else if ($(value).attr("class").includes("time_3")){
           green_count = green_count + 1;
           $(".green_record").val(green_count/4);
           }
-        else if ($(value).attr("class").includes("time_3")){
+        else if ($(value).attr("class").includes("time_4")){
           yellow_count = yellow_count + 1;
           $(".yellow_record").val(yellow_count/4);
           }
+        else if ($(value).attr("class").includes("time_5")){
+          grey_count = grey_count + 1;
+          $(".grey_record").val(grey_count/4);
+          }
         })
-        result_show.append( "red:"+ red_count + "blue:" + blue_count + "green:" + green_count + "yellow:" + yellow_count );
+        result_show.append( "red:"+ red_count + "blue:" + blue_count + "green:" + green_count + "yellow:" + yellow_count + "grey" + grey_count);
         console.log('選択終了')
 
         var result = $( "#select-result" ).empty();
@@ -88,14 +126,21 @@
           var index = $( "#selectable li" ).index( this );
           result.append( " #" + ( index + 1 ) );
           var block_id = "#block_" + index;
-          $( block_id ).val(color);
+          var class_name = $( ".ui-selected" ).attr('class');
+          var time_id = class_name.match(/\btime_\S+/g).toString().substr(-1);
+          $( block_id ).val(time_id);
         });
+
       }
     });
 
 
     $('#reset').on("click", function(){
       $( ".ui-selectee").css('background-color','#fff');
+      $( ".ui-selectee").removeClass(function(index, className) {
+          return (className.match(/\btime_\S+/g) || []).join(' ');
+      });
+      $( '[id^="block_"]' ).val('');
     });
 
     $('#red').on("click", function(){
@@ -112,6 +157,10 @@
     });
     $('#yellow').on("click", function(){
       color = "3";
+      //alert(color);
+    });
+    $('#grey').on("click", function(){
+      color = "4";
       //alert(color);
     });
   });
@@ -136,15 +185,16 @@
 <br>
 <button id = "reset">リセット</button>
 
-<br>
 <button id = "red">赤</button>
-<br>
+
 <button id = "blue">青</button>
-<br>
+
 <button id = "green">緑</button>
-<br>
+
 <button id = "yellow">黄</button>
-<br>
+
+<button id = "grey">灰</button>
+
 <%
 =begin%>
  <%= form_for @record do |form| %>
@@ -167,7 +217,6 @@
 =end%>
 
 <div id = "result-show"></div>
-<div id = "day-show"></div>
 <body>
 <ol id="selectable">
   <li class="ui-widget-content 0500" title="5:00">05:00</li>
@@ -283,11 +332,10 @@
       <%= form.submit "登録する", class: "submit_button"%>
     </div>
   <% end %> 
-<button id = "previous" , class: "btn btn-primary"><</button>
-<button id = "next" , class: "btn btn-primary">></button>
+
   <%= form_with model: @result_time do |form|  %>
     <div class="">
-      <%= form.text_field :record_date, placeholder: "record_date", id: :record_date %>
+      <%= form.text_field :record_date, placeholder: "record_date" %>
       <%= form.text_field :blocks, name: "block[][0]" , id: :block_0 %>
       <%= form.text_field :blocks, name: "block[][1]" , id: :block_1 %>
       <%= form.text_field :blocks, name: "block[][2]" , id: :block_2 %>
@@ -423,109 +471,3 @@
     <%= form.submit "登録する", class: "btn btn-primary"%>
   </div>
 <% end %> 
-
-
-
-
-<%
-=begin%>
- <ol id="selectable">
-  <li class="ui-widget-content">05:00</li>
-  <li class="ui-widget-content">05:15</li>
-  <li class="ui-widget-content">05:30</li>
-  <li class="ui-widget-content">05:45</li>
-  <li class="ui-widget-content 0600">06:00</li>
-  <li class="ui-widget-content 0615">06:15</li>
-  <li class="ui-widget-content 0630">06:30</li>
-  <li class="ui-widget-content 0645">06:45</li>
-  <li class="ui-widget-content 0700">07:00</li>
-  <li class="ui-widget-content 0715">07:15</li>
-  <li class="ui-widget-content 0730">07:30</li>
-  <li class="ui-widget-content 0745">07:45</li>
-  <li class="ui-widget-content 0800">08:00</li>
-  <li class="ui-widget-content 0815">08:15</li>
-  <li class="ui-widget-content 0830">08:30</li>
-  <li class="ui-widget-content">08:45</li>
-  <li class="ui-widget-content">09:00</li>
-  <li class="ui-widget-content">09:15</li>
-  <li class="ui-widget-content">09:30</li>
-  <li class="ui-widget-content">09:45</li>
-  <li class="ui-widget-content">10:00</li>
-  <li class="ui-widget-content">10:15</li>
-  <li class="ui-widget-content">10:30</li>
-  <li class="ui-widget-content">10:45</li>
-  <li class="ui-widget-content">11:00</li>
-  <li class="ui-widget-content">11:15</li>
-  <li class="ui-widget-content">11:30</li>
-  <li class="ui-widget-content">11:45</li>
-  <li class="ui-widget-content">12:00</li>
-  <li class="ui-widget-content">12:15</li>
-  <li class="ui-widget-content">12:30</li>
-  <li class="ui-widget-content">12:45</li>
-  <li class="ui-widget-content">13:00</li>
-  <li class="ui-widget-content">13:15</li>
-  <li class="ui-widget-content">13:30</li>
-  <li class="ui-widget-content">13:45</li>
-  <li class="ui-widget-content">14:00</li>
-  <li class="ui-widget-content">14:15</li>
-  <li class="ui-widget-content">14:30</li>
-  <li class="ui-widget-content">14:45</li>
-  <li class="ui-widget-content">15:00</li>
-  <li class="ui-widget-content">15:15</li>
-  <li class="ui-widget-content">15:30</li>
-  <li class="ui-widget-content">15:45</li>
-  <li class="ui-widget-content">16:00</li>
-  <li class="ui-widget-content">16:15</li>
-  <li class="ui-widget-content">16:30</li>
-  <li class="ui-widget-content">16:45</li>
-  <li class="ui-widget-content">17:00</li>
-  <li class="ui-widget-content">17:15</li>
-  <li class="ui-widget-content">17:30</li>
-  <li class="ui-widget-content">17:45</li>
-  <li class="ui-widget-content">18:00</li>
-  <li class="ui-widget-content">18:15</li>
-  <li class="ui-widget-content">18:30</li>
-  <li class="ui-widget-content">18:45</li>
-  <li class="ui-widget-content">19:00</li>
-  <li class="ui-widget-content">19:15</li>
-  <li class="ui-widget-content">19:30</li>
-  <li class="ui-widget-content">19:45</li>
-  <li class="ui-widget-content">20:00</li>
-  <li class="ui-widget-content">20:15</li>
-  <li class="ui-widget-content">20:30</li>
-  <li class="ui-widget-content">20:45</li>
-  <li class="ui-widget-content">21:00</li>
-  <li class="ui-widget-content">21:15</li>
-  <li class="ui-widget-content">21:30</li>
-  <li class="ui-widget-content">21:45</li>
-  <li class="ui-widget-content">22:00</li>
-  <li class="ui-widget-content">22:15</li>
-  <li class="ui-widget-content">22:30</li>
-  <li class="ui-widget-content">22:45</li>
-  <li class="ui-widget-content">23:00</li>
-  <li class="ui-widget-content">23:15</li>
-  <li class="ui-widget-content">23:30</li>
-  <li class="ui-widget-content">23:45</li>
-  <li class="ui-widget-content">24:00</li>
-  <li class="ui-widget-content">24:15</li>
-  <li class="ui-widget-content">24:30</li>
-  <li class="ui-widget-content">24:45</li>
-  <li class="ui-widget-content">01:00</li>
-  <li class="ui-widget-content">01:15</li>
-  <li class="ui-widget-content">01:30</li>
-  <li class="ui-widget-content">01:45</li>
-  <li class="ui-widget-content">02:00</li>
-  <li class="ui-widget-content">02:15</li>
-  <li class="ui-widget-content">02:30</li>
-  <li class="ui-widget-content">02:45</li>
-  <li class="ui-widget-content">03:00</li>
-  <li class="ui-widget-content">03:15</li>
-  <li class="ui-widget-content">03:30</li>
-  <li class="ui-widget-content">03:45</li>
-  <li class="ui-widget-content">04:00</li>
-  <li class="ui-widget-content">04:15</li>
-  <li class="ui-widget-content">04:30</li>
-  <li class="ui-widget-content">04:45</li>
-</ol> 
-<%
-=end%>
