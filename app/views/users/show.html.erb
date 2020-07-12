@@ -15,7 +15,6 @@
   #selectable { list-style-type: none; margin: 0; padding: 0; width: 10%; display: flex}
   #selectable li { margin: 0px; padding: 0.1em; font-size: 0.6em; font-weight: bold; height: 150px; width: 15%; text-align: center; writing-mode: vertical-rl; cursor: default;}
   /* .ui-widget-content { height: 0.1px} */
-
   </style>
   <script>
     // function setTime(id, type){
@@ -42,6 +41,7 @@
   </script>
   <script>
   var color = 0;
+  var own_time_id = 2;
 
   $(function() {
 
@@ -52,43 +52,11 @@
         //TODO:重要度×緊急度のマトリクスの説明
         //選択項目と同じ要領で合計時間を直後に右側に表示
         //TODO:メソッド切り出しで処理を共通化 javascriptファイルに処理を持っていく
-      // if(color == 0){
-      //   $( ".ui-selected", this ).css('background-color',setColor(0));
-      //   $( ".ui-selected", this ).removeClass(function(index, className) {
-      //       return (className.match(/\btime_\S+/g) || []).join(' ');
-      //   });
-      //   $( ".ui-selected", this ).addClass(setId(1));
-      // }else if(color == 1){
-      //   $( ".ui-selected", this ).css('background-color',setColor(1));
-      //   $( ".ui-selected", this ).removeClass(function(index, className) {
-      //       return (className.match(/\btime_\S+/g) || []).join(' ');
-      //   });
-      //   $( ".ui-selected", this ).addClass(setId(2));
-      // }else if(color == 2){
-      //   $( ".ui-selected", this ).css('background-color',setColor(2));
-      //   $( ".ui-selected", this ).removeClass(function(index, className) {
-      //       return (className.match(/\btime_\S+/g) || []).join(' ');
-      //   });
-      //   $( ".ui-selected", this ).addClass(setId(3));
-      // }else if(color == 3){
-      //   $( ".ui-selected", this ).css('background-color',setColor(3));
-      //   $( ".ui-selected", this ).removeClass(function(index, className) {
-      //       return (className.match(/\btime_\S+/g) || []).join(' ');
-      //   });
-      //   $( ".ui-selected", this ).addClass(setId(4));
-      // }else if(color == 4){
-      //   $( ".ui-selected", this ).css('background-color',setColor(4));
-      //   $( ".ui-selected", this ).removeClass(function(index, className) {
-      //       return (className.match(/\btime_\S+/g) || []).join(' ');
-      //   });
-      //   $( ".ui-selected", this ).addClass(setId(5));
-      // }
-
       $( ".ui-selected", this ).css('background-color',setColor(color));
       $( ".ui-selected", this ).removeClass(function(index, className) {
           return (className.match(/\btime_\S+/g) || []).join(' ');
       });
-      $( ".ui-selected", this ).addClass(setId( Number(color)+1));
+      $( ".ui-selected", this ).addClass(setId( own_time_id ));
 
       var result_show = $( "#result-show" ).empty();
       var red_count = 0;
@@ -145,22 +113,35 @@
 
     $('#red').on("click", function(){
       color = "0";
+      var val = $('#own_time_select_time_1').val();
+      own_time_id = val;
+      alert(val);
       //alert(color);
     });
     $('#blue').on("click", function(){
       color = "1";
+      var val = $('#own_time_select_time_2').val();
+      own_time_id = val;
+      alert(val);
       //alert(color);
     });
     $('#green').on("click", function(){
       color = "2";
+      var val = $('#own_time_select_time_3').val();
+      own_time_id = val;
+      alert(val);
       //alert(color);
     });
     $('#yellow').on("click", function(){
       color = "3";
+      var val = $('#own_time_select_time_4').val();
+      own_time_id = val;
+      alert(val);
       //alert(color);
     });
     $('#grey').on("click", function(){
       color = "4";
+      own_time_id = 5;
       //alert(color);
     });
   });
@@ -176,24 +157,8 @@
     });
   });
   </script>
-  <style>
-
-  </style>
 </head>
 <body>
-
-<br>
-<button id = "reset">リセット</button>
-
-<button id = "red">赤</button>
-
-<button id = "blue">青</button>
-
-<button id = "green">緑</button>
-
-<button id = "yellow">黄</button>
-
-<button id = "grey">灰</button>
 
 <%
 =begin%>
@@ -216,7 +181,6 @@
 <%
 =end%>
 
-<div id = "result-show"></div>
 <div id = "day-show"></div>
 <body>
 <ol id="selectable">
@@ -318,10 +282,35 @@
   <li class="ui-widget-content 0445" title="4:45">04:45</li>
 </ol>
 
+<div id = "result-show"></div>
+
+<br>
+<button id = "reset">リセット</button>
+
+<button id = "red">赤</button>
+
+<button id = "blue">青</button>
+
+<button id = "green">緑</button>
+
+<button id = "yellow">黄</button>
+
+<button id = "grey">灰</button>
 
 <div class="input_area">
 
  <%= form_with model: @own_time do |form|  %>
+    <%
+=begin%>
+ <%= form.collection_select :origin_id, @all_select_time, :id, :name, {prompt: ""}, {class: ""}%> 
+<%
+=end%>
+    <%= form.collection_select :select_time_0, @all_select_time, :id, :name %>
+    <%= form.collection_select :select_time_1, @select_time1, :id, :name %>
+    <%= form.collection_select :select_time_2, @select_time2, :id, :name %>
+    <%= form.collection_select :select_time_3, @select_time3, :id, :name %>
+    <%= form.collection_select :select_time_4, @select_time4, :id, :name %>
+
     <div class="">
       <%= form.text_field :name, placeholder: "name" %>
       <%= form.text_field :time_type, placeholder: "type" %>
@@ -441,7 +430,7 @@
     </div>
   <% end %>
 
- 
+
   <%= form_with model: @project do |form|  %>
     <div class="">
       <%= form.text_field :name, placeholder: "name"%>
@@ -452,11 +441,13 @@
       <%= form.submit "登録する", class: "submit_button"%>
     </div>
   <% end %>
-</div> 
+</div>
 
 <%= current_user.name %>
+<% if current_user.projects.exists? %>
 <%= current_user.projects.last.name %>
 <%= current_user.projects.last.limit_date %>
+<% end %>
 
 <% if @user.icon.attached? %>
   <%= image_tag @user.icon, height: 100, width: 100 %>
@@ -472,4 +463,5 @@
   <div >
     <%= form.submit "登録する", class: "btn btn-primary"%>
   </div>
-<% end %> 
+<% end %>
+
