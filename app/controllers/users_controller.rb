@@ -11,10 +11,10 @@ class UsersController < ApplicationController
 
     # own_timeの選択肢を設定
     @all_select_time = OwnTime.all
-    @select_time1 = OwnTime.where(id: 1)
-    @select_time2 = OwnTime.where(id: 1)
-    @select_time3 = OwnTime.where(id: 1)
-    @select_time4 = OwnTime.where(id: 1)
+    @select_time1 = OwnTime.where(time_type: 1)
+    @select_time2 = OwnTime.where(time_type: 2)
+    @select_time3 = OwnTime.where(time_type: 3)
+    @select_time4 = OwnTime.where(time_type: 4)
 
     # TODO:天気自動記録機能の実装
     #環境変数をJSに渡す
