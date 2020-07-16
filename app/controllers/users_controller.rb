@@ -16,6 +16,13 @@ class UsersController < ApplicationController
     @select_time3 = OwnTime.where(time_type: 3)
     @select_time4 = OwnTime.where(time_type: 4)
 
+
+    # プロジェクトの残り日付 
+    # TODO:終了カラムを追加する
+    # @projects = Project.where(user_id: current_user.id)
+
+
+
     # TODO:天気自動記録機能の実装
     #環境変数をJSに渡す
     #gon.wheather_api_key = ENV['OPEN_WEATHER_API_KEY']
