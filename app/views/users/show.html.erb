@@ -443,12 +443,6 @@
   <% end %>
 </div>
 
-<%= current_user.name %>
-<% if current_user.projects.exists? %>
-<%= current_user.projects.last.name %>
-<%= current_user.projects.last.limit_date %>
-<% end %>
-
 <% if @user.icon.attached? %>
   <%= image_tag @user.icon, height: 100, width: 100 %>
 <% else %>
@@ -465,3 +459,17 @@
   </div>
 <% end %>
 
+<%= current_user.name %>
+<% if current_user.projects.exists? %>
+  <% current_user.projects.each do |project| %>
+    <% if project.done_flg == 0 %>
+      <%= project.name %>
+      <%= project.limit_date %>
+      <p>残り日数<%= (project.limit_date.to_date - Date.today).round %>日</p>
+      <%= form_with model: project do |form| %>
+        <%= form.text_field :id, placeholder: "id", value: project.id %>
+        <%= form.submit "完了", class: "submit_button"%>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
