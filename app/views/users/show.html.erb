@@ -462,8 +462,10 @@
 <%= current_user.name %>
 <% if current_user.projects.exists? %>
   <% current_user.projects.each do |project| %>
-  <%= project.name %>
-  <%= project.limit_date %>
-  <p>残り日数<%= (project.limit_date.to_date - Date.today).round %>日</p>
+    <% if project.done_flg == 0 %>
+      <%= project.name %>
+      <%= project.limit_date %>
+      <p>残り日数<%= (project.limit_date.to_date - Date.today).round %>日</p>
+    <% end %>
   <% end %>
 <% end %>
