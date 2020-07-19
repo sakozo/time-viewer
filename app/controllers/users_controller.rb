@@ -18,8 +18,7 @@ class UsersController < ApplicationController
 
 
     # プロジェクトの残り日付 
-    # TODO:終了カラムを追加する
-    # @projects = Project.where(user_id: current_user.id)
+    #@projects = Project.where(user_id: current_user.id)
 
 
 
