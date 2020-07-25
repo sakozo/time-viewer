@@ -4,7 +4,7 @@ var toDoubleDigits = function(num) {
   if (num.length === 1) {
     num = "0" + num;
   }
- return num;     
+ return num;
 };
 
 // 最初に呼ばれる変数の定義
