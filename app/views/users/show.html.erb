@@ -91,6 +91,37 @@
 
         //TODO:同じ要領でown_timeのnameごとに時間を表示
 
+        var result_show = $( "#result-show" ).empty();
+        var red_count = 0;
+        var blue_count = 0;
+        var green_count = 0;
+        var yellow_count = 0;
+        var grey_count = 0;
+        $(".ui-selectee").each(function(index, value){
+          if($(value).attr("class").includes("time_1")){
+            red_count = red_count + 1;
+            $(".red_record").val(red_count/4);
+            }
+          else if ($(value).attr("class").includes("time_2")){
+            blue_count = blue_count + 1;
+            $(".blue_record").val(blue_count/4);
+            }
+          else if ($(value).attr("class").includes("time_3")){
+            green_count = green_count + 1;
+            $(".green_record").val(green_count/4);
+            }
+          else if ($(value).attr("class").includes("time_4")){
+            yellow_count = yellow_count + 1;
+            $(".yellow_record").val(yellow_count/4);
+            }
+          else if ($(value).attr("class").includes("time_5")){
+            grey_count = grey_count + 1;
+            $(".grey_record").val(grey_count/4);
+            }
+          })
+          result_show.append( "red:"+ red_count + "blue:" + blue_count + "green:" + green_count + "yellow:" + yellow_count + "grey" + grey_count);
+        //ここまで/////////////////////////////////
+
         var result = $( "#select-result" ).empty();
         $( ".ui-selected", this ).each(function() {
           var index = $( "#selectable li" ).index( this );
