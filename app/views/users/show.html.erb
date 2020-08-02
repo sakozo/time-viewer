@@ -89,8 +89,6 @@
         result_show.append( "red:"+ red_count + "blue:" + blue_count + "green:" + green_count + "yellow:" + yellow_count + "grey" + grey_count);
         console.log('選択終了')
 
-        //TODO:同じ要領でown_timeのnameごとに時間を表示
-
         var result_show = $( "#result-show" ).empty();
         var red_count = 0;
         var blue_count = 0;
@@ -131,6 +129,10 @@
           var time_id = class_name.match(/\btime_\S+/g).toString().substr(-1);
           $( block_id ).val(time_id);
         });
+
+        //TODO:同じ要領でown_timeのnameごとに時間を表示
+        //inputフォームに入力されたown_time_idをカウントする
+        $("[id^=block_]").each(function(index, element){console.log($(element).val())})
 
       }
     });
@@ -506,3 +508,4 @@
     <% end %>
   <% end %>
 <% end %>
+
