@@ -131,8 +131,16 @@
         });
 
         //TODO:同じ要領でown_timeのnameごとに時間を表示
+        //
         //inputフォームに入力されたown_time_idをカウントする
-        $("[id^=block_]").each(function(index, element){console.log($(element).val())})
+        var time_array = Array(100); //配列の長さを確定(idの数だけ確保)
+        time_array.fill(0); //0で初期化
+        $("[id^=block_]").each(function(index, element){
+          console.log($(element).val());
+          var time_id = $(element).val();
+          time_array[time_id] += 1; //idと一致する要素のカウントを+1
+        })
+        console.log("結果:" +  time_array) //結果を表示する
 
       }
     });
