@@ -16,6 +16,9 @@ class UsersController < ApplicationController
     @select_time3 = OwnTime.where(time_type: 3)
     @select_time4 = OwnTime.where(time_type: 4)
 
+    # own_timeの数をJSに渡してカウント用配列を作る
+    # own_time_idは1インデックス、配列は0インデックスのため1インデックスに合わせるため+1している
+    gon.own_time_count = @all_select_time.size + 1
 
     # プロジェクトの残り日付 
     #@projects = Project.where(user_id: current_user.id)

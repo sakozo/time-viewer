@@ -133,7 +133,7 @@
         //TODO:同じ要領でown_timeのnameごとに時間を表示
         //
         //inputフォームに入力されたown_time_idをカウントする
-        var time_array = Array(100); //配列の長さを確定(idの数だけ確保)
+        var time_array = Array(gon.own_time_count); //配列の長さを確定(idの数だけ確保)
         time_array.fill(0); //0で初期化
         $("[id^=block_]").each(function(index, element){
           console.log($(element).val());
