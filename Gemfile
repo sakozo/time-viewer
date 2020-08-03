@@ -70,3 +70,5 @@ gem 'jquery-rails'
 
 gem "sass-rails", "~>5.0"
 gem "bootstrap-sass", ">= 3.4.1"
+
+gem 'gon'
