@@ -141,22 +141,22 @@
           time_array[time_id] += 1; //idと一致する要素のカウントを+1
         })
         console.log("結果:" +  time_array) //結果を表示する
+        $('#time-show').empty();
         $.each(time_array,function(index,val){
           //0なら次のループへ
           if(val == 0){
             //continue;
             return;
           }
-          
           //15分ブロックの数から時間に変換
           var hour = Math.floor(val / 4);
-          var minutes = val % 4 * 15;
+          var minutes = (val % 4 == 0) ? "00" : val % 4 * 15; //参考演算子 0なら"00"とする
           var show_time = hour + ":" + minutes;
           console.log(show_time);
+          $('#time-show').append(gon.own_time_list[index] + ":" + show_time + " ")
         });
       }
     });
-
 
     $('#reset').on("click", function(){
       $( ".ui-selectee").css('background-color','#fff');
@@ -338,6 +338,7 @@
 </ol>
 
 <div id = "result-show"></div>
+<div id = "time-show"></div>
 
 <br>
 <button id = "reset">リセット</button>
