@@ -31,11 +31,18 @@ class UsersController < ApplicationController
     # プロジェクトの残り日付 
     #@projects = Project.where(user_id: current_user.id)
 
-
-
     # TODO:天気自動記録機能の実装
     #環境変数をJSに渡す
     #gon.wheather_api_key = ENV['OPEN_WEATHER_API_KEY']
+
+    # 日付とown_timeのセット
+    params_date = params[:format]
+    if params_date == nil
+      @date = Date.today
+    else
+      @date = params_date
+    end
+
   end
 
   def update
@@ -45,6 +52,12 @@ class UsersController < ApplicationController
     else
       render new_user_path
     end
+  end
+
+  def date
+    # 表示する日付をparamsから取得する
+    show_date = params[:format]
+
   end
 
   private
