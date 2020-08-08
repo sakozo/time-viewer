@@ -47,7 +47,7 @@ class UsersController < ApplicationController
     # DBに登録済みのResultTimeを取得する
     # ハッシュに詰める hashなので重複は上書きされて最新の値がセットされるはず
     result_times = ResultTime.where( user_id: current_user.id ).where( record_date: @date )
-    @result_times_hash = {}
+    @result_times_hash = Hash.new { "" } #存在しないキーを指定した場合にから文字を返すように宣言
     result_times.each do |result_time|
       @result_times_hash.store(result_time.block, result_time.own_time_id)
     end
