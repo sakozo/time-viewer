@@ -36,12 +36,17 @@ class UsersController < ApplicationController
     #gon.wheather_api_key = ENV['OPEN_WEATHER_API_KEY']
 
     # 日付とown_timeのセット
+    # params[:format]で日付が渡ってきている場合はその日付を表示
     params_date = params[:format]
     if params_date == nil
       @date = Date.today
     else
       @date = params_date
     end
+
+    # DBに登録済みのResultTimeを取得する
+    @result_times = ResultTime.where( user_id: current_user.id ).where( record_date: @date )
+    gon.result_times = @result_times
 
   end
 
