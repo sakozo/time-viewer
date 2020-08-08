@@ -45,8 +45,15 @@ class UsersController < ApplicationController
     end
 
     # DBに登録済みのResultTimeを取得する
-    @result_times = ResultTime.where( user_id: current_user.id ).where( record_date: @date )
-    gon.result_times = @result_times
+    # ハッシュに詰める hashなので重複は上書きされて最新の値がセットされるはず
+    result_times = ResultTime.where( user_id: current_user.id ).where( record_date: @date )
+    @result_times_hash = {}
+    result_times.each do |result_time|
+      @result_times_hash.store(result_time.block, result_time.own_time_id)
+    end
+
+    #TODO:JSにどうやって渡そう?
+    gon.result_times = @result_times_hash
 
   end
 
