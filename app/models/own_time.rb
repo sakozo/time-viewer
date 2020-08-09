@@ -4,5 +4,5 @@ class OwnTime < ApplicationRecord
       # t.integer :type,         null: false                    # 時間マトリックスの領域
       # t.shareFlg :integer      null: false                    # 共有設定（共有 or プライベート） 
       # t.publicLevel :integer     null: false                  # 公開範囲（プライベートのみ設定可能）
-
+      has_one :result_time
 end
