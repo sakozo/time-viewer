@@ -157,11 +157,6 @@
 </head>
 <body>
 
-
-<% @result_times_hash.each do |result_time| %>
-  <%= result_time%>
-<% end %>
-
 <div id = "day-show"></div>
 <%= @date %>
 <body>
@@ -270,6 +265,8 @@
 <br>
 <button id = "reset">リセット</button>
 
+<button id = "grey">睡眠</button>
+
 <button id = "red">赤</button>
 
 <button id = "blue">青</button>
@@ -278,16 +275,9 @@
 
 <button id = "yellow">黄</button>
 
-<button id = "grey">睡眠</button>
-
 <div class="input_area">
 
  <%= form_with model: @own_time do |form|  %>
-    <%
-=begin%>
- <%= form.collection_select :origin_id, @all_select_time, :id, :name, {prompt: ""}, {class: ""}%> 
-<%
-=end%>
     <%= form.collection_select :select_time_0, @all_select_time, :id, :name %>
     <%= form.collection_select :select_time_1, @select_time1, :id, :name %>
     <%= form.collection_select :select_time_2, @select_time2, :id, :name %>
