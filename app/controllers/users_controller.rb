@@ -48,12 +48,16 @@ class UsersController < ApplicationController
     # ハッシュに詰める hashなので重複は上書きされて最新の値がセットされるはず
     result_times = ResultTime.where( user_id: current_user.id ).where( record_date: @date )
     @result_times_hash = Hash.new { "" } #存在しないキーを指定した場合にから文字を返すように宣言
+    result_times_type_hash = {} # JSに渡す用のblock_idとtype_idのハッシュ
+
+    # テキストボックスにセットする用の@result_times_hash、ブロックに色をつける用のresult_times_type_hash
     result_times.each do |result_time|
       @result_times_hash.store(result_time.block, result_time.own_time_id)
+      result_times_type_hash.store(result_time.block, result_time.own_time.time_type)
     end
 
-    #TODO:JSにどうやって渡そう?
-    gon.result_times = @result_times_hash
+    #hashの形でJSに渡す
+    gon.result_times_type = result_times_type_hash
 
   end
 
