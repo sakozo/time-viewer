@@ -5,9 +5,8 @@
 =end%>
 <head>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
-
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <style>
   #feedback { font-size: 1em; }
   /* #selectable .ui-selecting { background: #FECA40; } */
@@ -16,6 +15,13 @@
   #selectable li { margin: 0px; padding: 0.1em; font-size: 0.6em; font-weight: bold; height: 150px; width: 15%; text-align: center; writing-mode: vertical-rl; cursor: default;}
   /* .ui-widget-content { height: 0.1px} */
   </style>
+
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+    $( "#datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+  } );
+  </script>
   <script>
     //色の定義
     var setColor = function(type){
@@ -154,8 +160,23 @@
     }, gon.result_times_type);
   });
   </script>
+  <script>
+  // datepickerのテキストボックスで変更があった場合に
+  $(function() {
+    $('#datepicker').change(function() {
+      let date_val = $('#datepicker').val();
+      let link = '/users/' + gon.user_id + '.' + date_val;
+      $('#date_link').attr('href', link);
+    });
+  })
+  </script>
 </head>
 <body>
+
+Date:<input type='text' id='datepicker' autocomplete="off" />
+<a id='date_link' href=''>
+  <button id = "" , class: "btn btn-primary">Go</button>
+</a>
 
 <div id = "day-show"></div>
 <%= @date %>

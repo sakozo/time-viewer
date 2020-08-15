@@ -60,4 +60,7 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
+
+  config.reload_classes_only_on_change = false
+
 end
