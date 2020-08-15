@@ -59,6 +59,8 @@ class UsersController < ApplicationController
     #hashの形でJSに渡す
     gon.result_times_type = result_times_type_hash
 
+    gon.user_id = current_user.id
+
   end
 
   def update
@@ -68,12 +70,6 @@ class UsersController < ApplicationController
     else
       render new_user_path
     end
-  end
-
-  def date
-    # 表示する日付をparamsから取得する
-    show_date = params[:format]
-
   end
 
   private
