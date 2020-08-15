@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :users #do
-  #   member do
-  #     get :date
-  #   end
-  # end
+    # member do
+    #   post :date
+    # end
+  #end
   resources :own_times, only: [:create]
   resources :result_times, only: [:create]
   resources :projects, only: [:create, :update]
