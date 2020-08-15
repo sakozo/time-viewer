@@ -160,11 +160,23 @@
     }, gon.result_times_type);
   });
   </script>
+  <script>
+  // datepickerのテキストボックスで変更があった場合に
+  $(function() {
+    $('#datepicker').change(function() {
+      let date_val = $('#datepicker').val();
+      let link = '/users/' + gon.user_id + '.' + date_val;
+      $('#date_link').attr('href', link);
+    });
+  })
+  </script>
 </head>
 <body>
 
-<p>Date: <input type="text" id="datepicker"></p>
-
+Date:<input type='text' id='datepicker' autocomplete="off" />
+<a id='date_link' href=''>
+  <button id = "" , class: "btn btn-primary">Go</button>
+</a>
 
 <div id = "day-show"></div>
 <%= @date %>
