@@ -1,2 +1,0 @@
-class UserColor < ApplicationRecord
-end
