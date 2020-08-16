@@ -172,7 +172,7 @@
   </script>
 </head>
 <body>
-
+<p> <%= @user.name %>さん </p>
 Date:<input type='text' id='datepicker' autocomplete="off" />
 <a id='date_link' href=''>
   <button id = "" , class: "btn btn-primary">Go</button>
@@ -299,23 +299,12 @@ Date:<input type='text' id='datepicker' autocomplete="off" />
 <div class="input_area">
 
  <%= form_with model: @own_time do |form|  %>
-    <%= form.collection_select :select_time_0, @all_select_time, :id, :name %>
-    <%= form.collection_select :select_time_1, @select_time1, :id, :name %>
-    <%= form.collection_select :select_time_2, @select_time2, :id, :name %>
-    <%= form.collection_select :select_time_3, @select_time3, :id, :name %>
-    <%= form.collection_select :select_time_4, @select_time4, :id, :name %>
-
-    <div class="">
-      <%= form.text_field :name, placeholder: "name" %>
-      <%= form.text_field :time_type, placeholder: "type" %>
-      <%= form.text_field :shareFlg, placeholder: "shareFlg" %>
-      <%= form.text_field :publicLevel, placeholder: "publicLevel" %>
-    </div>
-
-    <div >
-      <%= form.submit "登録する", class: "submit_button"%>
-    </div>
-  <% end %>
+  <%= form.collection_select :select_time_0, @all_select_time, :id, :name %>
+  <%= form.collection_select :select_time_1, @select_time1, :id, :name %>
+  <%= form.collection_select :select_time_2, @select_time2, :id, :name %>
+  <%= form.collection_select :select_time_3, @select_time3, :id, :name %>
+  <%= form.collection_select :select_time_4, @select_time4, :id, :name %>
+<% end %>
 
   <%= link_to user_path(current_user.id, @date.to_date-1) do %>
     <button id = "previous" , class: "btn btn-primary"><</button>
@@ -430,17 +419,6 @@ Date:<input type='text' id='datepicker' autocomplete="off" />
     </div>
   <% end %>
 
-
-  <%= form_with model: @project do |form|  %>
-    <div class="">
-      <%= form.text_field :name, placeholder: "name"%>
-      <%= form.text_field :limit_date, placeholder: "limit_date" %>
-    </div>
-
-    <div >
-      <%= form.submit "登録する", class: "submit_button"%>
-    </div>
-  <% end %>
 </div>
 
 <% if @user.icon.attached? %>
@@ -448,23 +426,12 @@ Date:<input type='text' id='datepicker' autocomplete="off" />
 <% else %>
   <%= image_tag "icon/icon.jpg", height: 100, width: 100 %>
 <% end %>
-
-<%= form_with model: @user do |form|  %>
-  <div class="">
-    <%= form.file_field :icon %>
-  </div>
-
-  <div >
-    <%= form.submit "登録する", class: "btn btn-primary"%>
-  </div>
-<% end %>
-
-<%= current_user.name %>
+<br>
 <% if current_user.projects.exists? %>
   <% current_user.projects.each do |project| %>
     <% if project.done_flg == 0 %>
       <%= project.name %>
-      <%= project.limit_date %>
+      目標日：<%= project.limit_date %>
       <p>残り日数<%= (project.limit_date.to_date - Date.today).round %>日</p>
       <%= form_with model: project do |form| %>
         <%= form.text_field :id, placeholder: "id", value: project.id %>
@@ -473,7 +440,6 @@ Date:<input type='text' id='datepicker' autocomplete="off" />
     <% end %>
   <% end %>
 <% end %>
-
 
 <%= link_to settings_path do %>
   <button id = "" , class: "btn btn-primary">設定画面へ</button>

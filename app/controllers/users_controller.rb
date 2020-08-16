@@ -7,7 +7,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @own_time = OwnTime.new
     @result_time = ResultTime.new
-    @project = Project.new
 
     # own_timeの選択肢を設定
     @all_select_time = OwnTime.all
