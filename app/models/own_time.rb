@@ -1,8 +1,24 @@
+# == Schema Information
+#
+# Table name: own_times
+#
+#  id          :bigint           not null, primary key
+#  name        :string(255)      not null
+#  publicLevel :integer          not null
+#  shareFlg    :integer          not null
+#  time_type   :integer          not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  user_id     :bigint           not null
+#
+# Indexes
+#
+#  index_own_times_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 class OwnTime < ApplicationRecord
-  # t.string :name,          null: false                    # 何をする時間か
-  # t.references :user,      null: false, foreign_key: true # 作成者
-  # t.integer :type,         null: false                    # 時間マトリックスの領域
-  # t.shareFlg :integer      null: false                    # 共有設定（0:共有 or 1:プライベート）
-  # t.publicLevel :integer     null: false                  # 公開範囲（プライベートのみ設定可能）1:公開しない
   has_one :result_time
 end
