@@ -434,7 +434,7 @@ Date:<input type='text' id='datepicker' autocomplete="off" />
       目標日：<%= project.limit_date %>
       <p>残り日数<%= (project.limit_date.to_date - Date.today).round %>日</p>
       <%= form_with model: project do |form| %>
-        <%= form.text_field :id, placeholder: "id", value: project.id %>
+        <%= form.hidden_field :id, placeholder: "id", value: project.id %>
         <%= form.submit "完了", class: "submit_button"%>
       <% end %>
     <% end %>
