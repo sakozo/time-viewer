@@ -45,7 +45,7 @@ class UsersController < ApplicationController
 
     # DBに登録済みのResultTimeを取得する
     # ハッシュに詰める hashなので重複は上書きされて最新の値がセットされるはず
-    result_times = ResultTime.where( user_id: current_user.id ).where( record_date: @date )
+    result_times = ResultTime.where( user_id: current_user.id ).where( record_date: @date ).includes([:own_time])
     @result_times_hash = Hash.new { "" } #存在しないキーを指定した場合にから文字を返すように宣言
     result_times_type_hash = {} # JSに渡す用のblock_idとtype_idのハッシュ
 
