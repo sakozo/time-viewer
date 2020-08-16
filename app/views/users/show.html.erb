@@ -25,7 +25,9 @@
   <script>
     //色の定義
     var setColor = function(type){
-      var draw_color = [ 'gray', 'red', 'blue', 'green', 'yellow' ][type];
+      //TODO:gonでユーザー設定の色を配列で取得する
+      const user_color_array = gon.user_color_array
+      let draw_color = user_color_array[type];
       return draw_color;
     }
     var setId = function(id){

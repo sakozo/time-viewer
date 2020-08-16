@@ -97,6 +97,33 @@ $( function() {
 <br><br><br>
 <!--own_timeの追加ここまで-->
 
+<!--色の設定ここから-->
+<%= form_with model: @user_color do |form|  %>
+  <div>
+  <%= form.color_field :color1, value: @initial_value1 %> 
+    <label for="head">必須</label>
+  </div>
+
+  <div>
+  <%= form.color_field :color2, value: @initial_value2 %> 
+    <label for="head">価値</label>
+  </div>
+
+  <div>
+  <%= form.color_field :color3, value: @initial_value3 %> 
+    <label for="head">錯覚</label>
+  </div>
+
+  <div>
+  <%= form.color_field :color4, value: @initial_value4%> 
+    <label for="head">無駄</label>
+  </div>
+
+  <div >
+    <%= form.submit "登録する", class: "submit_button"%>
+  </div>
+<% end %>
+<!--色の設定ここまで-->
 
 
 <%= link_to user_path(current_user.id) do %>
