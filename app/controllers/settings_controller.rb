@@ -21,10 +21,10 @@ class SettingsController < ApplicationController
     else
       # 未登録の場合はデフォルト初期値をViewに渡す
       @user_color = UserColor.new
-      @initial_value1 = "#ff0000"
-      @initial_value2 = "#0000ff"
-      @initial_value3 = "#00ff00"
-      @initial_value4 = "#ffff00"
+      @initial_value1 = '#ff0000'
+      @initial_value2 = '#0000ff'
+      @initial_value3 = '#00ff00'
+      @initial_value4 = '#ffff00'
     end
     # colorここまで
   end

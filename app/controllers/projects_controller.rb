@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
     if project.save
       redirect_to user_path(current_user.id)
     else
-      # TODO:処理
+      # TODO: 処理
     end
   end
 
@@ -16,11 +16,12 @@ class ProjectsController < ApplicationController
     if project.update(done_flg: 1, done_date: today)
       redirect_to user_path(current_user.id)
     else
-      # TODO:処理
+      # TODO: 処理
     end
   end
 
   private
+
   def project_params
     params.require(:project).permit(:name, :limit_date).merge(user_id: current_user.id)
   end
