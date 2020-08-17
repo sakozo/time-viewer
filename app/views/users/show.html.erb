@@ -33,6 +33,43 @@
       //$( ".ui-selected", this ).addClass(time_id);
     }
   </script>
+
+  <script>
+  $( function() {
+    showInputTime();
+  } );
+  </script>
+
+  <script>
+  function showInputTime() {
+    //inputフォームに入力されたown_time_idをカウントする
+    var time_array = Array(gon.own_time_count); //配列の長さを確定(idの数だけ確保)
+    time_array.fill(0); //0で初期化
+    $("[id^=block_]").each(function(index, element){
+      console.log($(element).val());
+      var time_id = $(element).val();
+      time_array[time_id] += 1; //idと一致する要素のカウントを+1
+    })
+    console.log("結果:" +  time_array) //結果を表示する
+    $('#time-show').empty();
+    $.each(time_array,function(index,val){
+      //0番目はから文字のためスキップ
+      if(index == 0){
+        return;
+      }
+      //0なら次のループへ
+      if(val == 0){
+        return;
+      }
+      //15分ブロックの数から時間に変換
+      var hour = Math.floor(val / 4);
+      var minutes = (val % 4 == 0) ? "00" : val % 4 * 15; //参考演算子 0なら"00"とする
+      var show_time = hour + ":" + minutes;
+      console.log(show_time);
+      $('#time-show').append(gon.own_time_list[index] + ":" + show_time + " ")
+    });
+  }
+  </script>
   <script>
   var color = 0;
   var own_time_id = 1;
@@ -62,31 +99,8 @@
           $( block_id ).val(time_id);
         });
 
-        //TODO:同じ要領でown_timeのnameごとに時間を表示
-        //
-        //inputフォームに入力されたown_time_idをカウントする
-        var time_array = Array(gon.own_time_count); //配列の長さを確定(idの数だけ確保)
-        time_array.fill(0); //0で初期化
-        $("[id^=block_]").each(function(index, element){
-          console.log($(element).val());
-          var time_id = $(element).val();
-          time_array[time_id] += 1; //idと一致する要素のカウントを+1
-        })
-        console.log("結果:" +  time_array) //結果を表示する
-        $('#time-show').empty();
-        $.each(time_array,function(index,val){
-          //0なら次のループへ
-          if(val == 0){
-            //continue;
-            return;
-          }
-          //15分ブロックの数から時間に変換
-          var hour = Math.floor(val / 4);
-          var minutes = (val % 4 == 0) ? "00" : val % 4 * 15; //参考演算子 0なら"00"とする
-          var show_time = hour + ":" + minutes;
-          console.log(show_time);
-          $('#time-show').append(gon.own_time_list[index] + ":" + show_time + " ")
-        });
+        //own_timeのnameごとに時間を表示
+        showInputTime();
       }
     });
 
