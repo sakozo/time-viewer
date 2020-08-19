@@ -12,7 +12,12 @@
   #selectable li { margin: 0px; padding: 0.1em; font-size: 0.6em; font-weight: bold; height: 150px; width: 15%; text-align: center; writing-mode: vertical-rl; cursor: default;}
   /* .ui-widget-content { height: 0.1px} */
   </style>
-
+  <script>
+  var color = 0;
+  let own_time_id = 1;
+  const result_times = gon.result_times;
+  const own_time_list = gon.own_time_list;
+  </script>
   <script>
   $( function() {
     $( "#datepicker" ).datepicker();
@@ -33,7 +38,14 @@
       //$( ".ui-selected", this ).addClass(time_id);
     }
   </script>
-
+  <script>
+  function setToolTip(block_selector, time_id) {
+    console.log("title" + $( block_selector ).attr('title') )
+    let new_title = $( block_selector ).attr('title').split(' ')[0];
+    new_title += " " + own_time_list[time_id];
+    $( block_selector ).attr('title', new_title);
+  }
+  </script>
   <script>
   $( function() {
     showInputTime();
@@ -43,14 +55,12 @@
   <script>
   function showInputTime() {
     //inputフォームに入力されたown_time_idをカウントする
-    var time_array = Array(gon.own_time_count); //配列の長さを確定(idの数だけ確保)
+    let time_array = Array(gon.own_time_count); //配列の長さを確定(idの数だけ確保)
     time_array.fill(0); //0で初期化
     $("[id^=block_]").each(function(index, element){
-      console.log($(element).val());
       var time_id = $(element).val();
       time_array[time_id] += 1; //idと一致する要素のカウントを+1
     })
-    console.log("結果:" +  time_array) //結果を表示する
     $('#time-show').empty();
     $.each(time_array,function(index,val){
       //0番目はから文字のためスキップ
@@ -65,15 +75,11 @@
       var hour = Math.floor(val / 4);
       var minutes = (val % 4 == 0) ? "00" : val % 4 * 15; //参考演算子 0なら"00"とする
       var show_time = hour + ":" + minutes;
-      console.log(show_time);
       $('#time-show').append(gon.own_time_list[index] + ":" + show_time + " ")
     });
   }
   </script>
   <script>
-  var color = 0;
-  var own_time_id = 1;
-
   $(function() {
     $( "#selectable" ).selectable({
       stop: function() {
@@ -97,12 +103,15 @@
           var class_name = $( ".ui-selected" ).attr('class');
           var time_id = class_name.match(/\btime_\S+/g).toString().substr(-1);
           $( block_id ).val(time_id);
-        });
 
-        //own_timeのnameごとに時間を表示
-        showInputTime();
+          //own_timeのnameごとに時間を表示
+          showInputTime();
+          var block_li_id = "#block_li_" + index
+          console.log(block_li_id)
+          setToolTip( block_li_id, own_time_id );
+        });
       }
-    });
+      });
 
     $('#reset').on("click", function(){
       $( ".ui-selectee").css('background-color','#fff');
@@ -158,19 +167,22 @@
       },
     });
   });
-  </script>
-  <script>
+
   $(function() {
     //gon.result_times_type
     Object.keys(gon.result_times_type).forEach(function(key) {
       var val = this[key]; // this は gon.result_times_type
-      console.log(key, val);
 
       var selector = "#block_li_" + key;
-      console.log(selector);
       $( selector ).css('background-color',setColor(val));
 
     }, gon.result_times_type);
+
+    Object.keys(gon.result_times).forEach(function(key) {
+      let val = this[key]; // this は gon.result_times
+      let selector = "#block_li_" + key;
+      setToolTip( selector, val);
+    }, gon.result_times);
   });
   </script>
   <script>

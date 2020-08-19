@@ -55,7 +55,7 @@ class UsersController < ApplicationController
 
     # hashの形でJSに渡す
     gon.result_times_type = result_times_type_hash
-
+    gon.result_times = @result_times_hash
     gon.user_id = current_user.id
 
     # colorここから
