@@ -104,11 +104,14 @@
           var time_id = class_name.match(/\btime_\S+/g).toString().substr(-1);
           $( block_id ).val(time_id);
 
-          //own_timeのnameごとに時間を表示
-          showInputTime();
+          //tooltipにown_timeを追加
           var block_li_id = "#block_li_" + index
           console.log(block_li_id)
           setToolTip( block_li_id, own_time_id );
+
+          //own_timeのnameごとに時間を表示
+          showInputTime();
+
         });
       }
       });
