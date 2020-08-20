@@ -103,8 +103,7 @@
           result.append( " #" + ( index + 1 ) );
           var block_id = "#block_" + index;
           var class_name = $( ".ui-selected" ).attr('class');
-          var time_id = class_name.match(/\btime_\S+/g).toString().substr(-1);
-          $( block_id ).val(time_id);
+          $( block_id ).val(own_time_id);
 
           //tooltipにown_timeを追加
           var block_li_id = "#block_li_" + index
