@@ -4,9 +4,6 @@
 <%
 =end%>
 <head>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <style>
   #feedback { font-size: 1em; }
   /* #selectable .ui-selecting { background: #FECA40; } */
@@ -15,7 +12,14 @@
   #selectable li { margin: 0px; padding: 0.1em; font-size: 0.6em; font-weight: bold; height: 150px; width: 15%; text-align: center; writing-mode: vertical-rl; cursor: default;}
   /* .ui-widget-content { height: 0.1px} */
   </style>
+  <script>
+  var color = 0;
+  let own_time_id = 1;
+  const result_times = gon.result_times;
+  const own_time_list = gon.own_time_list;
+  const block_li_id_list = [ "5:00", "5:15", "5:30", "5:45", "6:00", "6:15", "6:30", "6:45", "7:00", "7:15", "7:30", "7:45", "8:00", "8:15", "8:30", "8:45", "9:00", "9:15", "9:30", "9:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45", "16:00", "16:15", "16:30", "16:45", "17:00", "17:15", "17:30", "17:45", "18:00", "18:15", "18:30", "18:45", "19:00", "19:15", "19:30", "19:45", "20:00", "20:15", "20:30", "20:45", "21:00", "21:15", "21:30", "21:45", "22:00", "22:15", "22:30", "22:45", "23:00", "23:15", "23:30", "23:45", "24:00", "24:15", "24:30", "24:45", "1:00", "1:15", "1:30", "1:45", "2:00", "2:15", "2:30", "2:45", "3:00", "3:15", "3:30", "3:45", "4:00", "4:15", "4:30", "4:45"];
 
+  </script>
   <script>
   $( function() {
     $( "#datepicker" ).datepicker();
@@ -37,9 +41,47 @@
     }
   </script>
   <script>
-  var color = 0;
-  var own_time_id = 1;
+  //tooltipに入力したown_timeのnameを追加するメソッド
+  function setToolTip(block_selector, time_id) {
+    let index = Number(block_selector.slice(10))
+    let new_title = block_li_id_list[index] + " " + own_time_list[time_id];
+    $( block_selector ).attr('title', new_title);
+  }
+  </script>
+  <script>
+  $( function() {
+    showInputTime();
+  } );
+  </script>
 
+  <script>
+  function showInputTime() {
+    //inputフォームに入力されたown_time_idをカウントする
+    let time_array = Array(gon.own_time_count); //配列の長さを確定(idの数だけ確保)
+    time_array.fill(0); //0で初期化
+    $("[id^=block_]").each(function(index, element){
+      var time_id = $(element).val();
+      time_array[time_id] += 1; //idと一致する要素のカウントを+1
+    })
+    $('#time-show').empty();
+    $.each(time_array,function(index,val){
+      //0番目はから文字のためスキップ
+      if(index == 0){
+        return;
+      }
+      //0なら次のループへ
+      if(val == 0){
+        return;
+      }
+      //15分ブロックの数から時間に変換
+      var hour = Math.floor(val / 4);
+      var minutes = (val % 4 == 0) ? "00" : val % 4 * 15; //参考演算子 0なら"00"とする
+      var show_time = hour + ":" + minutes;
+      $('#time-show').append(gon.own_time_list[index] + ":" + show_time + " ")
+    });
+  }
+  </script>
+  <script>
   $(function() {
     $( "#selectable" ).selectable({
       stop: function() {
@@ -61,37 +103,18 @@
           result.append( " #" + ( index + 1 ) );
           var block_id = "#block_" + index;
           var class_name = $( ".ui-selected" ).attr('class');
-          var time_id = class_name.match(/\btime_\S+/g).toString().substr(-1);
-          $( block_id ).val(time_id);
-        });
+          $( block_id ).val(own_time_id);
 
-        //TODO:同じ要領でown_timeのnameごとに時間を表示
-        //
-        //inputフォームに入力されたown_time_idをカウントする
-        var time_array = Array(gon.own_time_count); //配列の長さを確定(idの数だけ確保)
-        time_array.fill(0); //0で初期化
-        $("[id^=block_]").each(function(index, element){
-          console.log($(element).val());
-          var time_id = $(element).val();
-          time_array[time_id] += 1; //idと一致する要素のカウントを+1
-        })
-        console.log("結果:" +  time_array) //結果を表示する
-        $('#time-show').empty();
-        $.each(time_array,function(index,val){
-          //0なら次のループへ
-          if(val == 0){
-            //continue;
-            return;
-          }
-          //15分ブロックの数から時間に変換
-          var hour = Math.floor(val / 4);
-          var minutes = (val % 4 == 0) ? "00" : val % 4 * 15; //参考演算子 0なら"00"とする
-          var show_time = hour + ":" + minutes;
-          console.log(show_time);
-          $('#time-show').append(gon.own_time_list[index] + ":" + show_time + " ")
+          //tooltipにown_timeを追加
+          var block_li_id = "#block_li_" + index
+          setToolTip( block_li_id, own_time_id );
+
+          //own_timeのnameごとに時間を表示
+          showInputTime();
+
         });
       }
-    });
+      });
 
     $('#reset').on("click", function(){
       $( ".ui-selectee").css('background-color','#fff');
@@ -147,19 +170,22 @@
       },
     });
   });
-  </script>
-  <script>
+
   $(function() {
     //gon.result_times_type
     Object.keys(gon.result_times_type).forEach(function(key) {
       var val = this[key]; // this は gon.result_times_type
-      console.log(key, val);
 
       var selector = "#block_li_" + key;
-      console.log(selector);
       $( selector ).css('background-color',setColor(val));
 
     }, gon.result_times_type);
+
+    Object.keys(gon.result_times).forEach(function(key) {
+      let val = this[key]; // this は gon.result_times
+      let selector = "#block_li_" + key;
+      setToolTip( selector, val);
+    }, gon.result_times);
   });
   </script>
   <script>
@@ -290,13 +316,13 @@ Date:<input type='text' id='datepicker' autocomplete="off" />
 
 <button id = "grey">睡眠</button>
 
-<button id = "red">赤</button>
+<button id = "red">必須</button>
 
-<button id = "blue">青</button>
+<button id = "blue">価値</button>
 
-<button id = "green">緑</button>
+<button id = "green">錯覚</button>
 
-<button id = "yellow">黄</button>
+<button id = "yellow">無駄</button>
 
 <div class="input_area">
 
