@@ -1,5 +1,7 @@
 {
   "name": "time-viewer",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "chart.js": "^2.7.1"
+  }
 }
