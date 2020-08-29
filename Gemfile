@@ -75,3 +75,5 @@ gem 'bootstrap-sass', '>= 3.4.1'
 gem 'sass-rails', '~>5.0'
 
 gem 'gon'
+
+gem 'chart-js-rails', '~> 0.1.4'

@@ -1,0 +1,24 @@
+<%= link_to user_path do %>
+  <button id = "" , class: "btn btn-primary">戻る</button>
+<% end %>
+<canvas id="myChart"></canvas>
+<script>
+var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+  type: 'radar',
+  data: {
+    labels: ["Japanese", "Mathematics", "English", "Social studies", "Science"],
+    datasets: [{
+      label: 'A_kun',
+      backgroundColor: "rgba(0,0,80,0.4)",
+      borderColor: "rgba(0,0,80,1)",
+      data: [80, 90, 60, 70, 100, 70]
+    }, {
+      label: 'B_kun',
+      backgroundColor: "rgba(0,255,0,0.4)",
+      borderColor: "rgba(0,255,0,1)",
+      data: [90, 75, 80, 65, 80, 70]
+    }]
+  }
+});
+</script>
