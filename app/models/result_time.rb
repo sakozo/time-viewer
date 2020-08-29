@@ -26,4 +26,5 @@ class ResultTime < ApplicationRecord
   # t.integer :block,        null: false # ブロックid  ブロック1(5:00) ブロック2(5:15)...
 
   belongs_to :own_time
+  belongs_to :user
 end
