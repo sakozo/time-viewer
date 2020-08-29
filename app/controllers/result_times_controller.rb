@@ -1,5 +1,8 @@
 class ResultTimesController < ApplicationController
   def create
+    # 同じ日付が以前に入力されていた場合は先に削除しておく
+    User.find(current_user.id).result_time.where(record_date: record_date).destroy_all
+
     error_flg = false # エラーフラグ ループで保存する中で1つでもエラーがあると trueになる
 
     # 96ブロック分のループを回す 1週ごとに1レコード保存
@@ -24,9 +27,14 @@ class ResultTimesController < ApplicationController
 
   private
 
-  # record_dateを取得
+  # 入力を取得
   def result_time_params
     params.require(:result_time).permit(:record_date).merge(user_id: current_user.id)
+  end
+
+  # record_dateを取得
+  def record_date
+    params.require(:result_time).permit(:record_date)[:record_date]
   end
 
   # 96ブロックのidと入力されたown_time_idを取得
