@@ -469,15 +469,6 @@ Date:<input type='text' id='datepicker' autocomplete="off" />
   <% end %>
 <% end %>
 
-<%= link_to settings_path do %>
-  <button id = "" , class: "btn btn-primary">設定画面へ</button>
-<% end %>
-
-<%= link_to chart_path do %>
-  <button id = "" , class: "btn btn-primary">グラフ画面</button>
-<% end %>
-
-
 <%= form_with model: @diary do |form|  %>
   <%= form.text_field :record_date, value: @date, placeholder: "record_date" %>
   <%= form.text_field :diary, placeholder: "日記", autocomplete: "off"%>
@@ -486,4 +477,14 @@ Date:<input type='text' id='datepicker' autocomplete="off" />
 
 <% @today_diaries.each do |today_diary| %>
   <%= today_diary.diary %>
+<% end %>
+
+<br><br><br>
+
+<%= link_to settings_path do %>
+  <button id = "" , class: "btn btn-primary">設定画面へ</button>
+<% end %>
+
+<%= link_to chart_path do %>
+  <button id = "" , class: "btn btn-primary">グラフ画面</button>
 <% end %>
