@@ -28,4 +28,5 @@ class User < ApplicationRecord
   has_many :projects
   has_one_attached :icon
   has_many :result_time, dependent: :destroy
+  has_many :diaries
 end

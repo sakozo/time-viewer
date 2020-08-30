@@ -2,9 +2,21 @@ class UsersController < ApplicationController
   def index; end
 
   def show
+    # 日付とown_timeのセット
+    # params[:format]で日付が渡ってきている場合はその日付を表示
+    params_date = params[:format]
+    @date = if params_date.nil?
+              Date.today
+            else
+              params_date
+            end
+
     @user = User.find(params[:id])
     @own_time = OwnTime.new
     @result_time = ResultTime.new
+
+    # Diary.find_by(record_date: @date).nil? ? @diary = Diary.new : @diary = Diary.find_by(record_date: @date)
+    @diary = Diary.new
 
     # own_timeの選択肢を設定
     @all_select_time = OwnTime.all
@@ -32,14 +44,6 @@ class UsersController < ApplicationController
     # 環境変数をJSに渡す
     # gon.wheather_api_key = ENV['OPEN_WEATHER_API_KEY']
 
-    # 日付とown_timeのセット
-    # params[:format]で日付が渡ってきている場合はその日付を表示
-    params_date = params[:format]
-    @date = if params_date.nil?
-              Date.today
-            else
-              params_date
-            end
 
     # DBに登録済みのResultTimeを取得する
     # ハッシュに詰める hashなので重複は上書きされて最新の値がセットされるはず
@@ -79,6 +83,9 @@ class UsersController < ApplicationController
     # 睡眠時間のグレーを先頭に追加してgonでJSに渡す
     gon.user_color_array = colors.unshift('grey')
     # colorここまで
+
+    # 日記の取り出し（同じユーザーかつ同じ日付）
+    @today_diaries = Diary.where(user_id: current_user.id).where(record_date: @date)
   end
 
   def update

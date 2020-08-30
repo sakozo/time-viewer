@@ -51,6 +51,8 @@ GEM
       io-like (~> 0.3.0)
     arel (9.0.0)
     ast (2.4.1)
+    attr_encrypted (3.1.0)
+      encryptor (~> 3.0.0)
     autoprefixer-rails (9.8.4)
       execjs
     bcrypt (3.1.13)
@@ -102,6 +104,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    encryptor (3.0.0)
     erubi (1.9.0)
     execjs (2.7.0)
     ffi (1.13.1)
@@ -266,6 +269,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  attr_encrypted
   better_errors
   binding_of_caller
   bootsnap (>= 1.1.0)
