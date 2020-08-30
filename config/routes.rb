@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   resources :settings, only: [:index]
   resources :user_colors, only: %i[create update]
   resources :charts, only: [:show]
+  resources :diaries, only: [:create, :edit]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

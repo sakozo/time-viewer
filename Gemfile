@@ -77,3 +77,5 @@ gem 'sass-rails', '~>5.0'
 gem 'gon'
 
 gem 'chart-js-rails', '~> 0.1.4'
+
+gem "attr_encrypted"
