@@ -1,9 +1,17 @@
+<script>
+$( function() {
+  $( "#datepicker" ).datepicker();
+  $( "#datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+} );
+</script>
+
 <%= link_to user_path(current_user.id) do %>
   <button id = "" , class: "btn btn-primary">入力画面に戻る</button>
 <% end %>
 
 <%= form_with url: chart_path, method: 'get', local: true do |form|  %>
   <%= form.collection_select :select_time_0, @all_select_time, :id, :name %>
+  <%= form.text_field :date, placeholder: "1週間前から入力日まで", id: :datepicker, autocomplete: "off"%>
   <%= form.submit "完了", class: "submit_button"%>
 <% end %>
 
