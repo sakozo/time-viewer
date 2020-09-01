@@ -347,7 +347,7 @@
 
 
 <div class="input_area">
-  <%= form_with model: @result_time do |form|  %>
+  <%= form_with model: @result_time, local: true do |form|  %>
     <div class="">
       <%= form.hidden_field :record_date, value: @date, placeholder: "record_date" , id: :record_date %>
       <%= form.hidden_field :blocks, name: "block[][0]" , value: @result_times_hash[0] , id: :block_0 %>
@@ -456,9 +456,10 @@
 
 <br>
 
-<%= form_with model: @diary do |form|  %>
-  <%= form.text_field :record_date, value: @date, placeholder: "record_date" %>
-  <%= form.text_field :diary, placeholder: "日記", autocomplete: "off"%>
+日記の入力
+<%= form_with model: @diary, local: true do |form|  %>
+  <%= form.hidden_field :record_date, value: @date, placeholder: "record_date" %>
+  <%= form.text_area :diary, placeholder: "日記", autocomplete: "off"%>
   <%= form.submit "登録する", class: "submit_button"%>
 <% end %>
 
