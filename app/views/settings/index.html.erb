@@ -36,7 +36,7 @@ $( function() {
 <!--プロジェクトここから-->
 <!--TODO:プロジェクトの追加はshow画面からモーダル表示などで行うべきか検討-->
 <p>プロジェクトの作成</p>
-<%= form_with model: @project do |form|  %>
+<%= form_with model: @project, local: true do |form|  %>
   <div class="">
     <%= form.text_field :name, placeholder: "name"%>
     <%= form.text_field :limit_date, placeholder: "limit_date", id: :datepicker, autocomplete: "off"%>
@@ -82,7 +82,7 @@ $( function() {
 <div>
 
 
-<%= form_with url: own_times_path do |form|  %>
+<%= form_with url: own_times_path, local: true do |form|  %>
   <div class="">
     <%= form.text_field :name, placeholder: "name" %>
     <%= form.select :time_type, [["必須", 1], ["価値", 2], ["錯覚", 3], ["無駄", 5]], include_blank: "分類を選択して下さい" %>
@@ -98,7 +98,7 @@ $( function() {
 <!--own_timeの追加ここまで-->
 
 <!--色の設定ここから-->
-<%= form_with model: @user_color do |form|  %>
+<%= form_with model: @user_color, local: true do |form|  %>
   <div>
   <%= form.color_field :color1, value: @initial_value1 %> 
     <label for="head">必須</label>
