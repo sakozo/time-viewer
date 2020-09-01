@@ -1,24 +1,87 @@
-<%= link_to user_path do %>
-  <button id = "" , class: "btn btn-primary">戻る</button>
-<% end %>
-<canvas id="myChart"></canvas>
 <script>
-var ctx = document.getElementById("myChart");
-var myChart = new Chart(ctx, {
-  type: 'radar',
-  data: {
-    labels: ["Japanese", "Mathematics", "English", "Social studies", "Science"],
-    datasets: [{
-      label: 'A_kun',
-      backgroundColor: "rgba(0,0,80,0.4)",
-      borderColor: "rgba(0,0,80,1)",
-      data: [80, 90, 60, 70, 100, 70]
-    }, {
-      label: 'B_kun',
-      backgroundColor: "rgba(0,255,0,0.4)",
-      borderColor: "rgba(0,255,0,1)",
-      data: [90, 75, 80, 65, 80, 70]
-    }]
+$( function() {
+  $( "#datepicker" ).datepicker();
+  $( "#datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+} );
+</script>
+
+<%= link_to user_path(current_user.id) do %>
+  <button id = "" , class: "btn btn-primary">入力画面に戻る</button>
+<% end %>
+
+<%= form_with url: chart_path, method: 'get', local: true do |form|  %>
+  <%= form.collection_select :select_time_0, @all_select_time, :id, :name %>
+  <%= form.text_field :date, placeholder: "1週間前から入力日まで", id: :datepicker, autocomplete: "off"%>
+  <%= form.submit "完了", class: "submit_button"%>
+<% end %>
+
+<canvas id="myChart2"></canvas>
+
+<script>
+$( function() {
+  function drawChart() {
+    var ctx = document.getElementById("myChart2");
+    var Bar = new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: gon.label,
+        datasets: [{
+          label: gon.title,
+          backgroundColor: "rgba(0,0,255,0.6)",
+          borderColor: "rgba(0,0,80,1)",
+          data: gon.statistics_select_time_week
+        }]
+      },
+      options: {                                   //◆オプション
+                responsive: true,                  //グラフ自動設定
+                legend: {                          //凡例設定
+                    display: false                 //表示設定
+                },
+                title: {                           //タイトル設定
+                    display: true,                 //表示設定
+                    fontSize: 18,                  //フォントサイズ
+                    text: gon.title                //ラベル
+                },
+                scales: {                          //軸設定
+                    yAxes: [{                      //y軸設定
+                        display: true,             //表示設定
+                        scaleLabel: {              //軸ラベル設定
+                            display: true,          //表示設定
+                            labelString: '時間(h)',  //ラベル
+                            fontSize: 18               //フォントサイズ
+                        },
+                        ticks: {                      //最大値最小値設定
+                            min: 0,                   //最小値
+                            //max: 100,                  //最大値
+                            fontSize: 18,             //フォントサイズ
+                            stepSize: 5               //軸間隔
+                        },
+                    }],
+                    xAxes: [{                         //x軸設定
+                        display: true,                //表示設定
+                        barPercentage: 0.6,           //棒グラフ幅
+                        categoryPercentage: 0.6,      //棒グラフ幅
+                        scaleLabel: {                 //軸ラベル設定
+                            display: true,             //表示設定
+                            labelString: '日付',  //ラベル
+                            fontSize: 18               //フォントサイズ
+                        },
+                        ticks: {
+                            fontSize: 18             //フォントサイズ
+                        },
+                    }],
+                },
+                layout: {                             //レイアウト
+                    padding: {                          //余白設定
+                        left: 100,
+                        right: 50,
+                        top: 0,
+                        bottom: 0
+                    }
+                }
+      }
+    });
   }
+  drawChart();
 });
 </script>

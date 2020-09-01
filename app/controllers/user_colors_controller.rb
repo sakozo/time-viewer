@@ -3,7 +3,6 @@ class UserColorsController < ApplicationController
     user_color = UserColor.new
     user_color.user_id = current_user.id
     user_color.colors = user_color_params
-    binding.pry
 
     if user_color.save
       redirect_to user_path(current_user.id)
