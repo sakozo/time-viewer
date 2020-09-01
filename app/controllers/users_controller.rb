@@ -78,6 +78,7 @@ class UsersController < ApplicationController
       @initial_value2 = '#0000ff'
       @initial_value3 = '#00ff00'
       @initial_value4 = '#ffff00'
+      colors = ['#ff0000', '#0000ff', '#00ff00', '#ffff00']
     end
 
     # 睡眠時間のグレーを先頭に追加してgonでJSに渡す
