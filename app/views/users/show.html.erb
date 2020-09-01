@@ -477,6 +477,10 @@
   <button id = "" , class: "btn btn-primary">グラフ画面</button>
 <% end %>
 
+<%= link_to users_path do %>
+  <button id = "" , class: "btn btn-primary">トップ</button>
+<% end %>
+
 <br><br><br>
 <% if current_user.projects.exists? %>
   <% current_user.projects.each do |project| %>
