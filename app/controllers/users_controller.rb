@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
-  def index; end
+  def index
+    @tweets = Tweet.all.includes(:user)
+  end
 
   def show
     # 日付とown_timeのセット

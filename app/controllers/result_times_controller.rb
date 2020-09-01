@@ -1,5 +1,6 @@
 class ResultTimesController < ApplicationController
   def create
+    # own_timeの入力ここから
     # 同じ日付が以前に入力されていた場合は先に削除しておく
     User.find(current_user.id).result_time.where(record_date: record_date).destroy_all
 
@@ -23,6 +24,13 @@ class ResultTimesController < ApplicationController
     else
       redirect_to user_path(current_user.id)
     end
+    # own_timeの入力ここまで
+
+    # tweetテーブルに登録　ここから
+    unless tweet_params.blank?
+      Tweet.new(tweet_params).save
+    end
+    # tweetテーブルに登録　ここまで
   end
 
   private
@@ -40,5 +48,9 @@ class ResultTimesController < ApplicationController
   # 96ブロックのidと入力されたown_time_idを取得
   def block_params
     params.require(:block)[0]
+  end
+
+  def tweet_params
+    params.permit(:text).merge(user_id: current_user.id, record_date: record_date)
   end
 end

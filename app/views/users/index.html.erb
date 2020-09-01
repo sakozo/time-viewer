@@ -10,3 +10,11 @@
 <%= link_to chart_path(current_user.id) do %>
   <button id = "" , class: "btn btn-primary">グラフ画面</button>
 <% end %>
+
+<br>
+<br>
+
+
+<% @tweets.each do |tweet| %>
+  <%= tweet.user.name %>さんが <%= tweet.record_date %> <%= tweet.text %>の入力を行いました。<%= tweet.created_at %><br>
+<% end %>
