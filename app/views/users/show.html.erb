@@ -12,6 +12,15 @@
   #selectable li { margin: 0px; padding: 0.1em; font-size: 0.6em; font-weight: bold; height: 150px; width: 15%; text-align: center; writing-mode: vertical-rl; cursor: default;}
   /* .ui-widget-content { height: 0.1px} */
   </style>
+  <style>
+  li {
+    cursor: pointer;
+    -webkit-user-select: none;
+      -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+  }
+  </style>
   <script>
   var color = 0;
   var own_time_id = 1;
