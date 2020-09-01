@@ -1,1 +1,12 @@
-index
+<h1>Time Viewer(仮)</h1>
+<%= link_to user_path(current_user.id) do %>
+  <button id = "" , class: "btn btn-primary">入力画面</button>
+<% end %>
+
+<%= link_to settings_path(current_user.id) do %>
+  <button id = "" , class: "btn btn-primary">設定画面へ</button>
+<% end %>
+
+<%= link_to chart_path(current_user.id) do %>
+  <button id = "" , class: "btn btn-primary">グラフ画面</button>
+<% end %>

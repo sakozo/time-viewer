@@ -11,7 +11,7 @@ class UsersController < ApplicationController
               params_date
             end
 
-    @user = User.find(params[:id])
+    @user = User.find(current_user.id)
     @own_time = OwnTime.new
     @result_time = ResultTime.new
 
