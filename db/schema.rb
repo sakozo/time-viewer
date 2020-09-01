@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_29_015753) do
+ActiveRecord::Schema.define(version: 2020_09_01_081937) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -76,6 +76,15 @@ ActiveRecord::Schema.define(version: 2020_08_29_015753) do
     t.index ["user_id"], name: "index_result_times_on_user_id"
   end
 
+  create_table "tweets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "text"
+    t.date "record_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tweets_on_user_id"
+  end
+
   create_table "user_colors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "colors", null: false
@@ -104,5 +113,6 @@ ActiveRecord::Schema.define(version: 2020_08_29_015753) do
   add_foreign_key "projects", "users"
   add_foreign_key "result_times", "own_times"
   add_foreign_key "result_times", "users"
+  add_foreign_key "tweets", "users"
   add_foreign_key "user_colors", "users"
 end

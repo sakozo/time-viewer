@@ -88,6 +88,7 @@
       var show_time = hour + ":" + minutes;
       $('#time-show').append(gon.own_time_list[index] + ":" + show_time + " ")
     });
+    $('#tweet').val($('#time-show').text());
   }
   </script>
   <script>
@@ -446,6 +447,7 @@
       <%= form.hidden_field :blocks, name: "block[][93]" , value: @result_times_hash[93] , id: :block_93 %>
       <%= form.hidden_field :blocks, name: "block[][94]" , value: @result_times_hash[94] , id: :block_94 %>
       <%= form.hidden_field :blocks, name: "block[][95]" , value: @result_times_hash[95] , id: :block_95 %>
+      <%= form.hidden_field :tweet, name: "text" , id: :tweet %>
 </div>
     <div >
       <%= form.submit "登録する", class: "submit_button"%>
@@ -459,7 +461,7 @@
 日記の入力
 <%= form_with model: @diary, local: true do |form|  %>
   <%= form.hidden_field :record_date, value: @date, placeholder: "record_date" %>
-  <%= form.text_area :diary, placeholder: "日記", autocomplete: "off"%>
+  <%= form.text_area :diary, placeholder: "日記", autocomplete: "off", rows: "5"%>
   <%= form.submit "登録する", class: "submit_button"%>
 <% end %>
 

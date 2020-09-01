@@ -10,3 +10,18 @@
 <%= link_to chart_path(current_user.id) do %>
   <button id = "" , class: "btn btn-primary">グラフ画面</button>
 <% end %>
+
+<%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+
+<br>
+<br>
+
+
+<% @tweets.each do |tweet| %>
+  <% if tweet.user.icon.attached? %>
+    <%= image_tag tweet.user.icon, height: 30, width: 30 %>
+  <% else %>
+    <%= image_tag "icon/icon.jpg", height: 30, width: 30 %>
+  <% end %>
+  <%= tweet.user.name %>さんが <%= tweet.record_date %> <%= tweet.text %>の入力を行いました。<%= tweet.created_at %><br><br>
+<% end %>

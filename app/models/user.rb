@@ -29,4 +29,5 @@ class User < ApplicationRecord
   has_one_attached :icon
   has_many :result_time, dependent: :destroy
   has_many :diaries
+  has_many :tweets
 end
