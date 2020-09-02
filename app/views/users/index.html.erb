@@ -25,3 +25,17 @@
   <% end %>
   <%= tweet.user.name %>さんが <%= tweet.record_date %> <%= tweet.text %>の入力を行いました。<%= tweet.created_at %><br><br>
 <% end %>
+
+
+<% if user_signed_in? %>
+<p>ユーザー一覧<p>
+  <% @users.each do |user| %>
+  <p><a href="/users/<%= user.id %>"><%= user.name %>さん</a></p>
+  <hr>
+  <% end %>
+  <%= link_to "ログアウト", destroy_user_session_path, :method => :delete %>
+<% else %>
+  <%= link_to "ユーザーを登録する", new_user_registration_path %>
+  <br>
+  <%= link_to "ログインする", new_user_session_path %>
+<% end %>

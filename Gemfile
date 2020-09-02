@@ -46,6 +46,7 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'annotate'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'bullet'
@@ -53,7 +54,6 @@ group :development do
   gem 'rubocop', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'annotate'
 end
 
 group :test do
@@ -78,4 +78,4 @@ gem 'gon'
 
 gem 'chart-js-rails', '~> 0.1.4'
 
-gem "attr_encrypted"
+gem 'attr_encrypted'

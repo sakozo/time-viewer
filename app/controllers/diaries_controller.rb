@@ -1,12 +1,7 @@
 class DiariesController < ApplicationController
   def create
     diary = Diary.new(diary_params)
-    if diary.save
-      redirect_to user_path(current_user.id)
-    else
-      
-    end
-
+    redirect_to user_path(current_user.id) if diary.save
   end
 
   def edit

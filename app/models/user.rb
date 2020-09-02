@@ -30,4 +30,6 @@ class User < ApplicationRecord
   has_many :result_time, dependent: :destroy
   has_many :diaries
   has_many :tweets
+  has_many :messages, dependent: :destroy
+  has_many :entries, dependent: :destroy
 end

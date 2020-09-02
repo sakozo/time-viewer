@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def index
     @tweets = Tweet.all.includes(:user)
+    @users = User.all
   end
 
   def show
@@ -13,7 +14,8 @@ class UsersController < ApplicationController
               params_date
             end
 
-    @user = User.find(current_user.id)
+    # @user = User.find(current_user.id)
+    @user = User.find(params[:id])
     @own_time = OwnTime.new
     @result_time = ResultTime.new
 
@@ -45,7 +47,6 @@ class UsersController < ApplicationController
     # TODO: 天気自動記録機能の実装
     # 環境変数をJSに渡す
     # gon.wheather_api_key = ENV['OPEN_WEATHER_API_KEY']
-
 
     # DBに登録済みのResultTimeを取得する
     # ハッシュに詰める hashなので重複は上書きされて最新の値がセットされるはず
@@ -89,6 +90,28 @@ class UsersController < ApplicationController
 
     # 日記の取り出し（同じユーザーかつ同じ日付）
     @today_diaries = Diary.where(user_id: current_user.id).where(record_date: @date)
+
+    # DMここから
+    # @user = User.find(params[:id])
+    @currentUserEntry = Entry.where(user_id: current_user.id)
+    @userEntry = Entry.where(user_id: @user.id)
+    if @user.id == current_user.id
+    else
+      @currentUserEntry.each do |cu|
+        @userEntry.each do |u|
+          if cu.room_id == u.room_id
+            @isRoom = true
+            @roomId = cu.room_id
+          end
+        end
+      end
+      if @isRoom
+      else
+        @room = Room.new
+        @entry = Entry.new
+      end
+    end
+    # DMここまで
   end
 
   def update
