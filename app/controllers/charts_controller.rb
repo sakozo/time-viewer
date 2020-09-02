@@ -14,15 +14,16 @@ class ChartsController < ApplicationController
     tmp_result_time = ResultTime.where(user_id: current_user.id).where(own_time_id: select_time)
     (0..6).reverse_each do |i|
       week_array << base_day - i
-      statistics_select_time_week << tmp_result_time.where(record_date: base_day - i).count/4.to_f
+      statistics_select_time_week << tmp_result_time.where(record_date: base_day - i).count / 4.to_f
     end
     gon.label = week_array
     gon.statistics_select_time_week = statistics_select_time_week
     gon.title = select_time.name
     end
-    # 棒グラフ 1週間 ここまで
+  # 棒グラフ 1週間 ここまで
 
   private
+
   def select_time_params
     params[:select_time_0]
   end

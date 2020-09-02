@@ -27,9 +27,7 @@ class ResultTimesController < ApplicationController
     # own_timeの入力ここまで
 
     # tweetテーブルに登録　ここから
-    unless tweet_params.blank?
-      Tweet.new(tweet_params).save
-    end
+    Tweet.new(tweet_params).save unless tweet_params.blank?
     # tweetテーブルに登録　ここまで
   end
 
