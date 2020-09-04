@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_01_221648) do
+ActiveRecord::Schema.define(version: 2020_09_03_230518) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -70,6 +70,9 @@ ActiveRecord::Schema.define(version: 2020_09_01_221648) do
     t.integer "publicLevel", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "task_flg", default: 0
+    t.integer "done_task_flg", default: 0
+    t.integer "estimated_time"
     t.index ["user_id"], name: "index_own_times_on_user_id"
   end
 

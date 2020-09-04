@@ -12,6 +12,6 @@ class OwnTimesController < ApplicationController
   private
 
   def own_time_params
-    params.permit(:name, :time_type, :shareFlg, :publicLevel).merge(user_id: current_user.id)
+    params.permit(:name, :time_type, :shareFlg, :publicLevel, :task_flg, :estimated_time).merge(user_id: current_user.id)
   end
 end
