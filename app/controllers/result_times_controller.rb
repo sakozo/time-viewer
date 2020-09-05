@@ -28,7 +28,10 @@ class ResultTimesController < ApplicationController
     # own_timeの入力ここまで
 
     # tweetテーブルに登録　ここから
-    Tweet.new(tweet_params).save unless tweet_params.blank?
+    unless tweet_params.blank?
+      Tweet.where(user_id: current_user.id).where(record_date: record_date).destroy_all
+      Tweet.new(tweet_params).save
+    end
     # tweetテーブルに登録　ここまで
   end
 
