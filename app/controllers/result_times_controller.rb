@@ -21,6 +21,7 @@ class ResultTimesController < ApplicationController
 
     if error_flg
       # TODO: 処理
+      logger.warn("Error: result_time登録に失敗")
     else
       redirect_to user_path(current_user.id)
     end
