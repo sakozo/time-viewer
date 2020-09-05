@@ -483,6 +483,10 @@
   <button id = "" , class: "btn btn-primary">トップ</button>
 <% end %>
 
+<%= link_to tasks_path do %>
+  <button id = "" , class: "btn btn-primary">タスク管理画面へ</button>
+<% end %>
+
 <br><br><br>
 <% if current_user.projects.exists? %>
   <% current_user.projects.each do |project| %>

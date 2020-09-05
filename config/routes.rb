@@ -64,5 +64,6 @@ Rails.application.routes.draw do
   resources :diaries, only: %i[create edit]
   resources :messages, only: [:create]
   resources :rooms, only: %i[create show index]
+  resources :tasks, only: %i[update show index]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
