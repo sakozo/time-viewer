@@ -71,7 +71,6 @@ gem 'devise'
 gem 'font-awesome-sass'
 gem 'jquery-rails'
 
-gem 'bootstrap-sass', '>= 3.4.1'
 gem 'sass-rails', '~>5.0'
 
 gem 'gon'
@@ -79,3 +78,6 @@ gem 'gon'
 gem 'chart-js-rails', '~> 0.1.4'
 
 gem 'attr_encrypted'
+
+gem 'materialize-sass', '~> 1.0.0'
+gem 'material_icons' 
