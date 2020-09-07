@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:index]
   def index
     @tweets = Tweet.all.includes(:user)
     @users = User.all

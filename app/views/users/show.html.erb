@@ -1,3 +1,5 @@
+ <%= render partial: "template/page_top_main",  locals: {guide_message: "入力画面"}%>
+
 <%
 =begin%>
  TODO: ホバー したときのカーソル ホバー したときのブロックのエフェクト　同じ色を選択した場合キャンセルできる　リセットボタンでクラスと色を取り除く
@@ -471,21 +473,6 @@
 
 <br><br><br>
 
-<%= link_to settings_path do %>
-  <button id = "" , class: "btn btn-primary">設定画面へ</button>
-<% end %>
-
-<%= link_to chart_path do %>
-  <button id = "" , class: "btn btn-primary">グラフ画面</button>
-<% end %>
-
-<%= link_to users_path do %>
-  <button id = "" , class: "btn btn-primary">トップ</button>
-<% end %>
-
-<%= link_to tasks_path do %>
-  <button id = "" , class: "btn btn-primary">タスク管理画面へ</button>
-<% end %>
 
 <br><br><br>
 <% if current_user.projects.exists? %>
