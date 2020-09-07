@@ -1,3 +1,5 @@
+<%= render partial: "template/page_top_main",  locals: {guide_message: "入力画面"}%>
+
 <% @doing_task_result_time_list.each do |task, value| %>
   取り組み中 / <%= task.name %> / 推定時間<%= task.estimated_time %>時間 / 取り組んだ時間<%= value %>時間 / 進捗<%= (value / task.estimated_time).round(3) * 100 %>%
   <%= form_with url: task_path(current_user.id), method: 'PATCH' , local: true do |form| %>
