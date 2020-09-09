@@ -1,8 +1,21 @@
 <script>
-$( function() {
-  $( "#datepicker" ).datepicker();
-  $( "#datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-} );
+
+  // document.addEventListener('DOMContentLoaded', function() {
+  //   var elems = document.querySelectorAll('select');
+  //   var instances = M.FormSelect.init(elems, options);
+  // });
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+      
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+      format: "yyyy-mm-dd"
+    });
+  });
 </script>
 
 <%= link_to user_path(current_user.id) do %>
@@ -11,7 +24,7 @@ $( function() {
 
 <%= form_with url: chart_path, method: 'get', local: true do |form|  %>
   <%= form.collection_select :select_time_0, @all_select_time, :id, :name %>
-  <%= form.text_field :date, placeholder: "1週間前から入力日まで", id: :datepicker, autocomplete: "off"%>
+  <%= form.text_field :date, placeholder: "1週間前から入力日まで",class: :datepicker , autocomplete: "off"%>
   <%= form.submit "完了", class: "submit_button"%>
 <% end %>
 
