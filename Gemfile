@@ -79,5 +79,5 @@ gem 'chart-js-rails', '~> 0.1.4'
 
 gem 'attr_encrypted'
 
+gem 'material_icons'
 gem 'materialize-sass', '~> 1.0.0'
-gem 'material_icons' 
