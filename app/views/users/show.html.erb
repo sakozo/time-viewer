@@ -1,510 +1,611 @@
- <%= render partial: "template/page_top_main",  locals: {guide_message: "入力画面"}%>
+<%= render partial: "template/page_top_main",  locals: {guide_message: "入力画面"}%>
 
 <%
 =begin%>
- TODO: ホバー したときのカーソル ホバー したときのブロックのエフェクト　同じ色を選択した場合キャンセルできる　リセットボタンでクラスと色を取り除く
+TODO: ホバー したときのカーソル ホバー したときのブロックのエフェクト　同じ色を選択した場合キャンセルできる　リセットボタンでクラスと色を取り除く
 <%
 =end%>
+
 <head>
+  <script>
+    // document.addEventListener('DOMContentLoaded', function() {
+    //   var elems = document.querySelectorAll('select');
+    //   var instances = M.FormSelect.init(elems, options);
+    // });
+
+    // Or with jQuery
+
+    $(document).ready(function() {
+      $('select').formSelect();
+    });
+  </script>
   <style>
-  #feedback { font-size: 1em; }
-  /* #selectable .ui-selecting { background: #FECA40; } */
-  /* #selectable .ui-selected { background: #F39814; color: white; } */
-  #selectable { list-style-type: none; margin: 0; padding: 0; width: 10%; display: flex}
-  #selectable li { margin: 0px; padding: 0.1em; font-size: 0.6em; font-weight: bold; height: 150px; width: 15%; text-align: center; writing-mode: vertical-rl; cursor: default;}
-  /* .ui-widget-content { height: 0.1px} */
+    #feedback {
+      font-size: 1em;
+    }
+
+    /* #selectable .ui-selecting { background: #FECA40; } */
+    /* #selectable .ui-selected { background: #F39814; color: white; } */
+    #selectable {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+
+    #selectable li {
+      margin: 0px;
+      padding: 0.1em;
+      font-size: 0.6em;
+      font-weight: bold;
+      height: 20px;
+      width: 100%;
+      text-align: center;
+      cursor: default;
+    }
+
+    /* .ui-widget-content { height: 0.1px} */
   </style>
   <style>
-  li {
-    cursor: pointer;
-    -webkit-user-select: none;
+    li {
+      cursor: pointer;
+      -webkit-user-select: none;
       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
-  }
+      -ms-user-select: none;
+      user-select: none;
+    }
   </style>
   <script>
-  var color = 0;
-  var own_time_id = 1;
-  var result_times = gon.result_times;
-  var own_time_list = gon.own_time_list;
-  var block_li_id_list = [ "5:00", "5:15", "5:30", "5:45", "6:00", "6:15", "6:30", "6:45", "7:00", "7:15", "7:30", "7:45", "8:00", "8:15", "8:30", "8:45", "9:00", "9:15", "9:30", "9:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45", "16:00", "16:15", "16:30", "16:45", "17:00", "17:15", "17:30", "17:45", "18:00", "18:15", "18:30", "18:45", "19:00", "19:15", "19:30", "19:45", "20:00", "20:15", "20:30", "20:45", "21:00", "21:15", "21:30", "21:45", "22:00", "22:15", "22:30", "22:45", "23:00", "23:15", "23:30", "23:45", "24:00", "24:15", "24:30", "24:45", "1:00", "1:15", "1:30", "1:45", "2:00", "2:15", "2:30", "2:45", "3:00", "3:15", "3:30", "3:45", "4:00", "4:15", "4:30", "4:45"];
-
+    var color = 0;
+    var own_time_id = 1;
+    var result_times = gon.result_times;
+    var own_time_list = gon.own_time_list;
+    var block_li_id_list = ["5:00", "5:15", "5:30", "5:45", "6:00", "6:15", "6:30", "6:45", "7:00", "7:15", "7:30", "7:45", "8:00", "8:15", "8:30", "8:45", "9:00", "9:15", "9:30", "9:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45", "16:00", "16:15", "16:30", "16:45", "17:00", "17:15", "17:30", "17:45", "18:00", "18:15", "18:30", "18:45", "19:00", "19:15", "19:30", "19:45", "20:00", "20:15", "20:30", "20:45", "21:00", "21:15", "21:30", "21:45", "22:00", "22:15", "22:30", "22:45", "23:00", "23:15", "23:30", "23:45", "24:00", "24:15", "24:30", "24:45", "1:00", "1:15", "1:30", "1:45", "2:00", "2:15", "2:30", "2:45", "3:00", "3:15", "3:30", "3:45", "4:00", "4:15", "4:30", "4:45"];
   </script>
   <script>
-  $( function() {
-    $( "#datepicker" ).datepicker();
-    $( "#datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-  } );
+    $(document).ready(function() {
+      $('.datepicker').datepicker({
+        format: "yyyy-mm-dd"
+      });
+    });
   </script>
   <script>
     //色の定義
-    var setColor = function(type){
+    var setColor = function(type) {
       //gonでユーザー設定の色を配列で取得する
       const user_color_array = gon.user_color_array
       let draw_color = user_color_array[type];
       return draw_color;
     }
-    var setId = function(id){
+    var setId = function(id) {
       var time_id = 'time_' + id;
       return time_id;
       //$( ".ui-selected", this ).addClass(time_id);
     }
   </script>
   <script>
-  //tooltipに入力したown_timeのnameを追加するメソッド
-  function setToolTip(block_selector, time_id) {
-    let index = Number(block_selector.slice(10))
-    let new_title = block_li_id_list[index] + " " + own_time_list[time_id];
-    $( block_selector ).attr('title', new_title);
-  }
+    //tooltipに入力したown_timeのnameを追加するメソッド
+    function setToolTip(block_selector, time_id) {
+      let index = Number(block_selector.slice(10))
+      let new_title = block_li_id_list[index] + " " + own_time_list[time_id];
+      $(block_selector).attr('data-tooltip', new_title);
+    }
   </script>
   <script>
-  $( function() {
-    showInputTime();
-  } );
-  </script>
-
-  <script>
-  function showInputTime() {
-    //inputフォームに入力されたown_time_idをカウントする
-    let time_array = Array(gon.own_time_count); //配列の長さを確定(idの数だけ確保)
-    time_array.fill(0); //0で初期化
-    $("[id^=block_]").each(function(index, element){
-      var time_id = $(element).val();
-      time_array[time_id] += 1; //idと一致する要素のカウントを+1
-    })
-    $('#time-show').empty();
-    $.each(time_array,function(index,val){
-      //0番目はから文字のためスキップ
-      if(index == 0){
-        return;
-      }
-      //0なら次のループへ
-      if(val == 0){
-        return;
-      }
-      //15分ブロックの数から時間に変換
-      var hour = Math.floor(val / 4);
-      var minutes = (val % 4 == 0) ? "00" : val % 4 * 15; //参考演算子 0なら"00"とする
-      var show_time = hour + ":" + minutes;
-      $('#time-show').append(gon.own_time_list[index] + ":" + show_time + " ")
+    $(function() {
+      showInputTime();
     });
-    $('#tweet').val($('#time-show').text());
-  }
+  </script>
+
+  <script>
+    function showInputTime() {
+      //inputフォームに入力されたown_time_idをカウントする
+      let time_array = Array(gon.own_time_count); //配列の長さを確定(idの数だけ確保)
+      time_array.fill(0); //0で初期化
+      $("[id^=block_]").each(function(index, element) {
+        var time_id = $(element).val();
+        time_array[time_id] += 1; //idと一致する要素のカウントを+1
+      })
+      $('#time-show').empty();
+      $.each(time_array, function(index, val) {
+        //0番目はから文字のためスキップ
+        if (index == 0) {
+          return;
+        }
+        //0なら次のループへ
+        if (val == 0) {
+          return;
+        }
+        //15分ブロックの数から時間に変換
+        var hour = Math.floor(val / 4);
+        var minutes = (val % 4 == 0) ? "00" : val % 4 * 15; //参考演算子 0なら"00"とする
+        var show_time = hour + ":" + minutes;
+        $('#time-show').append(gon.own_time_list[index] + ":" + show_time + " ")
+      });
+      $('#tweet').val($('#time-show').text());
+    }
   </script>
   <script>
-  $(function() {
-    $( "#selectable" ).selectable({
-      stop: function() {
+    $(function() {
+      $("#selectable").selectable({
+        stop: function() {
 
-        //ここで選択箇所の色を上書き、他を選択しても消えないようにする
-        //TODO:重要度×緊急度のマトリクスの説明
-        //選択項目と同じ要領で合計時間を直後に右側に表示
-        //TODO:メソッド切り出しで処理を共通化 javascriptファイルに処理を持っていく
-      $( ".ui-selected", this ).css('background-color',setColor(color));
-      $( ".ui-selected", this ).removeClass(function(index, className) {
-          return (className.match(/\btime_\S+/g) || []).join(' ');
+          //ここで選択箇所の色を上書き、他を選択しても消えないようにする
+          //TODO:重要度×緊急度のマトリクスの説明
+          //選択項目と同じ要領で合計時間を直後に右側に表示
+          //TODO:メソッド切り出しで処理を共通化 javascriptファイルに処理を持っていく
+          $(".ui-selected", this).css('background-color', setColor(color));
+          $(".ui-selected", this).removeClass(function(index, className) {
+            return (className.match(/\btime_\S+/g) || []).join(' ');
+          });
+          $(".ui-selected", this).addClass(setId(own_time_id));
+
+
+          var result = $("#select-result").empty();
+          $(".ui-selected", this).each(function() {
+            var index = $("#selectable li").index(this);
+            result.append(" #" + (index + 1));
+            var block_id = "#block_" + index;
+            var class_name = $(".ui-selected").attr('class');
+            $(block_id).val(own_time_id);
+
+            //tooltipにown_timeを追加
+            var block_li_id = "#block_li_" + index
+            setToolTip(block_li_id, own_time_id);
+
+            //own_timeのnameごとに時間を表示
+            showInputTime();
+
+          });
+        }
       });
-      $( ".ui-selected", this ).addClass(setId( own_time_id ));
 
-
-        var result = $( "#select-result" ).empty();
-        $( ".ui-selected", this ).each(function() {
-          var index = $( "#selectable li" ).index( this );
-          result.append( " #" + ( index + 1 ) );
-          var block_id = "#block_" + index;
-          var class_name = $( ".ui-selected" ).attr('class');
-          $( block_id ).val(own_time_id);
-
-          //tooltipにown_timeを追加
-          var block_li_id = "#block_li_" + index
-          setToolTip( block_li_id, own_time_id );
-
-          //own_timeのnameごとに時間を表示
-          showInputTime();
-
+      $('#reset').on("click", function() {
+        $(".ui-selectee").css('background-color', '#fff');
+        $(".ui-selectee").removeClass(function(index, className) {
+          return (className.match(/\btime_\S+/g) || []).join(' ');
         });
-      }
+        $('[id^="block_"]').val('');
       });
 
-    $('#reset').on("click", function(){
-      $( ".ui-selectee").css('background-color','#fff');
-      $( ".ui-selectee").removeClass(function(index, className) {
-          return (className.match(/\btime_\S+/g) || []).join(' ');
+      $('#red').on("click", function() {
+        color = "1";
+        var val = $('#own_time_select_time_1').val();
+        own_time_id = val;
+        //alert(val);
+        //alert(color);
       });
-      $( '[id^="block_"]' ).val('');
+      $('#blue').on("click", function() {
+        color = "2";
+        var val = $('#own_time_select_time_2').val();
+        own_time_id = val;
+        //alert(val);
+        //alert(color);
+      });
+      $('#green').on("click", function() {
+        color = "3";
+        var val = $('#own_time_select_time_3').val();
+        own_time_id = val;
+        //alert(val);
+        //alert(color);
+      });
+      $('#yellow').on("click", function() {
+        color = "4";
+        var val = $('#own_time_select_time_4').val();
+        own_time_id = val;
+        //alert(val);
+        //alert(color);
+      });
+      $('#grey').on("click", function() {
+        color = "0";
+        own_time_id = 1;
+        //alert(own_time_id);
+        //alert(color);
+      });
     });
-
-    $('#red').on("click", function(){
-      color = "1";
-      var val = $('#own_time_select_time_1').val();
-      own_time_id = val;
-      //alert(val);
-      //alert(color);
-    });
-    $('#blue').on("click", function(){
-      color = "2";
-      var val = $('#own_time_select_time_2').val();
-      own_time_id = val;
-      //alert(val);
-      //alert(color);
-    });
-    $('#green').on("click", function(){
-      color = "3";
-      var val = $('#own_time_select_time_3').val();
-      own_time_id = val;
-      //alert(val);
-      //alert(color);
-    });
-    $('#yellow').on("click", function(){
-      color = "4";
-      var val = $('#own_time_select_time_4').val();
-      own_time_id = val;
-      //alert(val);
-      //alert(color);
-    });
-    $('#grey').on("click", function(){
-      color = "0";
-      own_time_id = 1;
-      //alert(own_time_id);
-      //alert(color);
-    });
-  });
   </script>
   <script>
-  $( function() {
-    $( ".ui-widget-content" ).tooltip({
-      show: false,
-      hide: false,
-      position: {
-        my: 'left', at: 'top', collision: 'none'
-      },
+    // $( function() {
+    //   $( ".ui-widget-content" ).tooltip({
+    //     show: false,
+    //     hide: false,
+    //     position: {
+    //       my: 'left', at: 'top', collision: 'none'
+    //     },
+    //   });
+    // });
+
+    $(function() {
+      //gon.result_times_type
+      Object.keys(gon.result_times_type).forEach(function(key) {
+        var val = this[key]; // this は gon.result_times_type
+
+        var selector = "#block_li_" + key;
+        $(selector).css('background-color', setColor(val));
+
+      }, gon.result_times_type);
+
+      Object.keys(gon.result_times).forEach(function(key) {
+        let val = this[key]; // this は gon.result_times
+        let selector = "#block_li_" + key;
+        setToolTip(selector, val);
+      }, gon.result_times);
     });
-  });
-
-  $(function() {
-    //gon.result_times_type
-    Object.keys(gon.result_times_type).forEach(function(key) {
-      var val = this[key]; // this は gon.result_times_type
-
-      var selector = "#block_li_" + key;
-      $( selector ).css('background-color',setColor(val));
-
-    }, gon.result_times_type);
-
-    Object.keys(gon.result_times).forEach(function(key) {
-      let val = this[key]; // this は gon.result_times
-      let selector = "#block_li_" + key;
-      setToolTip( selector, val);
-    }, gon.result_times);
-  });
   </script>
   <script>
-  // datepickerのテキストボックスで変更があった場合に
-  $(function() {
-    $('#datepicker').change(function() {
-      let date_val = $('#datepicker').val();
-      let link = '/users/' + gon.user_id + '.' + date_val;
-      $('#date_link').attr('href', link);
-    });
-  })
+    // datepickerのテキストボックスで変更があった場合に
+    $(function() {
+      $('#datepicker').change(function() {
+        let date_val = $('#datepicker').val();
+        let link = '/users/' + gon.user_id + '.' + date_val;
+        $('#date_link').attr('href', link);
+      });
+    })
   </script>
+  <script>
+    $(document).ready(function() {
+      $('.tooltipped').tooltip({
+        exitDelay: 0,
+        enterDelay: 0,
+        inDuration: 0,
+        outDuration: 0,
+        position: 'top',
+        margin: 0,
+        transitionMovement: 0,
+      });
+    });
+  </script>
+
 </head>
-<body>
-<%= @user.name %>さん
-<% if @user.icon.attached? %>
-  <%= image_tag @user.icon, height: 70, width: 70 %>
-<% else %>
-  <%= image_tag "icon/icon.jpg", height: 100, width: 100 %>
-<% end %>
-<br><br>
-入力日に遷移:<input type='text' id='datepicker' autocomplete="off" />
-<a id='date_link' href=''>
-  <button id = "" , class: "btn btn-primary">Go</button>
-</a>
-<br><br>
 
-<div id = "day-show"></div>
-<%= @date %>
-
-<%= link_to user_path(current_user.id, @date.to_date-1) do %>
-  <button id = "previous" , class: "btn btn-primary"><</button>
-<% end %>
-
-<%= link_to user_path(current_user.id, @date.to_date+1) do %>
-  <button id = "next" , class: "btn btn-primary">></button>
-<% end %>
-
-<br/>
-
-<%= form_with model: @own_time do |form|  %>
-  <%= form.collection_select :select_time_1, @select_time1, :id, :name %><button id = "red">選択</button><br>
-  <%= form.collection_select :select_time_2, @select_time2, :id, :name %><button id = "blue">選択</button><br>
-  <%= form.collection_select :select_time_3, @select_time3, :id, :name %><button id = "green">選択</button><br>
-  <%= form.collection_select :select_time_4, @select_time4, :id, :name %><button id = "yellow">選択</button><br>
-  <button id = "grey">睡眠を選択</button>
-<% end %>
-
-<br>
-
-<div id = "time-show"></div>
-<ol id="selectable">
-  <li class="ui-widget-content 0500" id="block_li_0" title="5:00">05:00</li>
-  <li class="ui-widget-content 0515" id="block_li_1" title="5:15">05:15</li>
-  <li class="ui-widget-content 0530" id="block_li_2" title="5:30">05:30</li>
-  <li class="ui-widget-content 0545" id="block_li_3" title="5:45">05:45</li>
-  <li class="ui-widget-content 0600" id="block_li_4" title="6:00">06:00</li>
-  <li class="ui-widget-content 0615" id="block_li_5" title="6:15">06:15</li>
-  <li class="ui-widget-content 0630" id="block_li_6" title="6:30">06:30</li>
-  <li class="ui-widget-content 0645" id="block_li_7" title="6:45">06:45</li>
-  <li class="ui-widget-content 0700" id="block_li_8" title="7:00">07:00</li>
-  <li class="ui-widget-content 0715" id="block_li_9" title="7:15">07:15</li>
-  <li class="ui-widget-content 0730" id="block_li_10" title="7:30">07:30</li>
-  <li class="ui-widget-content 0745" id="block_li_11" title="7:45">07:45</li>
-  <li class="ui-widget-content 0800" id="block_li_12" title="8:00">08:00</li>
-  <li class="ui-widget-content 0815" id="block_li_13" title="8:15">08:15</li>
-  <li class="ui-widget-content 0830" id="block_li_14" title="8:30">08:30</li>
-  <li class="ui-widget-content 0845" id="block_li_15" title="8:45">08:45</li>
-  <li class="ui-widget-content 0900" id="block_li_16" title="9:00">09:00</li>
-  <li class="ui-widget-content 0915" id="block_li_17" title="9:15">09:15</li>
-  <li class="ui-widget-content 0930" id="block_li_18" title="9:30">09:30</li>
-  <li class="ui-widget-content 0945" id="block_li_19" title="9:45">09:45</li>
-  <li class="ui-widget-content 1000" id="block_li_20" title="10:00">10:00</li>
-  <li class="ui-widget-content 1015" id="block_li_21" title="10:15">10:15</li>
-  <li class="ui-widget-content 1030" id="block_li_22" title="10:30">10:30</li>
-  <li class="ui-widget-content 1045" id="block_li_23" title="10:45">10:45</li>
-  <li class="ui-widget-content 1100" id="block_li_24" title="11:00">11:00</li>
-  <li class="ui-widget-content 1115" id="block_li_25" title="11:15">11:15</li>
-  <li class="ui-widget-content 1130" id="block_li_26" title="11:30">11:30</li>
-  <li class="ui-widget-content 1145" id="block_li_27" title="11:45">11:45</li>
-  <li class="ui-widget-content 1200" id="block_li_28" title="12:00">12:00</li>
-  <li class="ui-widget-content 1215" id="block_li_29" title="12:15">12:15</li>
-  <li class="ui-widget-content 1230" id="block_li_30" title="12:30">12:30</li>
-  <li class="ui-widget-content 1245" id="block_li_31" title="12:45">12:45</li>
-  <li class="ui-widget-content 1300" id="block_li_32" title="13:00">13:00</li>
-  <li class="ui-widget-content 1315" id="block_li_33" title="13:15">13:15</li>
-  <li class="ui-widget-content 1330" id="block_li_34" title="13:30">13:30</li>
-  <li class="ui-widget-content 1345" id="block_li_35" title="13:45">13:45</li>
-  <li class="ui-widget-content 1400" id="block_li_36" title="14:00">14:00</li>
-  <li class="ui-widget-content 1415" id="block_li_37" title="14:15">14:15</li>
-  <li class="ui-widget-content 1430" id="block_li_38" title="14:30">14:30</li>
-  <li class="ui-widget-content 1445" id="block_li_39" title="14:45">14:45</li>
-  <li class="ui-widget-content 1500" id="block_li_40" title="15:00">15:00</li>
-  <li class="ui-widget-content 1515" id="block_li_41" title="15:15">15:15</li>
-  <li class="ui-widget-content 1530" id="block_li_42" title="15:30">15:30</li>
-  <li class="ui-widget-content 1545" id="block_li_43" title="15:45">15:45</li>
-  <li class="ui-widget-content 1600" id="block_li_44" title="16:00">16:00</li>
-  <li class="ui-widget-content 1615" id="block_li_45" title="16:15">16:15</li>
-  <li class="ui-widget-content 1630" id="block_li_46" title="16:30">16:30</li>
-  <li class="ui-widget-content 1645" id="block_li_47" title="16:45">16:45</li>
-  <li class="ui-widget-content 1700" id="block_li_48" title="17:00">17:00</li>
-  <li class="ui-widget-content 1715" id="block_li_49" title="17:15">17:15</li>
-  <li class="ui-widget-content 1730" id="block_li_50" title="17:30">17:30</li>
-  <li class="ui-widget-content 1745" id="block_li_51" title="17:45">17:45</li>
-  <li class="ui-widget-content 1800" id="block_li_52" title="18:00">18:00</li>
-  <li class="ui-widget-content 1815" id="block_li_53" title="18:15">18:15</li>
-  <li class="ui-widget-content 1830" id="block_li_54" title="18:30">18:30</li>
-  <li class="ui-widget-content 1845" id="block_li_55" title="18:45">18:45</li>
-  <li class="ui-widget-content 1900" id="block_li_56" title="19:00">19:00</li>
-  <li class="ui-widget-content 1915" id="block_li_57" title="19:15">19:15</li>
-  <li class="ui-widget-content 1930" id="block_li_58" title="19:30">19:30</li>
-  <li class="ui-widget-content 1945" id="block_li_59" title="19:45">19:45</li>
-  <li class="ui-widget-content 2000" id="block_li_60" title="20:00">20:00</li>
-  <li class="ui-widget-content 2015" id="block_li_61" title="20:15">20:15</li>
-  <li class="ui-widget-content 2030" id="block_li_62" title="20:30">20:30</li>
-  <li class="ui-widget-content 2045" id="block_li_63" title="20:45">20:45</li>
-  <li class="ui-widget-content 2100" id="block_li_64" title="21:00">21:00</li>
-  <li class="ui-widget-content 2115" id="block_li_65" title="21:15">21:15</li>
-  <li class="ui-widget-content 2130" id="block_li_66" title="21:30">21:30</li>
-  <li class="ui-widget-content 2145" id="block_li_67" title="21:45">21:45</li>
-  <li class="ui-widget-content 2200" id="block_li_68" title="22:00">22:00</li>
-  <li class="ui-widget-content 2215" id="block_li_69" title="22:15">22:15</li>
-  <li class="ui-widget-content 2230" id="block_li_70" title="22:30">22:30</li>
-  <li class="ui-widget-content 2245" id="block_li_71" title="22:45">22:45</li>
-  <li class="ui-widget-content 2300" id="block_li_72" title="23:00">23:00</li>
-  <li class="ui-widget-content 2315" id="block_li_73" title="23:15">23:15</li>
-  <li class="ui-widget-content 2330" id="block_li_74" title="23:30">23:30</li>
-  <li class="ui-widget-content 2345" id="block_li_75" title="23:45">23:45</li>
-  <li class="ui-widget-content 2400" id="block_li_76" title="24:00">24:00</li>
-  <li class="ui-widget-content 2415" id="block_li_77" title="24:15">24:15</li>
-  <li class="ui-widget-content 2430" id="block_li_78" title="24:30">24:30</li>
-  <li class="ui-widget-content 2445" id="block_li_79" title="24:45">24:45</li>
-  <li class="ui-widget-content 0100" id="block_li_80" title="1:00">01:00</li>
-  <li class="ui-widget-content 0115" id="block_li_81" title="1:15">01:15</li>
-  <li class="ui-widget-content 0130" id="block_li_82" title="1:30">01:30</li>
-  <li class="ui-widget-content 0145" id="block_li_83" title="1:45">01:45</li>
-  <li class="ui-widget-content 0200" id="block_li_84" title="2:00">02:00</li>
-  <li class="ui-widget-content 0215" id="block_li_85" title="2:15">02:15</li>
-  <li class="ui-widget-content 0230" id="block_li_86" title="2:30">02:30</li>
-  <li class="ui-widget-content 0245" id="block_li_87" title="2:45">02:45</li>
-  <li class="ui-widget-content 0300" id="block_li_88" title="3:00">03:00</li>
-  <li class="ui-widget-content 0315" id="block_li_89" title="3:15">03:15</li>
-  <li class="ui-widget-content 0330" id="block_li_90" title="3:30">03:30</li>
-  <li class="ui-widget-content 0345" id="block_li_91" title="3:45">03:45</li>
-  <li class="ui-widget-content 0400" id="block_li_92" title="4:00">04:00</li>
-  <li class="ui-widget-content 0415" id="block_li_93" title="4:15">04:15</li>
-  <li class="ui-widget-content 0430" id="block_li_94" title="4:30">04:30</li>
-  <li class="ui-widget-content 0445" id="block_li_95" title="4:45">04:45</li>
-</ol>
-
-
-<div class="input_area">
-  <%= form_with model: @result_time, local: true do |form|  %>
-    <div class="">
-      <%= form.hidden_field :record_date, value: @date, placeholder: "record_date" , id: :record_date %>
-      <%= form.hidden_field :blocks, name: "block[][0]" , value: @result_times_hash[0] , id: :block_0 %>
-      <%= form.hidden_field :blocks, name: "block[][1]" , value: @result_times_hash[1] , id: :block_1 %>
-      <%= form.hidden_field :blocks, name: "block[][2]" , value: @result_times_hash[2] , id: :block_2 %>
-      <%= form.hidden_field :blocks, name: "block[][3]" , value: @result_times_hash[3] , id: :block_3 %>
-      <%= form.hidden_field :blocks, name: "block[][4]" , value: @result_times_hash[4] , id: :block_4 %>
-      <%= form.hidden_field :blocks, name: "block[][5]" , value: @result_times_hash[5] , id: :block_5 %>
-      <%= form.hidden_field :blocks, name: "block[][6]" , value: @result_times_hash[6] , id: :block_6 %>
-      <%= form.hidden_field :blocks, name: "block[][7]" , value: @result_times_hash[7] , id: :block_7 %>
-      <%= form.hidden_field :blocks, name: "block[][8]" , value: @result_times_hash[8] , id: :block_8 %>
-      <%= form.hidden_field :blocks, name: "block[][9]" , value: @result_times_hash[9] , id: :block_9 %>
-      <%= form.hidden_field :blocks, name: "block[][10]" , value: @result_times_hash[10] , id: :block_10 %>
-      <%= form.hidden_field :blocks, name: "block[][11]" , value: @result_times_hash[11] , id: :block_11 %>
-      <%= form.hidden_field :blocks, name: "block[][12]" , value: @result_times_hash[12] , id: :block_12 %>
-      <%= form.hidden_field :blocks, name: "block[][13]" , value: @result_times_hash[13] , id: :block_13 %>
-      <%= form.hidden_field :blocks, name: "block[][14]" , value: @result_times_hash[14] , id: :block_14 %>
-      <%= form.hidden_field :blocks, name: "block[][15]" , value: @result_times_hash[15] , id: :block_15 %>
-      <%= form.hidden_field :blocks, name: "block[][16]" , value: @result_times_hash[16] , id: :block_16 %>
-      <%= form.hidden_field :blocks, name: "block[][17]" , value: @result_times_hash[17] , id: :block_17 %>
-      <%= form.hidden_field :blocks, name: "block[][18]" , value: @result_times_hash[18] , id: :block_18 %>
-      <%= form.hidden_field :blocks, name: "block[][19]" , value: @result_times_hash[19] , id: :block_19 %>
-      <%= form.hidden_field :blocks, name: "block[][20]" , value: @result_times_hash[20] , id: :block_20 %>
-      <%= form.hidden_field :blocks, name: "block[][21]" , value: @result_times_hash[21] , id: :block_21 %>
-      <%= form.hidden_field :blocks, name: "block[][22]" , value: @result_times_hash[22] , id: :block_22 %>
-      <%= form.hidden_field :blocks, name: "block[][23]" , value: @result_times_hash[23] , id: :block_23 %>
-      <%= form.hidden_field :blocks, name: "block[][24]" , value: @result_times_hash[24] , id: :block_24 %>
-      <%= form.hidden_field :blocks, name: "block[][25]" , value: @result_times_hash[25] , id: :block_25 %>
-      <%= form.hidden_field :blocks, name: "block[][26]" , value: @result_times_hash[26] , id: :block_26 %>
-      <%= form.hidden_field :blocks, name: "block[][27]" , value: @result_times_hash[27] , id: :block_27 %>
-      <%= form.hidden_field :blocks, name: "block[][28]" , value: @result_times_hash[28] , id: :block_28 %>
-      <%= form.hidden_field :blocks, name: "block[][29]" , value: @result_times_hash[29] , id: :block_29 %>
-      <%= form.hidden_field :blocks, name: "block[][30]" , value: @result_times_hash[30] , id: :block_30 %>
-      <%= form.hidden_field :blocks, name: "block[][31]" , value: @result_times_hash[31] , id: :block_31 %>
-      <%= form.hidden_field :blocks, name: "block[][32]" , value: @result_times_hash[32] , id: :block_32 %>
-      <%= form.hidden_field :blocks, name: "block[][33]" , value: @result_times_hash[33] , id: :block_33 %>
-      <%= form.hidden_field :blocks, name: "block[][34]" , value: @result_times_hash[34] , id: :block_34 %>
-      <%= form.hidden_field :blocks, name: "block[][35]" , value: @result_times_hash[35] , id: :block_35 %>
-      <%= form.hidden_field :blocks, name: "block[][36]" , value: @result_times_hash[36] , id: :block_36 %>
-      <%= form.hidden_field :blocks, name: "block[][37]" , value: @result_times_hash[37] , id: :block_37 %>
-      <%= form.hidden_field :blocks, name: "block[][38]" , value: @result_times_hash[38] , id: :block_38 %>
-      <%= form.hidden_field :blocks, name: "block[][39]" , value: @result_times_hash[39] , id: :block_39 %>
-      <%= form.hidden_field :blocks, name: "block[][40]" , value: @result_times_hash[40] , id: :block_40 %>
-      <%= form.hidden_field :blocks, name: "block[][41]" , value: @result_times_hash[41] , id: :block_41 %>
-      <%= form.hidden_field :blocks, name: "block[][42]" , value: @result_times_hash[42] , id: :block_42 %>
-      <%= form.hidden_field :blocks, name: "block[][43]" , value: @result_times_hash[43] , id: :block_43 %>
-      <%= form.hidden_field :blocks, name: "block[][44]" , value: @result_times_hash[44] , id: :block_44 %>
-      <%= form.hidden_field :blocks, name: "block[][45]" , value: @result_times_hash[45] , id: :block_45 %>
-      <%= form.hidden_field :blocks, name: "block[][46]" , value: @result_times_hash[46] , id: :block_46 %>
-      <%= form.hidden_field :blocks, name: "block[][47]" , value: @result_times_hash[47] , id: :block_47 %>
-      <%= form.hidden_field :blocks, name: "block[][48]" , value: @result_times_hash[48] , id: :block_48 %>
-      <%= form.hidden_field :blocks, name: "block[][49]" , value: @result_times_hash[49] , id: :block_49 %>
-      <%= form.hidden_field :blocks, name: "block[][50]" , value: @result_times_hash[50] , id: :block_50 %>
-      <%= form.hidden_field :blocks, name: "block[][51]" , value: @result_times_hash[51] , id: :block_51 %>
-      <%= form.hidden_field :blocks, name: "block[][52]" , value: @result_times_hash[52] , id: :block_52 %>
-      <%= form.hidden_field :blocks, name: "block[][53]" , value: @result_times_hash[53] , id: :block_53 %>
-      <%= form.hidden_field :blocks, name: "block[][54]" , value: @result_times_hash[54] , id: :block_54 %>
-      <%= form.hidden_field :blocks, name: "block[][55]" , value: @result_times_hash[55] , id: :block_55 %>
-      <%= form.hidden_field :blocks, name: "block[][56]" , value: @result_times_hash[56] , id: :block_56 %>
-      <%= form.hidden_field :blocks, name: "block[][57]" , value: @result_times_hash[57] , id: :block_57 %>
-      <%= form.hidden_field :blocks, name: "block[][58]" , value: @result_times_hash[58] , id: :block_58 %>
-      <%= form.hidden_field :blocks, name: "block[][59]" , value: @result_times_hash[59] , id: :block_59 %>
-      <%= form.hidden_field :blocks, name: "block[][60]" , value: @result_times_hash[60] , id: :block_60 %>
-      <%= form.hidden_field :blocks, name: "block[][61]" , value: @result_times_hash[61] , id: :block_61 %>
-      <%= form.hidden_field :blocks, name: "block[][62]" , value: @result_times_hash[62] , id: :block_62 %>
-      <%= form.hidden_field :blocks, name: "block[][63]" , value: @result_times_hash[63] , id: :block_63 %>
-      <%= form.hidden_field :blocks, name: "block[][64]" , value: @result_times_hash[64] , id: :block_64 %>
-      <%= form.hidden_field :blocks, name: "block[][65]" , value: @result_times_hash[65] , id: :block_65 %>
-      <%= form.hidden_field :blocks, name: "block[][66]" , value: @result_times_hash[66] , id: :block_66 %>
-      <%= form.hidden_field :blocks, name: "block[][67]" , value: @result_times_hash[67] , id: :block_67 %>
-      <%= form.hidden_field :blocks, name: "block[][68]" , value: @result_times_hash[68] , id: :block_68 %>
-      <%= form.hidden_field :blocks, name: "block[][69]" , value: @result_times_hash[69] , id: :block_69 %>
-      <%= form.hidden_field :blocks, name: "block[][70]" , value: @result_times_hash[70] , id: :block_70 %>
-      <%= form.hidden_field :blocks, name: "block[][71]" , value: @result_times_hash[71] , id: :block_71 %>
-      <%= form.hidden_field :blocks, name: "block[][72]" , value: @result_times_hash[72] , id: :block_72 %>
-      <%= form.hidden_field :blocks, name: "block[][73]" , value: @result_times_hash[73] , id: :block_73 %>
-      <%= form.hidden_field :blocks, name: "block[][74]" , value: @result_times_hash[74] , id: :block_74 %>
-      <%= form.hidden_field :blocks, name: "block[][75]" , value: @result_times_hash[75] , id: :block_75 %>
-      <%= form.hidden_field :blocks, name: "block[][76]" , value: @result_times_hash[76] , id: :block_76 %>
-      <%= form.hidden_field :blocks, name: "block[][77]" , value: @result_times_hash[77] , id: :block_77 %>
-      <%= form.hidden_field :blocks, name: "block[][78]" , value: @result_times_hash[78] , id: :block_78 %>
-      <%= form.hidden_field :blocks, name: "block[][79]" , value: @result_times_hash[79] , id: :block_79 %>
-      <%= form.hidden_field :blocks, name: "block[][80]" , value: @result_times_hash[80] , id: :block_80 %>
-      <%= form.hidden_field :blocks, name: "block[][81]" , value: @result_times_hash[81] , id: :block_81 %>
-      <%= form.hidden_field :blocks, name: "block[][82]" , value: @result_times_hash[82] , id: :block_82 %>
-      <%= form.hidden_field :blocks, name: "block[][83]" , value: @result_times_hash[83] , id: :block_83 %>
-      <%= form.hidden_field :blocks, name: "block[][84]" , value: @result_times_hash[84] , id: :block_84 %>
-      <%= form.hidden_field :blocks, name: "block[][85]" , value: @result_times_hash[85] , id: :block_85 %>
-      <%= form.hidden_field :blocks, name: "block[][86]" , value: @result_times_hash[86] , id: :block_86 %>
-      <%= form.hidden_field :blocks, name: "block[][87]" , value: @result_times_hash[87] , id: :block_87 %>
-      <%= form.hidden_field :blocks, name: "block[][88]" , value: @result_times_hash[88] , id: :block_88 %>
-      <%= form.hidden_field :blocks, name: "block[][89]" , value: @result_times_hash[89] , id: :block_89 %>
-      <%= form.hidden_field :blocks, name: "block[][90]" , value: @result_times_hash[90] , id: :block_90 %>
-      <%= form.hidden_field :blocks, name: "block[][91]" , value: @result_times_hash[91] , id: :block_91 %>
-      <%= form.hidden_field :blocks, name: "block[][92]" , value: @result_times_hash[92] , id: :block_92 %>
-      <%= form.hidden_field :blocks, name: "block[][93]" , value: @result_times_hash[93] , id: :block_93 %>
-      <%= form.hidden_field :blocks, name: "block[][94]" , value: @result_times_hash[94] , id: :block_94 %>
-      <%= form.hidden_field :blocks, name: "block[][95]" , value: @result_times_hash[95] , id: :block_95 %>
-      <%= form.hidden_field :tweet, name: "text" , id: :tweet %>
-</div>
-    <div >
-      <%= form.submit "登録する", class: "submit_button"%>
-    </div>
-  <% end %>
-</div>
-
-
-<br>
-
-日記の入力
-<%= form_with model: @diary, local: true do |form|  %>
-  <%= form.hidden_field :record_date, value: @date, placeholder: "record_date" %>
-  <%= form.text_area :diary, placeholder: "日記", autocomplete: "off", rows: "5"%>
-  <%= form.submit "登録する", class: "submit_button"%>
-<% end %>
-
-<% @today_diaries.each do |today_diary| %>
-  <%= today_diary.diary %><br>
-<% end %>
-
-<br><br><br>
-
-
-<br><br><br>
-<% if current_user.projects.exists? %>
-  <% current_user.projects.each do |project| %>
-    <% if project.done_flg == 0 %>
-      <%= project.name %><br>
-      目標日：<%= project.limit_date %>
-      残り日数<%= (project.limit_date.to_date - Date.today).round %>日
-      <%= form_with model: project do |form| %>
-        <%= form.hidden_field :id, placeholder: "id", value: project.id %>
-        <%= form.submit "完了", class: "submit_button"%><br><br>
+<div class='row'>
+  <div class="user-icon-area col s2 l2">
+    <div class="card-panel">
+      <% if @user.icon.attached? %>
+      <%= image_tag @user.icon, height: 70, width: 70, class: "circle responsive-img" %>
+      <% else %>
+      <%= image_tag "icon/icon.jpg", height: 70, width: 70, class: "circle responsive-img"%>
       <% end %>
-    <% end %>
-  <% end %>
-<% end %>
+      <h5><%= @user.name %>さん</h5>
+      <% if @user.id == current_user.id %>
 
-
-<h2><%= @user.email %></h2>
-
-<% if @user.id == current_user.id %>
-
-<% else %>
-  <% if @isRoom == true %>
-    <p><a href="/rooms/<%= @roomId %>">チャットへ</a>
-  <% else %>
-    <%= form_with model: @room do |f| %>
-      <%= fields_for @entry do |e| %>
+      <% else %>
+      <% if @isRoom == true %>
+      <p><a href="/rooms/<%= @roomId %>">チャットへ</a>
+        <% else %>
+        <%= form_with model: @room do |f| %>
+        <%= fields_for @entry do |e| %>
         <%= e.hidden_field :user_id, value: @user.id %>
-      <% end %>
-      <%= f.submit "チャットを始める" %>
-    <% end %>
-  <% end %>
-<% end %>
+        <% end %>
+        <%= f.submit "チャットを始める" %>
+        <% end %>
+        <% end %>
+        <% end %>
+    </div>
+  </div>
 
-<%= link_to "ユーザー一覧に戻る", users_path %>
+  <div class="date-link-area col s8 l8">
+    <div class="card-panel">
+      <div class='row'>
+        <div class="date-link-area col s5 l5">
+          <h3>
+            <%= link_to user_path(current_user.id, @date.to_date-1) do %>
+            <button id="previous" class='btn'>＜</button>
+            <% end %>
+
+            <%= @date %>
+
+            <%= link_to user_path(current_user.id, @date.to_date+1) do %>
+            <button id="next" class='btn'>＞</button>
+            <% end %>
+          </h3>
+        </div>
+        <div class="date-link-area col s7 l7">
+          入力日に遷移:<input type='text' class='datepicker' autocomplete="off" />
+          <a id='date_link' href=''>
+            <button id="" class='btn'>Go</button>
+          </a>
+        </div>
+        </di>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s4 m4 l4">
+      <div class="card-panel">
+        <ol id="selectable">
+          <li class="ui-widget-content tooltipped 0500" id="block_li_0" data-tooltip="5:00">05:00</li>
+          <li class="ui-widget-content tooltipped 0515" id="block_li_1" data-tooltip="5:15">05:15</li>
+          <li class="ui-widget-content tooltipped 0530" id="block_li_2" data-tooltip="5:30">05:30</li>
+          <li class="ui-widget-content tooltipped 0545" id="block_li_3" data-tooltip="5:45">05:45</li>
+          <li class="ui-widget-content tooltipped 0600" id="block_li_4" data-tooltip="6:00">06:00</li>
+          <li class="ui-widget-content tooltipped 0615" id="block_li_5" data-tooltip="6:15">06:15</li>
+          <li class="ui-widget-content tooltipped 0630" id="block_li_6" data-tooltip="6:30">06:30</li>
+          <li class="ui-widget-content tooltipped 0645" id="block_li_7" data-tooltip="6:45">06:45</li>
+          <li class="ui-widget-content tooltipped 0700" id="block_li_8" data-tooltip="7:00">07:00</li>
+          <li class="ui-widget-content tooltipped 0715" id="block_li_9" data-tooltip="7:15">07:15</li>
+          <li class="ui-widget-content tooltipped 0730" id="block_li_10" data-tooltip="7:30">07:30</li>
+          <li class="ui-widget-content tooltipped 0745" id="block_li_11" data-tooltip="7:45">07:45</li>
+          <li class="ui-widget-content tooltipped 0800" id="block_li_12" data-tooltip="8:00">08:00</li>
+          <li class="ui-widget-content tooltipped 0815" id="block_li_13" data-tooltip="8:15">08:15</li>
+          <li class="ui-widget-content tooltipped 0830" id="block_li_14" data-tooltip="8:30">08:30</li>
+          <li class="ui-widget-content tooltipped 0845" id="block_li_15" data-tooltip="8:45">08:45</li>
+          <li class="ui-widget-content tooltipped 0900" id="block_li_16" data-tooltip="9:00">09:00</li>
+          <li class="ui-widget-content tooltipped 0915" id="block_li_17" data-tooltip="9:15">09:15</li>
+          <li class="ui-widget-content tooltipped 0930" id="block_li_18" data-tooltip="9:30">09:30</li>
+          <li class="ui-widget-content tooltipped 0945" id="block_li_19" data-tooltip="9:45">09:45</li>
+          <li class="ui-widget-content tooltipped 1000" id="block_li_20" data-tooltip="10:00">10:00</li>
+          <li class="ui-widget-content tooltipped 1015" id="block_li_21" data-tooltip="10:15">10:15</li>
+          <li class="ui-widget-content tooltipped 1030" id="block_li_22" data-tooltip="10:30">10:30</li>
+          <li class="ui-widget-content tooltipped 1045" id="block_li_23" data-tooltip="10:45">10:45</li>
+          <li class="ui-widget-content tooltipped 1100" id="block_li_24" data-tooltip="11:00">11:00</li>
+          <li class="ui-widget-content tooltipped 1115" id="block_li_25" data-tooltip="11:15">11:15</li>
+          <li class="ui-widget-content tooltipped 1130" id="block_li_26" data-tooltip="11:30">11:30</li>
+          <li class="ui-widget-content tooltipped 1145" id="block_li_27" data-tooltip="11:45">11:45</li>
+          <li class="ui-widget-content tooltipped 1200" id="block_li_28" data-tooltip="12:00">12:00</li>
+          <li class="ui-widget-content tooltipped 1215" id="block_li_29" data-tooltip="12:15">12:15</li>
+          <li class="ui-widget-content tooltipped 1230" id="block_li_30" data-tooltip="12:30">12:30</li>
+          <li class="ui-widget-content tooltipped 1245" id="block_li_31" data-tooltip="12:45">12:45</li>
+          <li class="ui-widget-content tooltipped 1300" id="block_li_32" data-tooltip="13:00">13:00</li>
+          <li class="ui-widget-content tooltipped 1315" id="block_li_33" data-tooltip="13:15">13:15</li>
+          <li class="ui-widget-content tooltipped 1330" id="block_li_34" data-tooltip="13:30">13:30</li>
+          <li class="ui-widget-content tooltipped 1345" id="block_li_35" data-tooltip="13:45">13:45</li>
+          <li class="ui-widget-content tooltipped 1400" id="block_li_36" data-tooltip="14:00">14:00</li>
+          <li class="ui-widget-content tooltipped 1415" id="block_li_37" data-tooltip="14:15">14:15</li>
+          <li class="ui-widget-content tooltipped 1430" id="block_li_38" data-tooltip="14:30">14:30</li>
+          <li class="ui-widget-content tooltipped 1445" id="block_li_39" data-tooltip="14:45">14:45</li>
+          <li class="ui-widget-content tooltipped 1500" id="block_li_40" data-tooltip="15:00">15:00</li>
+          <li class="ui-widget-content tooltipped 1515" id="block_li_41" data-tooltip="15:15">15:15</li>
+          <li class="ui-widget-content tooltipped 1530" id="block_li_42" data-tooltip="15:30">15:30</li>
+          <li class="ui-widget-content tooltipped 1545" id="block_li_43" data-tooltip="15:45">15:45</li>
+          <li class="ui-widget-content tooltipped 1600" id="block_li_44" data-tooltip="16:00">16:00</li>
+          <li class="ui-widget-content tooltipped 1615" id="block_li_45" data-tooltip="16:15">16:15</li>
+          <li class="ui-widget-content tooltipped 1630" id="block_li_46" data-tooltip="16:30">16:30</li>
+          <li class="ui-widget-content tooltipped 1645" id="block_li_47" data-tooltip="16:45">16:45</li>
+          <li class="ui-widget-content tooltipped 1700" id="block_li_48" data-tooltip="17:00">17:00</li>
+          <li class="ui-widget-content tooltipped 1715" id="block_li_49" data-tooltip="17:15">17:15</li>
+          <li class="ui-widget-content tooltipped 1730" id="block_li_50" data-tooltip="17:30">17:30</li>
+          <li class="ui-widget-content tooltipped 1745" id="block_li_51" data-tooltip="17:45">17:45</li>
+          <li class="ui-widget-content tooltipped 1800" id="block_li_52" data-tooltip="18:00">18:00</li>
+          <li class="ui-widget-content tooltipped 1815" id="block_li_53" data-tooltip="18:15">18:15</li>
+          <li class="ui-widget-content tooltipped 1830" id="block_li_54" data-tooltip="18:30">18:30</li>
+          <li class="ui-widget-content tooltipped 1845" id="block_li_55" data-tooltip="18:45">18:45</li>
+          <li class="ui-widget-content tooltipped 1900" id="block_li_56" data-tooltip="19:00">19:00</li>
+          <li class="ui-widget-content tooltipped 1915" id="block_li_57" data-tooltip="19:15">19:15</li>
+          <li class="ui-widget-content tooltipped 1930" id="block_li_58" data-tooltip="19:30">19:30</li>
+          <li class="ui-widget-content tooltipped 1945" id="block_li_59" data-tooltip="19:45">19:45</li>
+          <li class="ui-widget-content tooltipped 2000" id="block_li_60" data-tooltip="20:00">20:00</li>
+          <li class="ui-widget-content tooltipped 2015" id="block_li_61" data-tooltip="20:15">20:15</li>
+          <li class="ui-widget-content tooltipped 2030" id="block_li_62" data-tooltip="20:30">20:30</li>
+          <li class="ui-widget-content tooltipped 2045" id="block_li_63" data-tooltip="20:45">20:45</li>
+          <li class="ui-widget-content tooltipped 2100" id="block_li_64" data-tooltip="21:00">21:00</li>
+          <li class="ui-widget-content tooltipped 2115" id="block_li_65" data-tooltip="21:15">21:15</li>
+          <li class="ui-widget-content tooltipped 2130" id="block_li_66" data-tooltip="21:30">21:30</li>
+          <li class="ui-widget-content tooltipped 2145" id="block_li_67" data-tooltip="21:45">21:45</li>
+          <li class="ui-widget-content tooltipped 2200" id="block_li_68" data-tooltip="22:00">22:00</li>
+          <li class="ui-widget-content tooltipped 2215" id="block_li_69" data-tooltip="22:15">22:15</li>
+          <li class="ui-widget-content tooltipped 2230" id="block_li_70" data-tooltip="22:30">22:30</li>
+          <li class="ui-widget-content tooltipped 2245" id="block_li_71" data-tooltip="22:45">22:45</li>
+          <li class="ui-widget-content tooltipped 2300" id="block_li_72" data-tooltip="23:00">23:00</li>
+          <li class="ui-widget-content tooltipped 2315" id="block_li_73" data-tooltip="23:15">23:15</li>
+          <li class="ui-widget-content tooltipped 2330" id="block_li_74" data-tooltip="23:30">23:30</li>
+          <li class="ui-widget-content tooltipped 2345" id="block_li_75" data-tooltip="23:45">23:45</li>
+          <li class="ui-widget-content tooltipped 2400" id="block_li_76" data-tooltip="24:00">24:00</li>
+          <li class="ui-widget-content tooltipped 2415" id="block_li_77" data-tooltip="24:15">24:15</li>
+          <li class="ui-widget-content tooltipped 2430" id="block_li_78" data-tooltip="24:30">24:30</li>
+          <li class="ui-widget-content tooltipped 2445" id="block_li_79" data-tooltip="24:45">24:45</li>
+          <li class="ui-widget-content tooltipped 0100" id="block_li_80" data-tooltip="1:00">01:00</li>
+          <li class="ui-widget-content tooltipped 0115" id="block_li_81" data-tooltip="1:15">01:15</li>
+          <li class="ui-widget-content tooltipped 0130" id="block_li_82" data-tooltip="1:30">01:30</li>
+          <li class="ui-widget-content tooltipped 0145" id="block_li_83" data-tooltip="1:45">01:45</li>
+          <li class="ui-widget-content tooltipped 0200" id="block_li_84" data-tooltip="2:00">02:00</li>
+          <li class="ui-widget-content tooltipped 0215" id="block_li_85" data-tooltip="2:15">02:15</li>
+          <li class="ui-widget-content tooltipped 0230" id="block_li_86" data-tooltip="2:30">02:30</li>
+          <li class="ui-widget-content tooltipped 0245" id="block_li_87" data-tooltip="2:45">02:45</li>
+          <li class="ui-widget-content tooltipped 0300" id="block_li_88" data-tooltip="3:00">03:00</li>
+          <li class="ui-widget-content tooltipped 0315" id="block_li_89" data-tooltip="3:15">03:15</li>
+          <li class="ui-widget-content tooltipped 0330" id="block_li_90" data-tooltip="3:30">03:30</li>
+          <li class="ui-widget-content tooltipped 0345" id="block_li_91" data-tooltip="3:45">03:45</li>
+          <li class="ui-widget-content tooltipped 0400" id="block_li_92" data-tooltip="4:00">04:00</li>
+          <li class="ui-widget-content tooltipped 0415" id="block_li_93" data-tooltip="4:15">04:15</li>
+          <li class="ui-widget-content tooltipped 0430" id="block_li_94" data-tooltip="4:30">04:30</li>
+          <li class="ui-widget-content tooltipped 0445" id="block_li_95" data-tooltip="4:45">04:45</li>
+        </ol>
+
+        <div class="input_area">
+          <%= form_with model: @result_time, local: true do |form|  %>
+          <div class="">
+            <%= form.hidden_field :record_date, value: @date, placeholder: "record_date" , id: :record_date %>
+            <%= form.hidden_field :blocks, name: "block[][0]" , value: @result_times_hash[0] , id: :block_0 %>
+            <%= form.hidden_field :blocks, name: "block[][1]" , value: @result_times_hash[1] , id: :block_1 %>
+            <%= form.hidden_field :blocks, name: "block[][2]" , value: @result_times_hash[2] , id: :block_2 %>
+            <%= form.hidden_field :blocks, name: "block[][3]" , value: @result_times_hash[3] , id: :block_3 %>
+            <%= form.hidden_field :blocks, name: "block[][4]" , value: @result_times_hash[4] , id: :block_4 %>
+            <%= form.hidden_field :blocks, name: "block[][5]" , value: @result_times_hash[5] , id: :block_5 %>
+            <%= form.hidden_field :blocks, name: "block[][6]" , value: @result_times_hash[6] , id: :block_6 %>
+            <%= form.hidden_field :blocks, name: "block[][7]" , value: @result_times_hash[7] , id: :block_7 %>
+            <%= form.hidden_field :blocks, name: "block[][8]" , value: @result_times_hash[8] , id: :block_8 %>
+            <%= form.hidden_field :blocks, name: "block[][9]" , value: @result_times_hash[9] , id: :block_9 %>
+            <%= form.hidden_field :blocks, name: "block[][10]" , value: @result_times_hash[10] , id: :block_10 %>
+            <%= form.hidden_field :blocks, name: "block[][11]" , value: @result_times_hash[11] , id: :block_11 %>
+            <%= form.hidden_field :blocks, name: "block[][12]" , value: @result_times_hash[12] , id: :block_12 %>
+            <%= form.hidden_field :blocks, name: "block[][13]" , value: @result_times_hash[13] , id: :block_13 %>
+            <%= form.hidden_field :blocks, name: "block[][14]" , value: @result_times_hash[14] , id: :block_14 %>
+            <%= form.hidden_field :blocks, name: "block[][15]" , value: @result_times_hash[15] , id: :block_15 %>
+            <%= form.hidden_field :blocks, name: "block[][16]" , value: @result_times_hash[16] , id: :block_16 %>
+            <%= form.hidden_field :blocks, name: "block[][17]" , value: @result_times_hash[17] , id: :block_17 %>
+            <%= form.hidden_field :blocks, name: "block[][18]" , value: @result_times_hash[18] , id: :block_18 %>
+            <%= form.hidden_field :blocks, name: "block[][19]" , value: @result_times_hash[19] , id: :block_19 %>
+            <%= form.hidden_field :blocks, name: "block[][20]" , value: @result_times_hash[20] , id: :block_20 %>
+            <%= form.hidden_field :blocks, name: "block[][21]" , value: @result_times_hash[21] , id: :block_21 %>
+            <%= form.hidden_field :blocks, name: "block[][22]" , value: @result_times_hash[22] , id: :block_22 %>
+            <%= form.hidden_field :blocks, name: "block[][23]" , value: @result_times_hash[23] , id: :block_23 %>
+            <%= form.hidden_field :blocks, name: "block[][24]" , value: @result_times_hash[24] , id: :block_24 %>
+            <%= form.hidden_field :blocks, name: "block[][25]" , value: @result_times_hash[25] , id: :block_25 %>
+            <%= form.hidden_field :blocks, name: "block[][26]" , value: @result_times_hash[26] , id: :block_26 %>
+            <%= form.hidden_field :blocks, name: "block[][27]" , value: @result_times_hash[27] , id: :block_27 %>
+            <%= form.hidden_field :blocks, name: "block[][28]" , value: @result_times_hash[28] , id: :block_28 %>
+            <%= form.hidden_field :blocks, name: "block[][29]" , value: @result_times_hash[29] , id: :block_29 %>
+            <%= form.hidden_field :blocks, name: "block[][30]" , value: @result_times_hash[30] , id: :block_30 %>
+            <%= form.hidden_field :blocks, name: "block[][31]" , value: @result_times_hash[31] , id: :block_31 %>
+            <%= form.hidden_field :blocks, name: "block[][32]" , value: @result_times_hash[32] , id: :block_32 %>
+            <%= form.hidden_field :blocks, name: "block[][33]" , value: @result_times_hash[33] , id: :block_33 %>
+            <%= form.hidden_field :blocks, name: "block[][34]" , value: @result_times_hash[34] , id: :block_34 %>
+            <%= form.hidden_field :blocks, name: "block[][35]" , value: @result_times_hash[35] , id: :block_35 %>
+            <%= form.hidden_field :blocks, name: "block[][36]" , value: @result_times_hash[36] , id: :block_36 %>
+            <%= form.hidden_field :blocks, name: "block[][37]" , value: @result_times_hash[37] , id: :block_37 %>
+            <%= form.hidden_field :blocks, name: "block[][38]" , value: @result_times_hash[38] , id: :block_38 %>
+            <%= form.hidden_field :blocks, name: "block[][39]" , value: @result_times_hash[39] , id: :block_39 %>
+            <%= form.hidden_field :blocks, name: "block[][40]" , value: @result_times_hash[40] , id: :block_40 %>
+            <%= form.hidden_field :blocks, name: "block[][41]" , value: @result_times_hash[41] , id: :block_41 %>
+            <%= form.hidden_field :blocks, name: "block[][42]" , value: @result_times_hash[42] , id: :block_42 %>
+            <%= form.hidden_field :blocks, name: "block[][43]" , value: @result_times_hash[43] , id: :block_43 %>
+            <%= form.hidden_field :blocks, name: "block[][44]" , value: @result_times_hash[44] , id: :block_44 %>
+            <%= form.hidden_field :blocks, name: "block[][45]" , value: @result_times_hash[45] , id: :block_45 %>
+            <%= form.hidden_field :blocks, name: "block[][46]" , value: @result_times_hash[46] , id: :block_46 %>
+            <%= form.hidden_field :blocks, name: "block[][47]" , value: @result_times_hash[47] , id: :block_47 %>
+            <%= form.hidden_field :blocks, name: "block[][48]" , value: @result_times_hash[48] , id: :block_48 %>
+            <%= form.hidden_field :blocks, name: "block[][49]" , value: @result_times_hash[49] , id: :block_49 %>
+            <%= form.hidden_field :blocks, name: "block[][50]" , value: @result_times_hash[50] , id: :block_50 %>
+            <%= form.hidden_field :blocks, name: "block[][51]" , value: @result_times_hash[51] , id: :block_51 %>
+            <%= form.hidden_field :blocks, name: "block[][52]" , value: @result_times_hash[52] , id: :block_52 %>
+            <%= form.hidden_field :blocks, name: "block[][53]" , value: @result_times_hash[53] , id: :block_53 %>
+            <%= form.hidden_field :blocks, name: "block[][54]" , value: @result_times_hash[54] , id: :block_54 %>
+            <%= form.hidden_field :blocks, name: "block[][55]" , value: @result_times_hash[55] , id: :block_55 %>
+            <%= form.hidden_field :blocks, name: "block[][56]" , value: @result_times_hash[56] , id: :block_56 %>
+            <%= form.hidden_field :blocks, name: "block[][57]" , value: @result_times_hash[57] , id: :block_57 %>
+            <%= form.hidden_field :blocks, name: "block[][58]" , value: @result_times_hash[58] , id: :block_58 %>
+            <%= form.hidden_field :blocks, name: "block[][59]" , value: @result_times_hash[59] , id: :block_59 %>
+            <%= form.hidden_field :blocks, name: "block[][60]" , value: @result_times_hash[60] , id: :block_60 %>
+            <%= form.hidden_field :blocks, name: "block[][61]" , value: @result_times_hash[61] , id: :block_61 %>
+            <%= form.hidden_field :blocks, name: "block[][62]" , value: @result_times_hash[62] , id: :block_62 %>
+            <%= form.hidden_field :blocks, name: "block[][63]" , value: @result_times_hash[63] , id: :block_63 %>
+            <%= form.hidden_field :blocks, name: "block[][64]" , value: @result_times_hash[64] , id: :block_64 %>
+            <%= form.hidden_field :blocks, name: "block[][65]" , value: @result_times_hash[65] , id: :block_65 %>
+            <%= form.hidden_field :blocks, name: "block[][66]" , value: @result_times_hash[66] , id: :block_66 %>
+            <%= form.hidden_field :blocks, name: "block[][67]" , value: @result_times_hash[67] , id: :block_67 %>
+            <%= form.hidden_field :blocks, name: "block[][68]" , value: @result_times_hash[68] , id: :block_68 %>
+            <%= form.hidden_field :blocks, name: "block[][69]" , value: @result_times_hash[69] , id: :block_69 %>
+            <%= form.hidden_field :blocks, name: "block[][70]" , value: @result_times_hash[70] , id: :block_70 %>
+            <%= form.hidden_field :blocks, name: "block[][71]" , value: @result_times_hash[71] , id: :block_71 %>
+            <%= form.hidden_field :blocks, name: "block[][72]" , value: @result_times_hash[72] , id: :block_72 %>
+            <%= form.hidden_field :blocks, name: "block[][73]" , value: @result_times_hash[73] , id: :block_73 %>
+            <%= form.hidden_field :blocks, name: "block[][74]" , value: @result_times_hash[74] , id: :block_74 %>
+            <%= form.hidden_field :blocks, name: "block[][75]" , value: @result_times_hash[75] , id: :block_75 %>
+            <%= form.hidden_field :blocks, name: "block[][76]" , value: @result_times_hash[76] , id: :block_76 %>
+            <%= form.hidden_field :blocks, name: "block[][77]" , value: @result_times_hash[77] , id: :block_77 %>
+            <%= form.hidden_field :blocks, name: "block[][78]" , value: @result_times_hash[78] , id: :block_78 %>
+            <%= form.hidden_field :blocks, name: "block[][79]" , value: @result_times_hash[79] , id: :block_79 %>
+            <%= form.hidden_field :blocks, name: "block[][80]" , value: @result_times_hash[80] , id: :block_80 %>
+            <%= form.hidden_field :blocks, name: "block[][81]" , value: @result_times_hash[81] , id: :block_81 %>
+            <%= form.hidden_field :blocks, name: "block[][82]" , value: @result_times_hash[82] , id: :block_82 %>
+            <%= form.hidden_field :blocks, name: "block[][83]" , value: @result_times_hash[83] , id: :block_83 %>
+            <%= form.hidden_field :blocks, name: "block[][84]" , value: @result_times_hash[84] , id: :block_84 %>
+            <%= form.hidden_field :blocks, name: "block[][85]" , value: @result_times_hash[85] , id: :block_85 %>
+            <%= form.hidden_field :blocks, name: "block[][86]" , value: @result_times_hash[86] , id: :block_86 %>
+            <%= form.hidden_field :blocks, name: "block[][87]" , value: @result_times_hash[87] , id: :block_87 %>
+            <%= form.hidden_field :blocks, name: "block[][88]" , value: @result_times_hash[88] , id: :block_88 %>
+            <%= form.hidden_field :blocks, name: "block[][89]" , value: @result_times_hash[89] , id: :block_89 %>
+            <%= form.hidden_field :blocks, name: "block[][90]" , value: @result_times_hash[90] , id: :block_90 %>
+            <%= form.hidden_field :blocks, name: "block[][91]" , value: @result_times_hash[91] , id: :block_91 %>
+            <%= form.hidden_field :blocks, name: "block[][92]" , value: @result_times_hash[92] , id: :block_92 %>
+            <%= form.hidden_field :blocks, name: "block[][93]" , value: @result_times_hash[93] , id: :block_93 %>
+            <%= form.hidden_field :blocks, name: "block[][94]" , value: @result_times_hash[94] , id: :block_94 %>
+            <%= form.hidden_field :blocks, name: "block[][95]" , value: @result_times_hash[95] , id: :block_95 %>
+            <%= form.hidden_field :tweet, name: "text" , id: :tweet %>
+          </div>
+          <div>
+            <%= form.submit "登録する", class: "btn"%>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col s6 m6">
+      <div class="card-panel">
+        <p>入力結果</p>
+        <div id="time-show"></div>
+      </div>
+    </div>
+    <div class="user-icon-area col s6 l6">
+      <div class="card-panel">
+        <%= form_with model: @own_time do |form| %>
+        <div class="row">
+          <div class="input-field col s8 l8">
+            <%= form.collection_select :select_time_1, @select_time1, :id, :name %><button id="red" class='btn' type="button">選択</button><br>
+          </div>
+          <div class="input-field col s8 l8">
+            <%= form.collection_select :select_time_2, @select_time2, :id, :name %><button id="blue" class='btn' type="button">選択</button><br>
+          </div>
+          <div class="input-field col s8 l8">
+            <%= form.collection_select :select_time_3, @select_time3, :id, :name %><button id="green" class='btn' type="button">選択</button><br>
+          </div>
+          <div class="input-field col s8 l8">
+            <%= form.collection_select :select_time_4, @select_time4, :id, :name %><button id="yellow" class='btn' type="button">選択</button><br>
+          </div>
+          <div class="input-field col s8 l8">
+            <button id="grey" class='btn' type="button">睡眠を選択</button>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="user-icon-area col s6 l6">
+      <div class="card-panel">
+        日記の入力
+        <%= form_with model: @diary, local: true do |form|  %>
+        <%= form.hidden_field :record_date, value: @date, placeholder: "record_date" %>
+        <%= form.text_area :diary, placeholder: "日記", autocomplete: "off", rows: "5"%>
+        <%= form.submit "登録する", class: "btn"%>
+        <% end %>
+      </div>
+    </div>
+    <div class="user-icon-area col s6 l6">
+      <div class="card-panel">
+        <% @today_diaries.each do |today_diary| %>
+        <%= today_diary.diary %><br>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="user-icon-area col s6 l6">
+      <div class="card-panel">
+
+        <% if current_user.projects.exists? %>
+        <% current_user.projects.each do |project| %>
+        <% if project.done_flg == 0 %>
+        <%= project.name %><br>
+        目標日：<%= project.limit_date %>
+        残り日数<%= (project.limit_date.to_date - Date.today).round %>日
+        <%= form_with model: project do |form| %>
+        <%= form.hidden_field :id, placeholder: "id", value: project.id %>
+        <%= form.submit "完了", class: "btn"%><br><br>
+        <% end %>
+        <% end %>
+        <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!--
+  <h2><%= @user.email %></h2>
+
+  <% if @user.id == current_user.id %>
+
+  <% else %>
+  <% if @isRoom == true %>
+  <p><a href="/rooms/<%= @roomId %>">チャットへ</a>
+    <% else %>
+    <%= form_with model: @room do |f| %>
+    <%= fields_for @entry do |e| %>
+    <%= e.hidden_field :user_id, value: @user.id %>
+    <% end %>
+    <%= f.submit "チャットを始める" %>
+    <% end %>
+    <% end %>
+    <% end %>
+
+    <%= link_to "ユーザー一覧に戻る", users_path %> 
+-->

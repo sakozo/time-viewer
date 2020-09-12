@@ -13,7 +13,6 @@ class TasksController < ApplicationController
       task_count = ResultTime.where(own_time_id: task.id).count / 4.to_f
       @done_task_result_time_list[task] = task_count
     end
-
   end
 
   def update
@@ -28,8 +27,8 @@ class TasksController < ApplicationController
   end
 
   private
+
   def get_task_id
     params[:task_id]
   end
-
 end
