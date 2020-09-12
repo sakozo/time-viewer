@@ -1,26 +1,46 @@
 <%= render partial: "template/page_top_main",  locals: {guide_message: "入力画面"}%>
 
-<p>参加者<p>
-<% @entries.each do |e| %>
-  <h5><strong><a href="/users/<%= e.user.id %>"><%= e.user.name%>さん</a></strong></h5>
-<% end %>
 
-<hr>
-<% if @messages.present? %>
-  <% @messages.each do |m| %>
-    <strong><%= m.content %></strong>
-    <small>by <strong><a href="/users/<%= m.user_id %>"><%= m.user.email %>さん</a></strong></small>
-    <hr>
-  <% end %>
-<% else %>
-  <h3 class="text-center">メッセージはまだありません</h3>
-<% end %>
+<div class='row'>
+  <div class="direct-message-area col s8 l8">
 
-<%= form_with model: @message, local: true do |f| %>
-  <%= f.text_field :content, placeholder: "メッセージを入力して下さい" , size: 70 %>
-  <%= f.hidden_field :room_id, value: @room.id %>
-  <br>
-  <%= f.submit "投稿する" %>
-<% end %>
+    <div class='row'>
+      <div class="append-users-area col s8 l8">
+        <div class="card-panel">
+          <p>参加者
+          <p>
+            <% @entries.each do |e| %>
+            <a href="/users/<%= e.user.id %>">
+              <% if e.user.icon.attached? %>
+              <%= image_tag e.user.icon, height: 70, width: 70, class: "circle responsive-img" %>
+              <% else %>
+              <%= image_tag "icon/icon.jpg", height: 70, width: 70, class: "circle responsive-img"%>
+              <% end %>
+              <%= e.user.name%>さん</a>
+            <% end %>
+        </div>
+      </div>
+    </div>
 
-<%= link_to "ユーザー一覧に戻る", users_path %>
+    <ul class="collection">
+      <% if @messages.present? %>
+      <% @messages.each do |m| %>
+      <li class="collection-item"><%= m.content %>
+        by <a href="/users/<%= m.user_id %>"><%= m.user.name %>さん</a></li>
+      <% end %>
+      <% else %>
+      <h3 class="text-center">メッセージはまだありません</h3>
+      <% end %>
+    </ul>
+
+    <%= form_with model: @message, local: true, class: "col s12" do |f| %>
+        <div class="input-field col s6">
+          <i class="material-icons prefix">mail_outline</i>
+          <%= f.text_field :content, id: "icon_prefix", class: "validate" , size: 70 %>
+          <%= f.hidden_field :room_id, value: @room.id %>
+          <label for="icon_prefix">メッセージを入力</label>
+        </div>
+    <%= f.submit "送信", class: "btn"%>
+    <% end %>
+  </div>
+</div>
