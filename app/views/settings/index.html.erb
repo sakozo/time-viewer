@@ -8,10 +8,15 @@
 <%= render partial: "template/page_top_main",  locals: {guide_message: "入力画面"}%>
 
 <script>
-$( function() {
-  $( "#datepicker" ).datepicker();
-  $( "#datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-} );
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+      format: "yyyy-mm-dd"
+    });
+  });
+
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
 </script>
 
 <!--アイコンここから-->
