@@ -269,9 +269,9 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
   <div class="user-icon-area col s2 l2">
     <div class="card-panel">
       <% if @user.icon.attached? %>
-      <%= image_tag @user.icon, height: 70, width: 70, class: "circle responsive-img" %>
+      <%= image_tag @user.icon, width: "30%", height: :auto, class: "circle responsive-img icon-im" %>
       <% else %>
-      <%= image_tag "icon/icon.jpg", height: 70, width: 70, class: "circle responsive-img"%>
+      <%= image_tag "icon/icon.jpg", width: "30%", height: :auto, class: "circle responsive-img"%>
       <% end %>
       <h5><%= @user.name %>さん</h5>
       <% if @user.id == current_user.id %>
