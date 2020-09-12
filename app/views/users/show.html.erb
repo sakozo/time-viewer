@@ -18,6 +18,13 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
     $(document).ready(function() {
       $('select').formSelect();
     });
+
+    // ページから離れる時にresult_timeを保存する
+    $(window).on('beforeunload', function(e){
+      /** 更新される直前の処理 */
+      $('#result_time_submit_button').trigger("click");
+      console.log('beforeunload');
+    });
   </script>
   <style>
     #feedback {
@@ -155,8 +162,8 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
 
             //own_timeのnameごとに時間を表示
             showInputTime();
-
           });
+          //$('#result_time_submit_button').trigger("click");
         }
       });
 
@@ -414,7 +421,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
         </ol>
 
         <div class="input_area">
-          <%= form_with model: @result_time, local: true do |form|  %>
+          <%= form_with model: @result_time, remote: true do |form|  %>
           <div class="">
             <%= form.hidden_field :record_date, value: @date, placeholder: "record_date" , id: :record_date %>
             <%= form.hidden_field :blocks, name: "block[][0]" , value: @result_times_hash[0] , id: :block_0 %>
@@ -516,7 +523,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
             <%= form.hidden_field :tweet, name: "text" , id: :tweet %>
           </div>
           <div>
-            <%= form.submit "登録する", class: "btn"%>
+            <%= form.submit "登録する", class: "btn", id: "result_time_submit_button", style: "display:none;" %>
           </div>
           <% end %>
         </div>
