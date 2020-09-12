@@ -533,19 +533,19 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
         <%= form_with model: @own_time do |form| %>
         <div class="row">
           <div class="input-field col s8 l8">
-            <%= form.collection_select :select_time_1, @select_time1, :id, :name %><button id="red" class='btn'>選択</button><br>
+            <%= form.collection_select :select_time_1, @select_time1, :id, :name %><button id="red" class='btn' type="button">選択</button><br>
           </div>
           <div class="input-field col s8 l8">
-            <%= form.collection_select :select_time_2, @select_time2, :id, :name %><button id="blue" class='btn'>選択</button><br>
+            <%= form.collection_select :select_time_2, @select_time2, :id, :name %><button id="blue" class='btn' type="button">選択</button><br>
           </div>
           <div class="input-field col s8 l8">
-            <%= form.collection_select :select_time_3, @select_time3, :id, :name %><button id="green" class='btn'>選択</button><br>
+            <%= form.collection_select :select_time_3, @select_time3, :id, :name %><button id="green" class='btn' type="button">選択</button><br>
           </div>
           <div class="input-field col s8 l8">
-            <%= form.collection_select :select_time_4, @select_time4, :id, :name %><button id="yellow" class='btn'>選択</button><br>
+            <%= form.collection_select :select_time_4, @select_time4, :id, :name %><button id="yellow" class='btn' type="button">選択</button><br>
           </div>
           <div class="input-field col s8 l8">
-            <button id="grey" class='btn'>睡眠を選択</button>
+            <button id="grey" class='btn' type="button">睡眠を選択</button>
           </div>
         </div>
         <% end %>
