@@ -1,18 +1,84 @@
-<%= render partial: "template/page_top_main",  locals: {guide_message: "入力画面"}%>
+<%= render partial: "template/page_top_main",  locals: {guide_message: "タスク画面"}%>
 
-<% @doing_task_result_time_list.each do |task, value| %>
-  取り組み中 / <%= task.name %> / 推定時間<%= task.estimated_time %>時間 / 取り組んだ時間<%= value %>時間 / 進捗<%= (value / task.estimated_time).round(3) * 100 %>%
-  <%= form_with url: task_path(current_user.id), method: 'PATCH' , local: true do |form| %>
-    <%= form.hidden_field :task_id, placeholder: "id", value: task.id %>
-    <%= form.submit "完了", class: "submit_button"%><br><br>
-  <% end %>
-<% end %>
+<div class='row'>
+  <div class="doing-task-area col s8 l8">
+    <div class="card-panel">
 
-<% @done_task_result_time_list.each do |task, value| %>
-  完了 / <%= task.name %> / 推定時間<%= task.estimated_time %>時間 / 実績時間<%= value %>時間 / 乖離率(%) <%= (value - task.estimated_time) / task.estimated_time * 100 %>
-<% end %>
+      <table class="highlight centered responsive-table">
+        <thead>
+          <tr>
+            <th>ステータス</th>
+            <th>名前</th>
+            <th>推定時間</th>
+            <th>取り組み時間</th>
+            <th>進捗率</th>
+            <th>完了</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @doing_task_result_time_list.each do |task, value| %>
+          <tr>
+            <td>取り組み中</td>
+            <td><%= task.name %></td>
+            <td><%= task.estimated_time %>時間</td>
+            <td><%= value %>時間</td>
+            <td><%= (value / task.estimated_time).round(3) * 100 %>%</td>
 
-<%= link_to user_path(current_user.id) do %>
-  <button id = "" , class: "btn btn-primary">入力画面に戻る</button>
-<% end %>
+            <td>
+              <%= form_with url: task_path(current_user.id), method: 'PATCH' , local: true do |form| %>
+              <%= form.hidden_field :task_id, placeholder: "id", value: task.id %>
+              <%= form.submit "完了", class: "btn"%>
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
 
+    </div>
+  </div>
+</div>
+
+
+<div class='row'>
+  <div class="done-task-area col s8 l8">
+    <div class="card-panel">
+
+      <table class="highlight centered responsive-table">
+        <thead>
+          <tr>
+            <th>ステータス</th>
+            <th>名前</th>
+            <th>推定時間</th>
+            <th>実績時間</th>
+            <th>乖離率</th>
+            <th>完了</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @done_task_result_time_list.each do |task, value| %>
+          <tr>
+            <td>完了</td>
+            <td><%= task.name %></td>
+            <td><%= task.estimated_time %>時間</td>
+            <td><%= value %>時間</td>
+            <td><%= (value - task.estimated_time) / task.estimated_time * 100 %>%</td>
+
+            <%
+=begin%>
+ <td>
+              <%= form_with url: task_path(current_user.id), method: 'PATCH' , local: true do |form| %>
+              <%= form.hidden_field :task_id, placeholder: "id", value: task.id %>
+              <%= form.submit "完了", class: "btn"%>
+              <% end %>
+            </td> 
+<%
+=end%>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
