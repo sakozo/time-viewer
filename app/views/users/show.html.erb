@@ -258,44 +258,55 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
 
 </head>
 
-<body>
+<div class='row'>
+  <div class="user-icon-area col s2 l2">
+    <div class="card-panel">
+      <% if @user.icon.attached? %>
+      <%= image_tag @user.icon, height: 70, width: 70, class: "circle responsive-img" %>
+      <% else %>
+      <%= image_tag "icon/icon.jpg", height: 70, width: 70, class: "circle responsive-img"%>
+      <% end %>
+      <h5><%= @user.name %>さん</h5>
+      <% if @user.id == current_user.id %>
 
-  <div class='row'>
-    <div class="user-icon-area col s2 l2">
-      <div class="card-panel">
-        <% if @user.icon.attached? %>
-        <%= image_tag @user.icon, height: 70, width: 70, class: "circle responsive-img" %>
+      <% else %>
+      <% if @isRoom == true %>
+      <p><a href="/rooms/<%= @roomId %>">チャットへ</a>
         <% else %>
-        <%= image_tag "icon/icon.jpg", height: 70, width: 70, class: "circle responsive-img"%>
+        <%= form_with model: @room do |f| %>
+        <%= fields_for @entry do |e| %>
+        <%= e.hidden_field :user_id, value: @user.id %>
         <% end %>
-        <%= @user.name %>さん
-      </div>
+        <%= f.submit "チャットを始める" %>
+        <% end %>
+        <% end %>
+        <% end %>
     </div>
+  </div>
 
-    <div class="date-link-area col s8 l8">
-      <div class="card-panel">
-        <div class='row'>
-          <div class="date-link-area col s5 l5">
-            <h2>
-              <%= link_to user_path(current_user.id, @date.to_date-1) do %>
-              <button id="previous" class='btn'>
-                << /button>
-                  <% end %>
+  <div class="date-link-area col s8 l8">
+    <div class="card-panel">
+      <div class='row'>
+        <div class="date-link-area col s5 l5">
+          <h3>
+            <%= link_to user_path(current_user.id, @date.to_date-1) do %>
+            <button id="previous" class='btn'>＜</button>
+            <% end %>
 
-                  <%= @date %>
+            <%= @date %>
 
-                  <%= link_to user_path(current_user.id, @date.to_date+1) do %>
-                  <button id="next" class='btn'>></button>
-                  <% end %>
-            </h2>
-          </div>
-          <div class="date-link-area col s7 l7">
-            入力日に遷移:<input type='text' class='datepicker' autocomplete="off" />
-            <a id='date_link' href=''>
-              <button id="" class='btn'>Go</button>
-            </a>
-          </div>
+            <%= link_to user_path(current_user.id, @date.to_date+1) do %>
+            <button id="next" class='btn'>＞</button>
+            <% end %>
+          </h3>
         </div>
+        <div class="date-link-area col s7 l7">
+          入力日に遷移:<input type='text' class='datepicker' autocomplete="off" />
+          <a id='date_link' href=''>
+            <button id="" class='btn'>Go</button>
+          </a>
+        </div>
+        </di>
       </div>
     </div>
   </div>
@@ -513,6 +524,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
     </div>
     <div class="col s6 m6">
       <div class="card-panel">
+        <p>入力結果</p>
         <div id="time-show"></div>
       </div>
     </div>
@@ -539,10 +551,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
         <% end %>
       </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col s12 m5">
+    <div class="user-icon-area col s6 l6">
       <div class="card-panel">
         日記の入力
         <%= form_with model: @diary, local: true do |form|  %>
@@ -552,33 +561,35 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
         <% end %>
       </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col s12 m5">
+    <div class="user-icon-area col s6 l6">
       <div class="card-panel">
         <% @today_diaries.each do |today_diary| %>
         <%= today_diary.diary %><br>
         <% end %>
       </div>
     </div>
+
+    <div class="user-icon-area col s6 l6">
+      <div class="card-panel">
+
+        <% if current_user.projects.exists? %>
+        <% current_user.projects.each do |project| %>
+        <% if project.done_flg == 0 %>
+        <%= project.name %><br>
+        目標日：<%= project.limit_date %>
+        残り日数<%= (project.limit_date.to_date - Date.today).round %>日
+        <%= form_with model: project do |form| %>
+        <%= form.hidden_field :id, placeholder: "id", value: project.id %>
+        <%= form.submit "完了", class: "btn"%><br><br>
+        <% end %>
+        <% end %>
+        <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
 
-  <% if current_user.projects.exists? %>
-  <% current_user.projects.each do |project| %>
-  <% if project.done_flg == 0 %>
-  <%= project.name %><br>
-  目標日：<%= project.limit_date %>
-  残り日数<%= (project.limit_date.to_date - Date.today).round %>日
-  <%= form_with model: project do |form| %>
-  <%= form.hidden_field :id, placeholder: "id", value: project.id %>
-  <%= form.submit "完了", class: "submit_button"%><br><br>
-  <% end %>
-  <% end %>
-  <% end %>
-  <% end %>
-
-
+  <!--
   <h2><%= @user.email %></h2>
 
   <% if @user.id == current_user.id %>
@@ -596,4 +607,5 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
     <% end %>
     <% end %>
 
-    <%= link_to "ユーザー一覧に戻る", users_path %>
+    <%= link_to "ユーザー一覧に戻る", users_path %> 
+-->
