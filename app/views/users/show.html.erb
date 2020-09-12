@@ -18,6 +18,13 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
     $(document).ready(function() {
       $('select').formSelect();
     });
+
+    // ページから離れる際に検知する
+    $(window).on('beforeunload', function(e){
+      /** 更新される直前の処理 */
+      //$('#result_time_submit_button').trigger("click");
+      console.log('beforeunload');
+    });
   </script>
   <style>
     #feedback {
@@ -516,7 +523,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
             <%= form.hidden_field :tweet, name: "text" , id: :tweet %>
           </div>
           <div>
-            <%= form.submit "登録する", class: "btn"%>
+            <%= form.submit "入力完了", class: "btn"%>
           </div>
           <% end %>
         </div>
