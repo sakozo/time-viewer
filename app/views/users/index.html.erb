@@ -27,9 +27,9 @@
       <% if user_signed_in? %>
       <p>ユーザー一覧
       <p>
-        <% @users.each do |user| %>
+      <% @users.each do |user| %>
       <p><a href="/users/<%= user.id %>"><%= user.name %>さん</a></p>
-      <hr>
+      <%= render "relationships/follow_button", user: user %>
       <% end %>
       <% end %>
     </div>

@@ -65,5 +65,6 @@ Rails.application.routes.draw do
   resources :messages, only: [:create]
   resources :rooms, only: %i[create show index]
   resources :tasks, only: %i[update show index]
+  resources :relationships, only: [:create, :destroy]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
