@@ -39,7 +39,7 @@ TODO:設定を集約
       <%= form_with model: @user do |form|  %>
       <p>アイコンの設定</p>
       <% if @user.icon.attached? %>
-        <%= image_tag @user.icon, height: 100, width: 100 , class: "circle responsive-img icon-image", onClick:"$('#upfile').click()"%>
+      <%= image_tag @user.icon, height: 100, width: 100 , class: "circle responsive-img icon-image", onClick:"$('#upfile').click()"%>
       <% else %>
       <%= image_tag "icon/icon.jpg", height: 100, width: 100 , class: "circle responsive-img", onClick:"$('#upfile').click()"%>
       <% end %>
@@ -55,112 +55,132 @@ TODO:設定を集約
     </div>
   </div>
   <!--アイコンここまで-->
-  <!--色の設定ここから-->
-  <div class="user-icon-area col s4 l4">
-    <div class="card-panel">
-      <p>色の設定</p>
-      <%= form_with model: @user_color, local: true do |form|  %>
-      <div>
-        <%= form.color_field :color1, value: @initial_value1 %>
-        <label for="head">必須</label>
+  <div class='row'>
+    <div class="user-icon-area col s4 l4">
+      <div class="card-panel">
+        <p>フォローリクエスト</p>
+        <ul class="collection">
+          <% @followers.reverse_each do |follower| %>
+            <li class="collection-item">
+              <div>
+                <%= form_with url: relationship_path(current_user.id), method: "PATCH" do |form| %>
+                  <%= follower.user.name %>
+                  <%= form.hidden_field :user_id, value: follower.user.id %>
+                  <%= form.submit "承認する", class: "btn-small secondary-content"%>
+                <% end %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
       </div>
+    </div>
 
-      <div>
-        <%= form.color_field :color2, value: @initial_value2 %>
-        <label for="head">価値</label>
-      </div>
+    <!--色の設定ここから-->
+    <div class="user-icon-area col s4 l4">
+      <div class="card-panel">
+        <p>色の設定</p>
+        <%= form_with model: @user_color, local: true do |form|  %>
+        <div>
+          <%= form.color_field :color1, value: @initial_value1 %>
+          <label for="head">必須</label>
+        </div>
 
-      <div>
-        <%= form.color_field :color3, value: @initial_value3 %>
-        <label for="head">錯覚</label>
-      </div>
+        <div>
+          <%= form.color_field :color2, value: @initial_value2 %>
+          <label for="head">価値</label>
+        </div>
 
-      <div>
-        <%= form.color_field :color4, value: @initial_value4%>
-        <label for="head">無駄</label>
-      </div>
+        <div>
+          <%= form.color_field :color3, value: @initial_value3 %>
+          <label for="head">錯覚</label>
+        </div>
 
-      <div>
-        <%= form.submit "登録する", class: "btn"%>
+        <div>
+          <%= form.color_field :color4, value: @initial_value4%>
+          <label for="head">無駄</label>
+        </div>
+
+        <div>
+          <%= form.submit "登録する", class: "btn"%>
+        </div>
+        <% end %>
       </div>
-      <% end %>
+    </div>
+    <!--色の設定ここまで-->
+  </div>
+
+  <!--プロジェクトここから-->
+  <!--TODO:プロジェクトの追加はshow画面からモーダル表示などで行うべきか検討-->
+  <div class='row'>
+    <div class="user-icon-area col s10 l10">
+      <div class="card-panel">
+        <p>プロジェクトの作成</p>
+        <%= form_with model: @project, local: true do |form|  %>
+        <div class="">
+          <%= form.text_field :name, placeholder: "name"%>
+          <%= form.text_field :limit_date, placeholder: "limit_date", class: :datepicker, autocomplete: "off"%>
+        </div>
+
+        <div>
+          <%= form.submit "登録する", class: "btn"%>
+        </div>
+        <% end %>
+      </div>
     </div>
   </div>
-  <!--色の設定ここまで-->
-</div>
+  <!--プロジェクトここまで-->
 
-<!--プロジェクトここから-->
-<!--TODO:プロジェクトの追加はshow画面からモーダル表示などで行うべきか検討-->
-<div class='row'>
-  <div class="user-icon-area col s10 l10">
-    <div class="card-panel">
-      <p>プロジェクトの作成</p>
-      <%= form_with model: @project, local: true do |form|  %>
-      <div class="">
-        <%= form.text_field :name, placeholder: "name"%>
-        <%= form.text_field :limit_date, placeholder: "limit_date", class: :datepicker, autocomplete: "off"%>
-      </div>
 
-      <div>
-        <%= form.submit "登録する", class: "btn"%>
+  <!--own_timeの追加ここから-->
+  <div class='row'>
+    <div class="user-icon-area col s10 l10">
+      <div class="card-panel">
+        <p>時間種類の追加</p>
+
+        <div>
+          必須（1）
+          <% @select_time1.each do |select_time| %>
+          <%= select_time.name %>
+          <% end %>
+        </div>
+
+        <div>
+          価値（2）
+          <% @select_time2.each do |select_time| %>
+          <%= select_time.name %>
+          <% end %>
+        </div>
+
+        <div>
+          錯覚（3）
+          <% @select_time3.each do |select_time| %>
+          <%= select_time.name %>
+          <% end %>
+        </div>
+
+        <div>
+          無駄（4）
+          <% @select_time4.each do |select_time| %>
+          <%= select_time.name %>
+          <% end %>
+        </div>
+
+
+        <%= form_with url: own_times_path, local: true do |form|  %>
+        <div class="">
+          <%= form.text_field :name, placeholder: "name" %>
+          <%= form.select :time_type, [["必須", 1], ["価値", 2], ["錯覚", 3], ["無駄", 5]], include_blank: "分類を選択して下さい" %>
+          <%= form.select :shareFlg, [["共有する(他の人と共有し比較ができます)", 0], ["共有しない(共有しない秘密の時間です)", 1]] %>
+          <%= form.select :publicLevel, [["公開(他の人からの閲覧を許可)", 0], ["非公開(他の人から閲覧できません)", 1]] %>
+          <%= form.select :task_flg, [["習慣", 0], ["タスク(期限あり、進捗管理ができます)", 1]] %>
+          <%= form.text_field :estimated_time, placeholder: "見積もり時間（h）" %>
+        </div>
+
+        <div>
+          <%= form.submit "登録する", class: "btn"%>
+        </div>
+        <% end %>
       </div>
-      <% end %>
     </div>
   </div>
-</div>
-<!--プロジェクトここまで-->
-
-
-<!--own_timeの追加ここから-->
-<div class='row'>
-  <div class="user-icon-area col s10 l10">
-    <div class="card-panel">
-      <p>時間種類の追加</p>
-
-      <div>
-        必須（1）
-        <% @select_time1.each do |select_time| %>
-        <%= select_time.name %>
-        <% end %>
-      </div>
-
-      <div>
-        価値（2）
-        <% @select_time2.each do |select_time| %>
-        <%= select_time.name %>
-        <% end %>
-      </div>
-
-      <div>
-        錯覚（3）
-        <% @select_time3.each do |select_time| %>
-        <%= select_time.name %>
-        <% end %>
-      </div>
-
-      <div>
-        無駄（4）
-        <% @select_time4.each do |select_time| %>
-        <%= select_time.name %>
-        <% end %>
-      </div>
-
-
-      <%= form_with url: own_times_path, local: true do |form|  %>
-      <div class="">
-        <%= form.text_field :name, placeholder: "name" %>
-        <%= form.select :time_type, [["必須", 1], ["価値", 2], ["錯覚", 3], ["無駄", 5]], include_blank: "分類を選択して下さい" %>
-        <%= form.select :shareFlg, [["共有する(他の人と共有し比較ができます)", 0], ["共有しない(共有しない秘密の時間です)", 1]] %>
-        <%= form.select :publicLevel, [["公開(他の人からの閲覧を許可)", 0], ["非公開(他の人から閲覧できません)", 1]] %>
-        <%= form.select :task_flg, [["習慣", 0], ["タスク(期限あり、進捗管理ができます)", 1]] %>
-        <%= form.text_field :estimated_time, placeholder: "見積もり時間（h）" %>
-      </div>
-
-      <div>
-        <%= form.submit "登録する", class: "btn"%>
-      </div>
-      <% end %>
-    </div>
-  </div>
-</div>
-<!--own_timeの追加ここまで-->
+  <!--own_timeの追加ここまで-->

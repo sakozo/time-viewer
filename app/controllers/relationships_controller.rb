@@ -1,5 +1,5 @@
 class RelationshipsController < ApplicationController
-  before_action :set_user
+  before_action :set_user, except: :update
 
   def create
     following = current_user.follow(@user)
@@ -23,9 +23,19 @@ class RelationshipsController < ApplicationController
     end
   end
 
+  def update
+    binding.pry
+    record = Relationship.find_by(user_id: params[:user_id], follow_id: params[:id])
+    if record.update(status: 1)
+      redirect_to settings_path
+    else
+      # TODO: 処理
+    end
+  end
+
   private
+
   def set_user
     @user = User.find(params[:follow_id])
   end
-
 end

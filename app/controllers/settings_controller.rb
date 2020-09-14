@@ -27,5 +27,9 @@ class SettingsController < ApplicationController
       @initial_value4 = '#ffff00'
     end
     # colorここまで
+
+    # フォローワーここから
+    @followers = Relationship.where(follow_id: current_user.id, status: 0).includes(:user)
+    # フォローワーここまで
   end
 end
