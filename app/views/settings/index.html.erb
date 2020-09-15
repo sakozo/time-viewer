@@ -55,28 +55,9 @@ TODO:設定を集約
     </div>
   </div>
   <!--アイコンここまで-->
-  <div class='row'>
-    <div class="user-icon-area col s4 l4">
-      <div class="card-panel">
-        <p>フォローリクエスト</p>
-        <ul class="collection">
-          <% @followers.reverse_each do |follower| %>
-            <li class="collection-item">
-              <div>
-                <%= form_with url: relationship_path(current_user.id), method: "PATCH" do |form| %>
-                  <%= follower.user.name %>
-                  <%= form.hidden_field :user_id, value: follower.user.id %>
-                  <%= form.submit "承認する", class: "btn-small secondary-content"%>
-                <% end %>
-              </div>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
 
-    <!--色の設定ここから-->
-    <div class="user-icon-area col s4 l4">
+  <!--色の設定ここから-->
+    <div class="user-icon-area col s2 l2">
       <div class="card-panel">
         <p>色の設定</p>
         <%= form_with model: @user_color, local: true do |form|  %>
@@ -105,82 +86,137 @@ TODO:設定を集約
         </div>
         <% end %>
       </div>
-    </div>
-    <!--色の設定ここまで-->
   </div>
+  <!--色の設定ここまで-->
 
-  <!--プロジェクトここから-->
-  <!--TODO:プロジェクトの追加はshow画面からモーダル表示などで行うべきか検討-->
-  <div class='row'>
-    <div class="user-icon-area col s10 l10">
+    <div class="user-icon-area col s4 l4">
       <div class="card-panel">
-        <p>プロジェクトの作成</p>
-        <%= form_with model: @project, local: true do |form|  %>
-        <div class="">
-          <%= form.text_field :name, placeholder: "name"%>
-          <%= form.text_field :limit_date, placeholder: "limit_date", class: :datepicker, autocomplete: "off"%>
-        </div>
-
-        <div>
-          <%= form.submit "登録する", class: "btn"%>
-        </div>
-        <% end %>
+        <p>フォローリクエストが届いています</p>
+        <ul class="collection">
+          <% @followers.reverse_each do |follower| %>
+          <li class="collection-item">
+            <div>
+              <%= form_with url: relationship_path(current_user.id), method: "PATCH" do |form| %>
+              <%= follower.user.name %>
+              <%= form.hidden_field :user_id, value: follower.user.id %>
+              <%= form.submit "承認する", class: "btn-small secondary-content"%>
+              <% end %>
+            </div>
+          </li>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>
-  <!--プロジェクトここまで-->
 
-
-  <!--own_timeの追加ここから-->
   <div class='row'>
     <div class="user-icon-area col s10 l10">
-      <div class="card-panel">
-        <p>時間種類の追加</p>
-
-        <div>
-          必須（1）
-          <% @select_time1.each do |select_time| %>
-          <%= select_time.name %>
-          <% end %>
-        </div>
-
-        <div>
-          価値（2）
-          <% @select_time2.each do |select_time| %>
-          <%= select_time.name %>
-          <% end %>
-        </div>
-
-        <div>
-          錯覚（3）
-          <% @select_time3.each do |select_time| %>
-          <%= select_time.name %>
-          <% end %>
-        </div>
-
-        <div>
-          無駄（4）
-          <% @select_time4.each do |select_time| %>
-          <%= select_time.name %>
-          <% end %>
-        </div>
-
-
-        <%= form_with url: own_times_path, local: true do |form|  %>
-        <div class="">
-          <%= form.text_field :name, placeholder: "name" %>
-          <%= form.select :time_type, [["必須", 1], ["価値", 2], ["錯覚", 3], ["無駄", 5]], include_blank: "分類を選択して下さい" %>
-          <%= form.select :shareFlg, [["共有する(他の人と共有し比較ができます)", 0], ["共有しない(共有しない秘密の時間です)", 1]] %>
-          <%= form.select :publicLevel, [["公開(他の人からの閲覧を許可)", 0], ["非公開(他の人から閲覧できません)", 1]] %>
-          <%= form.select :task_flg, [["習慣", 0], ["タスク(期限あり、進捗管理ができます)", 1]] %>
-          <%= form.text_field :estimated_time, placeholder: "見積もり時間（h）" %>
-        </div>
-
-        <div>
-          <%= form.submit "登録する", class: "btn"%>
-        </div>
-        <% end %>
+      <div class="card">
+        <p>ユーザー一覧</p>
+        <table class="highlight centered responsive-table">
+          <thead>
+            <tr>
+              <th>名前</th>
+              <th>ステータス</th>
+              <th>ボタン</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
+            <tr>
+              <td><a href="/users/<%= user.id %>"><%= user.name %>さん</a></td>
+              <td>
+                <% if current_user.following?(user) %>
+                  <% if current_user.get_following_status(user) == 0 %>
+                    承認待ち
+                  <% elsif current_user.get_following_status(user) == 1 %>
+                    フォロー中
+                  <% end %>
+                <% else %>
+                  未フォロー
+                <% end %>
+              </td>
+              <td><%= render "relationships/follow_button", class: "btn-small secondary-content", user: user %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-  <!--own_timeの追加ここまで-->
+
+    <!--プロジェクトここから-->
+    <!--TODO:プロジェクトの追加はshow画面からモーダル表示などで行うべきか検討-->
+    <div class='row'>
+      <div class="user-icon-area col s10 l10">
+        <div class="card-panel">
+          <p>プロジェクトの作成</p>
+          <%= form_with model: @project, local: true do |form|  %>
+          <div class="">
+            <%= form.text_field :name, placeholder: "name"%>
+            <%= form.text_field :limit_date, placeholder: "limit_date", class: :datepicker, autocomplete: "off"%>
+          </div>
+
+          <div>
+            <%= form.submit "登録する", class: "btn"%>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <!--プロジェクトここまで-->
+
+
+    <!--own_timeの追加ここから-->
+    <div class='row'>
+      <div class="user-icon-area col s10 l10">
+        <div class="card-panel">
+          <p>時間種類の追加</p>
+
+          <div>
+            必須（1）
+            <% @select_time1.each do |select_time| %>
+            <%= select_time.name %>
+            <% end %>
+          </div>
+
+          <div>
+            価値（2）
+            <% @select_time2.each do |select_time| %>
+            <%= select_time.name %>
+            <% end %>
+          </div>
+
+          <div>
+            錯覚（3）
+            <% @select_time3.each do |select_time| %>
+            <%= select_time.name %>
+            <% end %>
+          </div>
+
+          <div>
+            無駄（4）
+            <% @select_time4.each do |select_time| %>
+            <%= select_time.name %>
+            <% end %>
+          </div>
+
+
+          <%= form_with url: own_times_path, local: true do |form|  %>
+          <div class="">
+            <%= form.text_field :name, placeholder: "name" %>
+            <%= form.select :time_type, [["必須", 1], ["価値", 2], ["錯覚", 3], ["無駄", 5]], include_blank: "分類を選択して下さい" %>
+            <%= form.select :shareFlg, [["共有する(他の人と共有し比較ができます)", 0], ["共有しない(共有しない秘密の時間です)", 1]] %>
+            <%= form.select :publicLevel, [["公開(他の人からの閲覧を許可)", 0], ["非公開(他の人から閲覧できません)", 1]] %>
+            <%= form.select :task_flg, [["習慣", 0], ["タスク(期限あり、進捗管理ができます)", 1]] %>
+            <%= form.text_field :estimated_time, placeholder: "見積もり時間（h）" %>
+          </div>
+
+          <div>
+            <%= form.submit "登録する", class: "btn"%>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <!--own_timeの追加ここまで-->

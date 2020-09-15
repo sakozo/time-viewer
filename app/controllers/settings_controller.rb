@@ -31,5 +31,7 @@ class SettingsController < ApplicationController
     # フォローワーここから
     @followers = Relationship.where(follow_id: current_user.id, status: 0).includes(:user)
     # フォローワーここまで
+
+    @users = User.all
   end
 end

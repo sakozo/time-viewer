@@ -19,19 +19,3 @@
     </div>
   </div>
 </div>
-
-
-<div class="row">
-  <div class="col s12 m8 l8 offset-l2">
-    <div class="card blue-grey darken-1">
-      <% if user_signed_in? %>
-      <p>ユーザー一覧
-      <p>
-      <% @users.each do |user| %>
-      <p><a href="/users/<%= user.id %>"><%= user.name %>さん</a></p>
-      <%= render "relationships/follow_button", user: user %>
-      <% end %>
-      <% end %>
-    </div>
-  </div>
-</div>
