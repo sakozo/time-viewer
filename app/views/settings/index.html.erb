@@ -39,7 +39,7 @@ TODO:設定を集約
       <%= form_with model: @user do |form|  %>
       <p>アイコンの設定</p>
       <% if @user.icon.attached? %>
-        <%= image_tag @user.icon, height: 100, width: 100 , class: "circle responsive-img icon-image", onClick:"$('#upfile').click()"%>
+      <%= image_tag @user.icon, height: 100, width: 100 , class: "circle responsive-img icon-image", onClick:"$('#upfile').click()"%>
       <% else %>
       <%= image_tag "icon/icon.jpg", height: 100, width: 100 , class: "circle responsive-img", onClick:"$('#upfile').click()"%>
       <% end %>
@@ -55,8 +55,9 @@ TODO:設定を集約
     </div>
   </div>
   <!--アイコンここまで-->
+
   <!--色の設定ここから-->
-  <div class="user-icon-area col s4 l4">
+  <div class="user-icon-area col s2 l2">
     <div class="card-panel">
       <p>色の設定</p>
       <%= form_with model: @user_color, local: true do |form|  %>
@@ -87,6 +88,69 @@ TODO:設定を集約
     </div>
   </div>
   <!--色の設定ここまで-->
+
+  <div class="user-icon-area col s4 l4">
+    <div class="card-panel">
+      <p>フォローリクエストが届いています</p>
+      <table class="highlight centered responsive-table">
+        <thead>
+          <tr>
+            <th>名前</th>
+            <th>ボタン</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @followers.reverse_each do |follower| %>
+          <tr>
+            <%= form_with url: relationship_path(current_user.id),local: true , method: "PATCH" do |form| %>
+            <%= form.hidden_field :user_id, value: follower.user.id %>
+            <td><%= follower.user.name %></a></td>
+            <td><%= form.submit "承認する", class: "btn-small"%></td>
+            <% end %>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+</div>
+
+<div class='row'>
+  <div class="user-icon-area col s10 l10">
+    <div class="card">
+      <p>ユーザー一覧</p>
+      <table class="highlight centered responsive-table">
+        <thead>
+          <tr>
+            <th>名前</th>
+            <th>ステータス</th>
+            <th>ボタン</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+          <tr>
+            <td><a href="/users/<%= user.id %>"><%= user.name %>さん</a></td>
+            <td>
+              <% if current_user.following?(user) %>
+              <% if current_user.get_following_status(user) == 0 %>
+              承認待ち
+              <% elsif current_user.get_following_status(user) == 1 %>
+              フォロー中
+              <% end %>
+              <% else %>
+              未フォロー
+              <% end %>
+            </td>
+            <td><%= render "relationships/follow_button", class: "btn-small secondary-content", user: user %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 <!--プロジェクトここから-->
