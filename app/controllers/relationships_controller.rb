@@ -24,7 +24,6 @@ class RelationshipsController < ApplicationController
   end
 
   def update
-    binding.pry
     record = Relationship.find_by(user_id: params[:user_id], follow_id: params[:id])
     if record.update(status: 1)
       redirect_to settings_path
