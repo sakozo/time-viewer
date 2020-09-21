@@ -3,8 +3,13 @@ class UsersController < ApplicationController
   before_action :check_following_user?, only: [:show]
 
   def index
-    @tweets = Tweet.all.includes(:user)
-    @users = User.all
+    all_tweets = Tweet.all
+    @tweets = []
+    if user_signed_in?
+      all_tweets.each do |tweet|
+        @tweets << tweet if current_user.check_following?(tweet.user_id) || (current_user.id == tweet.user_id)
+      end
+    end
   end
 
   def show
@@ -133,7 +138,7 @@ class UsersController < ApplicationController
   end
 
   def check_following_user?
-    if current_user.check_following?(params[:id]) or current_user.id == params[:id].to_i
+    if current_user.check_following?(params[:id]) || (current_user.id == params[:id].to_i)
     else
       redirect_to root_path
     end

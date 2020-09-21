@@ -10,6 +10,11 @@
           <% end %>
         </li>
         <li>
+          <%= link_to user_path(current_user.id) do %>
+          <%= content_tag :i, "assignment_late", class: "material-icons right" %> 入力画面へ
+          <% end %>
+        </li>
+        <li>
           <%= link_to settings_path(current_user.id) do %>
               <%= content_tag :i, "assignment_late", class: "material-icons right" %> 設定画面へ
           <% end %>
@@ -32,7 +37,7 @@
       <% else %>
         <li>
           <%= link_to new_user_session_path do %>
-              <%= content_tag :i, "assignment_turned_in", class: "material-icons right" %> ログイン　　
+              <%= content_tag :i, "assignment_turned_in", class: "material-icons right" %> ログイン
           <% end %>
         </li>
         <li>

@@ -39,9 +39,9 @@ TODO:設定を集約
       <%= form_with model: @user do |form|  %>
       <p>アイコンの設定</p>
       <% if @user.icon.attached? %>
-      <%= image_tag @user.icon, height: 100, width: 100 , class: "circle responsive-img icon-image", onClick:"$('#upfile').click()"%>
+      <%= image_tag @user.icon, height: 100, width: 100 , class: :circle, onClick:"$('#upfile').click()"%>
       <% else %>
-      <%= image_tag "icon/icon.jpg", height: 100, width: 100 , class: "circle responsive-img", onClick:"$('#upfile').click()"%>
+      <%= image_tag "icon/icon.jpg", height: 100, width: 100 , class: :circle, onClick:"$('#upfile').click()"%>
       <% end %>
 
       <div class="">
@@ -132,7 +132,7 @@ TODO:設定を集約
         <tbody>
           <% @users.each do |user| %>
           <tr>
-            <td><a href="/users/<%= user.id %>"><%= user.name %>さん</a></td>
+            <td><%= user.name %>さん</td>
             <td>
               <% if current_user.following?(user) %>
               <% if current_user.get_following_status(user) == 0 %>

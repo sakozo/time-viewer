@@ -21,7 +21,7 @@
             <td><%= task.name %></td>
             <td><%= task.estimated_time %>時間</td>
             <td><%= value %>時間</td>
-            <td><%= (value / task.estimated_time).round(3) * 100 %>%</td>
+            <td><%= ((value / task.estimated_time) * 100).round(3) %>%</td>
 
             <td>
               <%= form_with url: task_path(current_user.id), method: 'PATCH' , local: true do |form| %>
