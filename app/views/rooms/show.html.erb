@@ -12,9 +12,9 @@
             <% @entries.each do |e| %>
             <a href="/users/<%= e.user.id %>">
               <% if e.user.icon.attached? %>
-              <%= image_tag e.user.icon, height: 70, width: 70, class: "circle responsive-img" %>
+              <%= image_tag e.user.icon, height: 70, width: 70, class: :circle %>
               <% else %>
-              <%= image_tag "icon/icon.jpg", height: 70, width: 70, class: "circle responsive-img"%>
+              <%= image_tag "icon/icon.jpg", height: 70, width: 70, class: :circle%>
               <% end %>
               <%= e.user.name%>さん</a>
             <% end %>

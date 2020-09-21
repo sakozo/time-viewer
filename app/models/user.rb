@@ -55,4 +55,8 @@ class User < ApplicationRecord
   def get_following_status(other_user)
     relationships.find_by(follow_id: other_user.id).status
   end
+
+  def check_following?(other_user_id)
+    relationships.find_by(follow_id: other_user_id, status: 1).present?
+  end
 end

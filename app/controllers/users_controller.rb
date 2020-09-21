@@ -1,8 +1,15 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
+  before_action :check_following_user?, only: [:show]
+
   def index
-    @tweets = Tweet.all.includes(:user)
-    @users = User.all
+    all_tweets = Tweet.all
+    @tweets = []
+    if user_signed_in?
+      all_tweets.each do |tweet|
+        @tweets << tweet if current_user.check_following?(tweet.user_id) || (current_user.id == tweet.user_id)
+      end
+    end
   end
 
   def show
@@ -51,7 +58,7 @@ class UsersController < ApplicationController
 
     # DBに登録済みのResultTimeを取得する
     # ハッシュに詰める hashなので重複は上書きされて最新の値がセットされるはず
-    result_times = ResultTime.where(user_id: current_user.id).where(record_date: @date).includes([:own_time])
+    result_times = ResultTime.where(user_id: @user.id).where(record_date: @date).includes([:own_time])
     @result_times_hash = Hash.new { '' } # 存在しないキーを指定した場合にから文字を返すように宣言
     result_times_type_hash = {} # JSに渡す用のblock_idとtype_idのハッシュ
 
@@ -64,7 +71,7 @@ class UsersController < ApplicationController
     # hashの形でJSに渡す
     gon.result_times_type = result_times_type_hash
     gon.result_times = @result_times_hash
-    gon.user_id = current_user.id
+    gon.user_id = @user.id
 
     # colorここから
     if UserColor.find_by(user_id: current_user.id).present?
@@ -128,5 +135,12 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :icon)
+  end
+
+  def check_following_user?
+    if current_user.check_following?(params[:id]) || (current_user.id == params[:id].to_i)
+    else
+      redirect_to root_path
+    end
   end
 end

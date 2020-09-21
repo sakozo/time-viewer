@@ -242,10 +242,11 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
   <script>
     // datepickerのテキストボックスで変更があった場合に
     $(function() {
-      $('#datepicker').change(function() {
-        let date_val = $('#datepicker').val();
+      $('.datepicker').change(function() {
+        let date_val = $('.datepicker').val();
         let link = '/users/' + gon.user_id + '.' + date_val;
         $('#date_link').attr('href', link);
+        $('#date-link-btn').click();
       });
     })
   </script>
@@ -266,19 +267,19 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
 </head>
 
 <div class='row'>
-  <div class="user-icon-area col s2 l2">
+  <div class="user-icon-area col s4 l4">
     <div class="card-panel">
       <% if @user.icon.attached? %>
-      <%= image_tag @user.icon, width: "30%", height: :auto, class: "circle responsive-img icon-im" %>
+      <%= image_tag @user.icon, width: 90, height: 90, class: :circle %>
       <% else %>
-      <%= image_tag "icon/icon.jpg", width: "30%", height: :auto, class: "circle responsive-img"%>
+      <%= image_tag "icon/icon.jpg", height: 90, width: 90, class: :circle %>
       <% end %>
-      <h5><%= @user.name %>さん</h5>
+      <%= @user.name %>さん
       <% if @user.id == current_user.id %>
 
       <% else %>
       <% if @isRoom == true %>
-      <p><a href="/rooms/<%= @roomId %>">チャットへ</a>
+      <a href="/rooms/<%= @roomId %>">チャットへ</a>
         <% else %>
         <%= form_with model: @room do |f| %>
         <%= fields_for @entry do |e| %>
@@ -291,11 +292,11 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
     </div>
   </div>
 
-  <div class="date-link-area col s8 l8">
+  <div class="date-link-area col s6 l6">
     <div class="card-panel">
       <div class='row'>
-        <div class="date-link-area col s5 l5">
-          <h3>
+        <div class="date-link-area col s8 l8">
+          <h4>
             <%= link_to user_path(current_user.id, @date.to_date-1) do %>
             <button id="previous" class='btn'>＜</button>
             <% end %>
@@ -305,12 +306,13 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
             <%= link_to user_path(current_user.id, @date.to_date+1) do %>
             <button id="next" class='btn'>＞</button>
             <% end %>
-          </h3>
+          </h4>
         </div>
-        <div class="date-link-area col s7 l7">
-          入力日に遷移:<input type='text' class='datepicker' autocomplete="off" />
+        <div class="date-link-area col s4 l4">
+          <p>入力日に遷移:</p>
+          <input type='text' class='datepicker' autocomplete="off" />
           <a id='date_link' href=''>
-            <button id="" class='btn'>Go</button>
+            <button id="date-link-btn" class='btn' style="display:none;">Go</button>
           </a>
         </div>
         </di>
@@ -535,6 +537,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
         <div id="time-show"></div>
       </div>
     </div>
+<% if current_user.id == @user.id %>
     <div class="user-icon-area col s6 l6">
       <div class="card-panel">
         <%= form_with model: @own_time do |form| %>
@@ -578,7 +581,6 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
 
     <div class="user-icon-area col s6 l6">
       <div class="card-panel">
-
         <% if current_user.projects.exists? %>
         <% current_user.projects.each do |project| %>
         <% if project.done_flg == 0 %>
@@ -595,6 +597,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
       </div>
     </div>
   </div>
+<% end %>
 
   <!--
   <h2><%= @user.email %></h2>
