@@ -17,6 +17,7 @@ class TasksController < ApplicationController
     if task.done_task_flg == 0
       # done_flgを1（完了）にする
       if task.update(done_task_flg: 1, done_date: today)
+        flash[:success] = '完了にしました'
         redirect_to tasks_path
       else
         # TODO: 処理
@@ -24,6 +25,7 @@ class TasksController < ApplicationController
     else
       # done_flgを0（取り組み中）にする
       if task.update(done_task_flg: 0, done_date: nil)
+        flash[:success] = '取り組み中にしました'
         redirect_to tasks_path
       else
         # TODO: 処理

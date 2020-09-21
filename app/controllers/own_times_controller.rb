@@ -3,6 +3,7 @@ class OwnTimesController < ApplicationController
     own_time = OwnTime.new(own_time_params)
 
     if own_time.save
+      flash[:success] = '時間の登録を行いました'
       redirect_to user_path(current_user.id)
     else
       # TODO: 処理

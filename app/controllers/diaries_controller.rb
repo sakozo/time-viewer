@@ -1,7 +1,12 @@
 class DiariesController < ApplicationController
   def create
     diary = Diary.new(diary_params)
-    redirect_to user_path(current_user.id) if diary.save
+    if diary.save
+      flash[:success] = '日記の登録を行いました'
+      redirect_to user_path(current_user.id)
+    else
+
+    end
   end
 
   def edit

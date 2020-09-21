@@ -5,6 +5,7 @@ class UserColorsController < ApplicationController
     user_color.colors = user_color_params
 
     if user_color.save
+      flash[:success] = '表示色の設定を行いました'
       redirect_to user_path(current_user.id)
     else
       # TODO: 処理
@@ -15,6 +16,7 @@ class UserColorsController < ApplicationController
     user_color = UserColor.find_by(user_id: current_user.id)
 
     if user_color.update(colors: user_color_params)
+      flash[:success] = '表示色の設定を行いました'
       redirect_to user_path(current_user.id)
     else
       # TODO: 処理

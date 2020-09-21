@@ -14,6 +14,7 @@ class ProjectsController < ApplicationController
     today = Date.today.to_time
     # done_flgを1（完了）にする
     if project.update(done_flg: 1, done_date: today)
+      flash[:success] = '完了にしました'
       redirect_to user_path(current_user.id)
     else
       # TODO: 処理
