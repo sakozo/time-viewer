@@ -20,7 +20,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
     });
 
     // ページから離れる際に検知する
-    $(window).on('beforeunload', function(e){
+    $(window).on('beforeunload', function(e) {
       /** 更新される直前の処理 */
       //$('#result_time_submit_button').trigger("click");
       console.log('beforeunload');
@@ -280,15 +280,15 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
       <% else %>
       <% if @isRoom == true %>
       <a href="/rooms/<%= @roomId %>">チャットへ</a>
-        <% else %>
-        <%= form_with model: @room do |f| %>
-        <%= fields_for @entry do |e| %>
-        <%= e.hidden_field :user_id, value: @user.id %>
-        <% end %>
-        <%= f.submit "チャットを始める" %>
-        <% end %>
-        <% end %>
-        <% end %>
+      <% else %>
+      <%= form_with model: @room do |f| %>
+      <%= fields_for @entry do |e| %>
+      <%= e.hidden_field :user_id, value: @user.id %>
+      <% end %>
+      <%= f.submit "チャットを始める" %>
+      <% end %>
+      <% end %>
+      <% end %>
     </div>
   </div>
 
@@ -537,25 +537,64 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
         <div id="time-show"></div>
       </div>
     </div>
-<% if current_user.id == @user.id %>
+    <% if current_user.id == @user.id %>
     <div class="user-icon-area col s6 l6">
       <div class="card-panel">
         <%= form_with model: @own_time do |form| %>
         <div class="row">
           <div class="input-field col s8 l8">
-            <%= form.collection_select :select_time_1, @select_time1, :id, :name %><button id="red" class='btn' type="button">選択</button><br>
+            <p>
+              <label>
+                <input name="group1" type="radio" />
+                <span>
+                  <%= form.collection_select :select_time_1, @select_time1, :id, :name %>
+                </span>
+                <button id="red" class='btn' type="button">選択</button>
+              </label>
+            </p>
           </div>
           <div class="input-field col s8 l8">
-            <%= form.collection_select :select_time_2, @select_time2, :id, :name %><button id="blue" class='btn' type="button">選択</button><br>
+            <p>
+              <label>
+                <input name="group1" type="radio" />
+                <span>
+                  <%= form.collection_select :select_time_2, @select_time2, :id, :name %>
+                </span>
+                <button id="blue" class='btn' type="button">選択</button>
+              </label>
+            </p>
           </div>
           <div class="input-field col s8 l8">
-            <%= form.collection_select :select_time_3, @select_time3, :id, :name %><button id="green" class='btn' type="button">選択</button><br>
+            <p>
+              <label>
+                <input name="group1" type="radio" />
+                <span>
+                  <%= form.collection_select :select_time_3, @select_time3, :id, :name %>
+                </span>
+                <button id="green" class='btn' type="button">選択</button>
+              </label>
+            </p>
           </div>
           <div class="input-field col s8 l8">
-            <%= form.collection_select :select_time_4, @select_time4, :id, :name %><button id="yellow" class='btn' type="button">選択</button><br>
+            <p>
+              <label>
+                <input name="group1" type="radio" />
+                <span>
+                  <%= form.collection_select :select_time_4, @select_time4, :id, :name %>
+                </span>
+                <button id="yellow" class='btn' type="button">選択</button>
+              </label>
+            </p>
           </div>
           <div class="input-field col s8 l8">
-            <button id="grey" class='btn' type="button">睡眠を選択</button>
+            <p>
+              <label>
+                <input name="group1" type="radio" checked/>
+                <span>
+                </span>
+                <button id="grey" class='btn' type="button">睡眠を選択</button>
+              </label>
+            </p>
           </div>
         </div>
         <% end %>
@@ -599,7 +638,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
       </div>
     </div>
   </div>
-<% end %>
+  <% end %>
 
   <!--
   <h2><%= @user.email %></h2>
