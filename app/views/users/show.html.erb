@@ -209,6 +209,81 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
         //alert(own_time_id);
         //alert(color);
       });
+
+      $('#select_time1').on("click", function() {
+        $('#select_time1_radio').prop('checked', true);
+        color = "1";
+        var val = $('#own_time_select_time_1').val();
+        own_time_id = val;
+        //alert(own_time_id);
+      });
+      $('#select_time1').change(function() {
+        $('#select_time1_radio').prop('checked', true);
+        color = "1";
+        var val = $('#own_time_select_time_1').val();
+        own_time_id = val;
+        //alert(own_time_id);
+      });
+
+      $('#select_time2').on("click", function() {
+        $('#select_time2_radio').prop('checked', true);
+        color = "2";
+        var val = $('#own_time_select_time_2').val();
+        own_time_id = val;
+        //alert(own_time_id);
+      });
+      $('#select_time2').change(function() {
+        $('#select_time2_radio').prop('checked', true);
+        color = "2";
+        var val = $('#own_time_select_time_2').val();
+        own_time_id = val;
+        //alert(own_time_id);
+      });
+
+      $('#select_time3').on("click", function() {
+        $('#select_time3_radio').prop('checked', true);
+        color = "3";
+        var val = $('#own_time_select_time_3').val();
+        own_time_id = val;
+        //alert(own_time_id);
+      });
+      $('#select_time3').change(function() {
+        $('#select_time3_radio').prop('checked', true);
+        color = "3";
+        var val = $('#own_time_select_time_3').val();
+        own_time_id = val;
+        //alert(own_time_id);
+      });
+
+      $('#select_time4').on("click", function() {
+        $('#select_time4_radio').prop('checked', true);
+        color = "4";
+        var val = $('#own_time_select_time_4').val();
+        own_time_id = val;
+        //alert(own_time_id);
+      });
+      $('#select_time4').change(function() {
+        $('#select_time4_radio').prop('checked', true);
+        color = "4";
+        var val = $('#own_time_select_time_4').val();
+        own_time_id = val;
+        //alert(own_time_id);
+      });
+
+      $('#select_time0').on("click", function() {
+        $('#select_time0_radio').prop('checked', true);
+        color = "0";
+        //var val = $('#select0').val();
+        own_time_id = 1;
+        //alert(own_time_id);
+      });
+      $('#select_time0').change(function() {
+        $('#select_time0_radio').prop('checked', true);
+        color = "0";
+        //var val = $('#select0').val();
+        own_time_id = 1;
+        //alert(own_time_id);
+      });
     });
   </script>
   <script>
@@ -543,56 +618,59 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
         <%= form_with model: @own_time do |form| %>
         <div class="row">
           <div class="input-field col s8 l8">
-            <p>
+            <p id="select_time1">
               <label>
-                <input name="group1" type="radio" />
+                <input name="group1" type="radio" id="select_time1_radio"/>
                 <span>
                   <%= form.collection_select :select_time_1, @select_time1, :id, :name %>
                 </span>
-                <button id="red" class='btn' type="button">選択</button>
+                <button id="red" class='btn' type="button" style="display:none">選択</button>
               </label>
             </p>
           </div>
           <div class="input-field col s8 l8">
-            <p>
+            <p id="select_time2">
               <label>
-                <input name="group1" type="radio" />
+                <input name="group1" type="radio" id="select_time2_radio"/>
                 <span>
                   <%= form.collection_select :select_time_2, @select_time2, :id, :name %>
                 </span>
-                <button id="blue" class='btn' type="button">選択</button>
+                <button id="blue" class='btn' type="button" style="display:none">選択</button>
               </label>
             </p>
           </div>
           <div class="input-field col s8 l8">
-            <p>
+            <p id="select_time3">
               <label>
-                <input name="group1" type="radio" />
+                <input name="group1" type="radio" id="select_time3_radio"/>
                 <span>
                   <%= form.collection_select :select_time_3, @select_time3, :id, :name %>
                 </span>
-                <button id="green" class='btn' type="button">選択</button>
+                <button id="green" class='btn' type="button" style="display:none">選択</button>
               </label>
             </p>
           </div>
           <div class="input-field col s8 l8">
-            <p>
+            <p id="select_time4">
               <label>
-                <input name="group1" type="radio" />
+                <input name="group1" type="radio" id="select_time4_radio"/>
                 <span>
                   <%= form.collection_select :select_time_4, @select_time4, :id, :name %>
                 </span>
-                <button id="yellow" class='btn' type="button">選択</button>
+                <button id="yellow" class='btn' type="button" style="display:none">選択</button>
               </label>
             </p>
           </div>
           <div class="input-field col s8 l8">
-            <p>
+            <p id="select_time0">
               <label>
-                <input name="group1" type="radio" checked/>
+                <input name="group1" type="radio" checked id="select_time0_radio"/>
                 <span>
+                <select>
+                  <option value="1" id="select0" >睡眠</option>
+                </select>
                 </span>
-                <button id="grey" class='btn' type="button">睡眠を選択</button>
+                <button id="grey" class='btn' type="button" style="display:none">選択</button>
               </label>
             </p>
           </div>
