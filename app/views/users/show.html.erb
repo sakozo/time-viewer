@@ -242,10 +242,11 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
   <script>
     // datepickerのテキストボックスで変更があった場合に
     $(function() {
-      $('#datepicker').change(function() {
-        let date_val = $('#datepicker').val();
+      $('.datepicker').change(function() {
+        let date_val = $('.datepicker').val();
         let link = '/users/' + gon.user_id + '.' + date_val;
         $('#date_link').attr('href', link);
+        $('#date-link-btn').click();
       });
     })
   </script>
@@ -273,7 +274,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
       <% else %>
       <%= image_tag "icon/icon.jpg", width: "30%", height: :auto, class: "circle responsive-img"%>
       <% end %>
-      <h5><%= @user.name %>さん</h5>
+      <p><%= @user.name %>さん</p>
       <% if @user.id == current_user.id %>
 
       <% else %>
@@ -295,7 +296,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
     <div class="card-panel">
       <div class='row'>
         <div class="date-link-area col s5 l5">
-          <h3>
+          <h4>
             <%= link_to user_path(current_user.id, @date.to_date-1) do %>
             <button id="previous" class='btn'>＜</button>
             <% end %>
@@ -305,12 +306,13 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
             <%= link_to user_path(current_user.id, @date.to_date+1) do %>
             <button id="next" class='btn'>＞</button>
             <% end %>
-          </h3>
+          </h4>
         </div>
         <div class="date-link-area col s7 l7">
-          入力日に遷移:<input type='text' class='datepicker' autocomplete="off" />
+          <p>入力日に遷移:</p>
+          <input type='text' class='datepicker col s3' autocomplete="off" />
           <a id='date_link' href=''>
-            <button id="" class='btn'>Go</button>
+            <button id="date-link-btn" class='btn' style="display:none;">Go</button>
           </a>
         </div>
         </di>
