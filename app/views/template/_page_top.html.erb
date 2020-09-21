@@ -1,84 +1,51 @@
-
 <nav>
   <div class="nav-wrapper">
     <a href="#!" class="brand-logo">Logo</a>
     <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     <ul class="right hide-on-med-and-down">
-      <li><a href="sass.html">Sass</a></li>
-      <li><a href="badges.html">Components</a></li>
-      <li><a href="collapsible.html">Javascript</a></li>
-      <li><a href="mobile.html">Mobile</a></li>
+      <% if user_signed_in? %>
+      <li>
+        <%= link_to users_path do %>
+        <%= content_tag :i, "assignment_turned_in", class: "material-icons right" %> トップへ
+        <% end %>
+      </li>
+      <li>
+        <%= link_to user_path(current_user.id) do %>
+        <%= content_tag :i, "assignment_late", class: "material-icons right" %> 入力画面へ
+        <% end %>
+      </li>
+      <li>
+        <%= link_to settings_path(current_user.id) do %>
+        <%= content_tag :i, "assignment_late", class: "material-icons right" %> 設定画面へ
+        <% end %>
+      </li>
+      <li>
+        <%= link_to chart_path(current_user.id) do %>
+        <%= content_tag :i, "assignment_late", class: "material-icons right" %> グラフ画面へ
+        <% end %>
+      </li>
+      <li>
+        <%= link_to tasks_path do %>
+        <%= content_tag :i, "assignment_late", class: "material-icons right" %> タスク管理画面へ
+        <% end %>
+      </li>
+      <li>
+        <%= link_to destroy_user_session_path, method: :delete do %>
+        <%= content_tag :i, "assignment_late", class: "material-icons right" %> ログアウト
+        <% end %>
+      </li>
+      <% else %>
+      <li>
+        <%= link_to new_user_session_path do %>
+        <%= content_tag :i, "assignment_turned_in", class: "material-icons right" %> ログイン　　
+        <% end %>
+      </li>
+      <li>
+        <%= link_to new_user_registration_path do %>
+        <%= content_tag :i, "assignment_late", class: "material-icons right" %> ユーザー登録
+        <% end %>
+      </li>
+      <% end %>
     </ul>
   </div>
 </nav>
-
-<ul class="sidenav" id="mobile-demo">
-  <li><a href="sass.html">Sass</a></li>
-  <li><a href="badges.html">Components</a></li>
-  <li><a href="collapsible.html">Javascript</a></li>
-  <li><a href="mobile.html">Mobile</a></li>
-</ul>
-<%
-=begin%>
- 
-<div class="row">
-  <div class="col s4 m4 l4 offset-l2">
-    <div class="card">
-      <div class="card-image">
-        <%= image_tag 'logo/timeviewer_logo.png' %>
-      </div>
-      <div class="card-content">
-        <p>簡単入力ライフログアプリ</p>
-      </div>
-    </div>
-  </div>
-  <div class="col s4 m4 l4">
-    <div class="card">
-      <div class="card-content white-text">
-
-      </div>
-    </div>
-  </div>
-</div> 
-<%
-=end%>
-
-<% if user_signed_in? %>
-  <div class="row">
-    <div class="col s4 m4 l4 offset-s4 offset-m4 offset-l4">
-      <%= link_to user_path(current_user.id) do %>
-        <%= button_tag class: 'waves-effect waves-light btn-large' do %>
-          <%= content_tag :i, "assignment_turned_in", class: "material-icons right" %> 入力画面へ
-        <% end %>
-      <% end %>
-
-      <%= link_to settings_path(current_user.id) do %>
-        <%= button_tag class: 'waves-effect waves-light btn-large' do %>
-          <%= content_tag :i, "assignment_late", class: "material-icons right" %> 設定画面へ
-        <% end %>
-      <% end %>
-
-      <%= link_to destroy_user_session_path, method: :delete do %>
-        <%= button_tag class: 'waves-effect waves-light btn-large' do %>
-          <%= content_tag :i, "assignment_late", class: "material-icons right" %> ログアウト
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-<% else %>
-  <div class="row">
-    <div class="col s4 m4 l4 offset-s4 offset-m4 offset-l4">
-      <%= link_to new_user_session_path do %>
-        <%= button_tag class: 'waves-effect waves-light btn-large' do %>
-          <%= content_tag :i, "assignment_turned_in", class: "material-icons right" %> ログイン　　
-        <% end %>
-      <% end %>
-
-      <%= link_to new_user_registration_path do %>
-        <%= button_tag class: 'waves-effect waves-light btn-large' do %>
-          <%= content_tag :i, "assignment_late", class: "material-icons right" %> ユーザー登録
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-<% end %>
