@@ -23,6 +23,7 @@ class ResultTimesController < ApplicationController
       # TODO: 処理
       logger.warn('Error: result_time登録に失敗')
     else
+      flash[:success] = '入力完了しました'
       redirect_to user_path(current_user.id)
     end
     # own_timeの入力ここまで

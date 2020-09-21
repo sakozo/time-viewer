@@ -15,4 +15,5 @@
 //= require rails-ujs
 //= require activestorage
 //= require materialize
+//= require toastr
 //= require_tree .

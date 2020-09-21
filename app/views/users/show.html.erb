@@ -573,6 +573,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
     </div>
     <div class="user-icon-area col s6 l6">
       <div class="card-panel">
+        <p>本日の日記</p>
         <% @today_diaries.each do |today_diary| %>
         <%= today_diary.diary %><br>
         <% end %>
@@ -581,6 +582,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
 
     <div class="user-icon-area col s6 l6">
       <div class="card-panel">
+        <p>マイルストーン</p>
         <% if current_user.projects.exists? %>
         <% current_user.projects.each do |project| %>
         <% if project.done_flg == 0 %>
