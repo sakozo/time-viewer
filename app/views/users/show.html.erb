@@ -8,15 +8,9 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
 
 <head>
   <script>
-    // document.addEventListener('DOMContentLoaded', function() {
-    //   var elems = document.querySelectorAll('select');
-    //   var instances = M.FormSelect.init(elems, options);
-    // });
-
-    // Or with jQuery
-
     $(document).ready(function() {
       $('select').formSelect();
+      $('.modal').modal();
     });
 
     // ページから離れる際に検知する
@@ -147,7 +141,6 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
           });
           $(".ui-selected", this).addClass(setId(own_time_id));
 
-
           var result = $("#select-result").empty();
           $(".ui-selected", this).each(function() {
             var index = $("#selectable li").index(this);
@@ -164,6 +157,8 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
             showInputTime();
 
           });
+
+          $('#temporary-storage').empty();
         }
       });
 
@@ -342,7 +337,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
 </head>
 
 <div class='row'>
-  <div class="user-icon-area col s4 l4">
+  <div class="user-icon-area col s4 l4 offset-l1">
     <div class="card-panel">
       <% if @user.icon.attached? %>
       <%= image_tag @user.icon, width: 90, height: 90, class: :circle %>
@@ -396,7 +391,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
   </div>
 
   <div class="row">
-    <div class="col s4 m4 l4">
+    <div class="col s4 m4 l4 offset-l1">
       <div class="card-panel">
         <ol id="selectable">
           <li class="ui-widget-content tooltipped 0500" id="block_li_0" data-tooltip="5:00">05:00</li>
@@ -606,23 +601,23 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
         </div>
       </div>
     </div>
-    <div class="col s6 m6">
-      <div class="card-panel">
-        <p>入力結果</p>
-        <div id="time-show"></div>
-      </div>
-    </div>
+
     <% if current_user.id == @user.id %>
     <div class="user-icon-area col s6 l6">
-      <div class="card-panel">
+      <div class="card-panel" style="position:fixed; width:48.5%">
         <%= form_with model: @own_time do |form| %>
+        <div class="card-panel">
+          <div id="temporary-storage">まだ入力されていません</div>
+          <div id="time-show"></div>
+        </div>
         <div class="row">
           <div class="input-field col s8 l8">
             <p id="select_time1">
               <label>
-                <input name="group1" type="radio" id="select_time1_radio"/>
+                <input name="group1" type="radio" id="select_time1_radio" />
                 <span>
                   <%= form.collection_select :select_time_1, @select_time1, :id, :name %>
+                  <label>第一分類</label>
                 </span>
                 <button id="red" class='btn' type="button" style="display:none">選択</button>
               </label>
@@ -631,9 +626,10 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
           <div class="input-field col s8 l8">
             <p id="select_time2">
               <label>
-                <input name="group1" type="radio" id="select_time2_radio"/>
+                <input name="group1" type="radio" id="select_time2_radio" />
                 <span>
                   <%= form.collection_select :select_time_2, @select_time2, :id, :name %>
+                  <label>第二分類</label>
                 </span>
                 <button id="blue" class='btn' type="button" style="display:none">選択</button>
               </label>
@@ -642,9 +638,10 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
           <div class="input-field col s8 l8">
             <p id="select_time3">
               <label>
-                <input name="group1" type="radio" id="select_time3_radio"/>
+                <input name="group1" type="radio" id="select_time3_radio" />
                 <span>
                   <%= form.collection_select :select_time_3, @select_time3, :id, :name %>
+                  <label>第三分類</label>
                 </span>
                 <button id="green" class='btn' type="button" style="display:none">選択</button>
               </label>
@@ -653,9 +650,10 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
           <div class="input-field col s8 l8">
             <p id="select_time4">
               <label>
-                <input name="group1" type="radio" id="select_time4_radio"/>
+                <input name="group1" type="radio" id="select_time4_radio" />
                 <span>
                   <%= form.collection_select :select_time_4, @select_time4, :id, :name %>
+                  <label>第四分類</label>
                 </span>
                 <button id="yellow" class='btn' type="button" style="display:none">選択</button>
               </label>
@@ -664,11 +662,11 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
           <div class="input-field col s8 l8">
             <p id="select_time0">
               <label>
-                <input name="group1" type="radio" checked id="select_time0_radio"/>
+                <input name="group1" type="radio" checked id="select_time0_radio" />
                 <span>
-                <select>
-                  <option value="1" id="select0" >睡眠</option>
-                </select>
+                  <select>
+                    <option value="1" id="select0">睡眠</option>
+                  </select>
                 </span>
                 <button id="grey" class='btn' type="button" style="display:none">選択</button>
               </label>
@@ -676,26 +674,45 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
           </div>
         </div>
         <% end %>
+        <!-- Modal Trigger -->
+        <button data-target="modal1" class="btn modal-trigger">日記の入力</button>
+        <!-- Modal Trigger -->
+        <button data-target="modal2" class="btn modal-trigger">マイルストーン</button>
       </div>
     </div>
-    <div class="user-icon-area col s6 l6">
-      <div class="card-panel">
-        日記の入力
-        <%= form_with model: @diary, local: true do |form|  %>
-        <%= form.hidden_field :record_date, value: @date, placeholder: "record_date" %>
-        <%= form.text_area :diary, placeholder: "日記", autocomplete: "off", rows: "5"%>
-        <%= form.submit "登録する", class: "btn"%>
-        <% end %>
+  </div>
+  <% end %>
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <div class="user-icon-area col s6 l6">
+        <div class="card-panel">
+          日記の入力
+          <%= form_with model: @diary, local: true do |form|  %>
+          <%= form.hidden_field :record_date, value: @date, placeholder: "record_date" %>
+          <%= form.text_area :diary, placeholder: "日記", autocomplete: "off", rows: "5"%>
+          <%= form.submit "登録する", class: "btn"%>
+          <% end %>
+        </div>
+      </div>
+      <div class="user-icon-area col s6 l6">
+        <div class="card-panel">
+          <p>本日の日記</p>
+          <% @today_diaries.each do |today_diary| %>
+          <%= today_diary.diary %><br>
+          <% end %>
+        </div>
       </div>
     </div>
-    <div class="user-icon-area col s6 l6">
-      <div class="card-panel">
-        <p>本日の日記</p>
-        <% @today_diaries.each do |today_diary| %>
-        <%= today_diary.diary %><br>
-        <% end %>
-      </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
     </div>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="modal2" class="modal">
+    <div class="modal-content">
 
     <div class="user-icon-area col s6 l6">
       <div class="card-panel">
@@ -706,7 +723,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
         <%= project.name %><br>
         目標日：<%= project.limit_date %>
         残り日数<%= (project.limit_date.to_date - Date.today).round %>日
-        <%= form_with model: project do |form| %>
+        <%= form_with model: project, local: true do |form| %>
         <%= form.hidden_field :id, placeholder: "id", value: project.id %>
         <%= form.submit "完了", class: "btn"%><br><br>
         <% end %>
@@ -715,26 +732,9 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
         <% end %>
       </div>
     </div>
+
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
   </div>
-  <% end %>
-
-  <!--
-  <h2><%= @user.email %></h2>
-
-  <% if @user.id == current_user.id %>
-
-  <% else %>
-  <% if @isRoom == true %>
-  <p><a href="/rooms/<%= @roomId %>">チャットへ</a>
-    <% else %>
-    <%= form_with model: @room do |f| %>
-    <%= fields_for @entry do |e| %>
-    <%= e.hidden_field :user_id, value: @user.id %>
-    <% end %>
-    <%= f.submit "チャットを始める" %>
-    <% end %>
-    <% end %>
-    <% end %>
-
-    <%= link_to "ユーザー一覧に戻る", users_path %> 
--->
