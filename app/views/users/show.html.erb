@@ -282,16 +282,6 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
     });
   </script>
   <script>
-    // $( function() {
-    //   $( ".ui-widget-content" ).tooltip({
-    //     show: false,
-    //     hide: false,
-    //     position: {
-    //       my: 'left', at: 'top', collision: 'none'
-    //     },
-    //   });
-    // });
-
     $(function() {
       //gon.result_times_type
       Object.keys(gon.result_times_type).forEach(function(key) {
@@ -307,6 +297,14 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
         let selector = "#block_li_" + key;
         setToolTip(selector, val);
       }, gon.result_times);
+    });
+
+    // 画面表示時にgon.result_timesが値ありで帰ってきた場合に
+    // 「入力されていません」の文字を削除する
+    $(function() {
+      if(Object.keys(gon.result_times).length != 0){
+        $('#temporary-storage').empty();
+      }
     });
   </script>
   <script>
