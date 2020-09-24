@@ -3,6 +3,7 @@ class ProjectsController < ApplicationController
     project = Project.new(project_params)
 
     if project.save
+      flash[:success] = '作成しました'
       redirect_to user_path(current_user.id)
     else
       # TODO: 処理
