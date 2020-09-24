@@ -35,5 +35,3 @@ public/uploads/*
 *.env
 
 /*.env
-
-/config/database.yml
