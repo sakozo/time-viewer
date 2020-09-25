@@ -40,10 +40,10 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capistrano'
-  gem 'capistrano-rbenv'
+  gem 'capistrano3-unicorn'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
-  gem 'capistrano3-unicorn'
+  gem 'capistrano-rbenv'
 end
 
 group :development do
@@ -91,6 +91,6 @@ gem 'attr_encrypted'
 gem 'material_icons'
 gem 'materialize-sass', '~> 1.0.0'
 
-gem "toastr-rails"
+gem 'toastr-rails'
 
 gem 'aws-sdk-s3', require: false

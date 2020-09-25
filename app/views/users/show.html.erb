@@ -338,24 +338,23 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
   <div class="user-icon-area col s4 l4 offset-l1">
     <div class="card-panel">
       <% if @user.icon.attached? %>
-      <%= image_tag @user.icon, width: 90, height: 90, class: :circle %>
+        <%= image_tag @user.icon, width: 90, height: 90, class: :circle %>
       <% else %>
-      <%= image_tag "icon/icon.jpg", height: 90, width: 90, class: :circle %>
+        <%= image_tag "icon/icon.jpg", height: 90, width: 90, class: :circle %>
       <% end %>
       <%= @user.name %>さん
       <% if @user.id == current_user.id %>
-
       <% else %>
-      <% if @isRoom == true %>
-      <a href="/rooms/<%= @roomId %>">チャットへ</a>
-      <% else %>
-      <%= form_with model: @room do |f| %>
-      <%= fields_for @entry do |e| %>
-      <%= e.hidden_field :user_id, value: @user.id %>
-      <% end %>
-      <%= f.submit "チャットを始める" %>
-      <% end %>
-      <% end %>
+        <% if @isRoom == true %>
+          <a href="/rooms/<%= @roomId %>">チャットへ</a>
+        <% else %>
+          <%= form_with model: @room do |f| %>
+          <%= fields_for @entry do |e| %>
+          <%= e.hidden_field :user_id, value: @user.id %>
+          <% end %>
+          <%= f.submit "チャットを始める" %>
+          <% end %>
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -615,7 +614,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
                 <input name="group1" type="radio" id="select_time1_radio" />
                 <span>
                   <%= form.collection_select :select_time_1, @select_time1, :id, :name %>
-                  <label>第一分類</label>
+                  <label>第一分類（緊急：高　重要：高）</label>
                 </span>
                 <button id="red" class='btn' type="button" style="display:none">選択</button>
               </label>
@@ -627,7 +626,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
                 <input name="group1" type="radio" id="select_time2_radio" />
                 <span>
                   <%= form.collection_select :select_time_2, @select_time2, :id, :name %>
-                  <label>第二分類</label>
+                  <label>第二分類（緊急：低　重要：高）</label>
                 </span>
                 <button id="blue" class='btn' type="button" style="display:none">選択</button>
               </label>
@@ -639,7 +638,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
                 <input name="group1" type="radio" id="select_time3_radio" />
                 <span>
                   <%= form.collection_select :select_time_3, @select_time3, :id, :name %>
-                  <label>第三分類</label>
+                  <label>第三分類（緊急：高　重要：低）</label>
                 </span>
                 <button id="green" class='btn' type="button" style="display:none">選択</button>
               </label>
@@ -651,7 +650,7 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
                 <input name="group1" type="radio" id="select_time4_radio" />
                 <span>
                   <%= form.collection_select :select_time_4, @select_time4, :id, :name %>
-                  <label>第四分類</label>
+                  <label>第四分類（緊急：低　重要：低）</label>
                 </span>
                 <button id="yellow" class='btn' type="button" style="display:none">選択</button>
               </label>
@@ -736,3 +735,9 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
     </div>
   </div>
+
+<style>
+.input-field{
+  margin-bottom: 20px;
+}
+</style>

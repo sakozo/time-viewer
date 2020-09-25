@@ -4,8 +4,6 @@ class DiariesController < ApplicationController
     if diary.save
       flash[:success] = '日記の登録を行いました'
       redirect_to user_path(current_user.id)
-    else
-
     end
   end
 
