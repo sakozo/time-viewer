@@ -1,8 +1,17 @@
 class UsersController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index]
+  skip_before_action :authenticate_user!, only: [:index, :top]
   before_action :check_following_user?, only: [:show]
 
+  def top # root_pathの制御
+    if user_signed_in?
+      redirect_to user_path(current_user.id)
+    else
+      redirect_to users_path
+    end
+  end
+
   def index
+
     all_tweets = Tweet.all
     @tweets = []
     if user_signed_in?
