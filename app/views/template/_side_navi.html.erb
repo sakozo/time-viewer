@@ -1,0 +1,46 @@
+<ul id="slide-out" class="sidenav sidenav-fixed">
+  <li><div class="user-view">
+    <div class="background">
+      <%= image_tag "icon/icon.jpg"%>
+    </div>
+    <% if @user.icon.attached? %>
+      <%= image_tag @user.icon, class: :circle %>
+    <% else %>
+      <%= image_tag "icon/icon.jpg", class: :circle %>
+    <% end %>
+    <a href="#name"><span class="white-text name"><%= @user.name %></span></a>
+    <span class="white-text email">
+      <% if @user.id == current_user.id %>
+      <% else %>
+        <% if @isRoom == true %>
+          <a href="/rooms/<%= @roomId %>">チャットへ</a>
+        <% else %>
+          <%= form_with model: @room do |f| %>
+          <%= fields_for @entry do |e| %>
+          <%= e.hidden_field :user_id, value: @user.id %>
+          <% end %>
+          <%= f.submit "チャットを始める" %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </span>
+  </div></li>
+  <li>
+    <%= link_to user_path(current_user.id) do %><i class="material-icons">cloud</i>入力画面<% end %>
+  </li>
+  <li>
+    <%= link_to chart_path(current_user.id) do %><i class="material-icons">cloud</i>グラフ表示<% end %></li>
+  <li>
+    <%= link_to tasks_path do %>
+    <i class="material-icons">cloud</i>タスク管理
+    <% end %>
+  </li>
+  <li>
+    <%= link_to users_path do %><i class="material-icons">cloud</i>フォロー管理<% end %>
+  </li>
+  <li><div class="divider"></div></li>
+  <li><a class="subheader">Functions</a></li>
+  <li><a class="" href="#!"><i class="material-icons">cloud</i><span data-target="modal1" class="modal-trigger">日記の入力</span></a></li>
+  <li><a class="" href="#!"><i class="material-icons">cloud</i><span data-target="modal2" class="modal-trigger">マイルストーン</span></a></li>
+</ul>
+<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>

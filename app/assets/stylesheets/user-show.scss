@@ -1,0 +1,69 @@
+#feedback {
+  font-size: 1em;
+}
+
+/* #selectable .ui-selecting { background: #FECA40; } */
+/* #selectable .ui-selected { background: #F39814; color: white; } */
+#selectable {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+#selectable li {
+  margin: 0px;
+  padding: 0.1em;
+  font-size: 0.6em;
+  font-weight: bold;
+  height: 20px;
+  width: 100%;
+  text-align: center;
+  cursor: default;
+}
+
+/* .ui-widget-content { height: 0.1px} */
+
+li {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.input-time {
+  height: 70vh;
+  overflow: auto;
+  overscroll-behavior-y: contain;
+}
+
+.todo-area{
+  height: 15vh;
+  overflow: auto;
+  overscroll-behavior-y: contain;
+}
+
+.todo-area{
+  margin-top: 5px;
+}
+
+.submit-button{
+  margin-top: 20px;
+}
+
+#select_time1{
+  margin-bottom: 15px;
+}
+#select_time2{
+  margin-bottom: 15px;
+}
+#select_time3{
+  margin-bottom: 15px;
+}
+#select_time4{
+  margin-bottom: 15px;
+}
+#select_time0{
+  margin-bottom: 10px;
+}
