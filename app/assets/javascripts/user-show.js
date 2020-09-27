@@ -102,7 +102,7 @@ $(function () {
           //own_timeのnameごとに時間を表示
           showInputTime();
         });
-        //$('#time-submit-button').click();
+        $('#time-submit-button').click();
         $('#temporary-storage').empty();
       }
     });
