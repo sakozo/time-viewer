@@ -259,7 +259,7 @@ $(function () {
   })
 
   // datepickerのテキストボックスで変更があった場合に
-  $('.datepicker').change(function () {
+  $('.datepicker-date-link').change(function () {
     let date_val = $('.datepicker').val();
     let link = '/users/' + gon.user_id + '.' + date_val;
     $('#date_link').attr('href', link);
