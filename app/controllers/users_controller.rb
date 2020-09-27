@@ -39,6 +39,8 @@ class UsersController < ApplicationController
     # Diary.find_by(record_date: @date).nil? ? @diary = Diary.new : @diary = Diary.find_by(record_date: @date)
     @diary = Diary.new
 
+    @project = Project.new
+
     # own_timeの選択肢を設定
     @all_select_time = OwnTime.all
     @select_time1 = OwnTime.where(time_type: 1)

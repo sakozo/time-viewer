@@ -31,9 +31,16 @@ li {
   -ms-user-select: none;
   user-select: none;
 }
+#input-date-show{
+  margin-top: 45px;
+}
+
+.input-date-button{
+  cursor: pointer;
+}
 
 .input-time {
-  height: 70vh;
+  height: 68vh;
   overflow: auto;
   overscroll-behavior-y: contain;
 }
@@ -42,14 +49,55 @@ li {
   height: 15vh;
   overflow: auto;
   overscroll-behavior-y: contain;
+  overflow-y: scroll;
 }
+.todo-area{overflow-y:scroll;}
+.todo-area::-webkit-scrollbar{width:3px;}/*バーの太さ*/
+.todo-area::-webkit-scrollbar-track{background:#dddddd;}/*バーの背景色*/
+.todo-area::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
 
 .todo-area{
   margin-top: 5px;
 }
 
+.input-time{overflow-y:scroll;}
+.input-time::-webkit-scrollbar{width:3px;}/*バーの太さ*/
+.input-time::-webkit-scrollbar-track{background:#dddddd;}/*バーの背景色*/
+.input-time::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
+
+.todo-done-area{
+  height: 25vh;
+}
+.todo-done-area{overflow-y:scroll;}
+.todo-done-area::-webkit-scrollbar{width:3px;}/*バーの太さ*/
+.todo-done-area::-webkit-scrollbar-track{background:#dddddd;}/*バーの背景色*/
+.todo-done-area::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
+
 .submit-button{
   margin-top: 20px;
+}
+
+.todo-input-area{
+  height: 30vh;
+}
+
+#modal1{
+  height: 80vh;
+}
+#diary-text-area{
+  height: 50vh;
+}
+.diary-show-area{
+  height: 50vh;
+}
+#modal2{
+  height: 90vh;
+}
+#modal3{
+  height: 50vh;
+}
+#modal4{
+  height: 110vh;
 }
 
 #select_time1{
