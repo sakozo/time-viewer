@@ -1,0 +1,117 @@
+#feedback {
+  font-size: 1em;
+}
+
+/* #selectable .ui-selecting { background: #FECA40; } */
+/* #selectable .ui-selected { background: #F39814; color: white; } */
+#selectable {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+#selectable li {
+  margin: 0px;
+  padding: 0.1em;
+  font-size: 0.6em;
+  font-weight: bold;
+  height: 20px;
+  width: 100%;
+  text-align: center;
+  cursor: default;
+}
+
+/* .ui-widget-content { height: 0.1px} */
+
+li {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+#input-date-show{
+  margin-top: 45px;
+}
+
+.input-date-button{
+  cursor: pointer;
+}
+
+.input-time {
+  height: 68vh;
+  overflow: auto;
+  overscroll-behavior-y: contain;
+}
+
+.todo-area{
+  height: 15vh;
+  overflow: auto;
+  overscroll-behavior-y: contain;
+  overflow-y: scroll;
+}
+.todo-area{overflow-y:scroll;}
+.todo-area::-webkit-scrollbar{width:3px;}/*バーの太さ*/
+.todo-area::-webkit-scrollbar-track{background:#dddddd;}/*バーの背景色*/
+.todo-area::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
+
+.todo-area{
+  margin-top: 5px;
+}
+
+.input-time{overflow-y:scroll;}
+.input-time::-webkit-scrollbar{width:3px;}/*バーの太さ*/
+.input-time::-webkit-scrollbar-track{background:#dddddd;}/*バーの背景色*/
+.input-time::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
+
+.todo-done-area{
+  height: 25vh;
+}
+.todo-done-area{overflow-y:scroll;}
+.todo-done-area::-webkit-scrollbar{width:3px;}/*バーの太さ*/
+.todo-done-area::-webkit-scrollbar-track{background:#dddddd;}/*バーの背景色*/
+.todo-done-area::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
+
+.submit-button{
+  margin-top: 20px;
+}
+
+.todo-input-area{
+  height: 30vh;
+}
+
+#modal1{
+  height: 80vh;
+}
+#diary-text-area{
+  height: 50vh;
+}
+.diary-show-area{
+  height: 50vh;
+}
+#modal2{
+  height: 90vh;
+}
+#modal3{
+  height: 50vh;
+}
+#modal4{
+  height: 50vh;
+}
+
+#select_time1{
+  margin-bottom: 15px;
+}
+#select_time2{
+  margin-bottom: 15px;
+}
+#select_time3{
+  margin-bottom: 15px;
+}
+#select_time4{
+  margin-bottom: 15px;
+}
+#select_time0{
+  margin-bottom: 10px;
+}

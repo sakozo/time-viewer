@@ -1,7 +1,6 @@
 class SettingsController < ApplicationController
   def index
     @user = User.find(current_user.id)
-    @project = Project.new
 
     @all_select_time = OwnTime.all
     @select_time1 = OwnTime.where(time_type: 1)

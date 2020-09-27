@@ -1,395 +1,61 @@
 <%= render partial: "template/page_top_main",  locals: {guide_message: "入力画面"}%>
 
-<%
-=begin%>
-TODO: ホバー したときのカーソル ホバー したときのブロックのエフェクト　同じ色を選択した場合キャンセルできる　リセットボタンでクラスと色を取り除く
-<%
-=end%>
+<div class="row">
 
-<head>
-  <script>
-    $(document).ready(function() {
-      $('select').formSelect();
-      $('.modal').modal();
-    });
-
-    // ページから離れる際に検知する
-    $(window).on('beforeunload', function(e) {
-      /** 更新される直前の処理 */
-      //$('#result_time_submit_button').trigger("click");
-      console.log('beforeunload');
-    });
-  </script>
-  <style>
-    #feedback {
-      font-size: 1em;
-    }
-
-    /* #selectable .ui-selecting { background: #FECA40; } */
-    /* #selectable .ui-selected { background: #F39814; color: white; } */
-    #selectable {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      width: 100%;
-    }
-
-    #selectable li {
-      margin: 0px;
-      padding: 0.1em;
-      font-size: 0.6em;
-      font-weight: bold;
-      height: 20px;
-      width: 100%;
-      text-align: center;
-      cursor: default;
-    }
-
-    /* .ui-widget-content { height: 0.1px} */
-  </style>
-  <style>
-    li {
-      cursor: pointer;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-  </style>
-  <script>
-    var color = 0;
-    var own_time_id = 1;
-    var result_times = gon.result_times;
-    var own_time_list = gon.own_time_list;
-    var block_li_id_list = ["5:00", "5:15", "5:30", "5:45", "6:00", "6:15", "6:30", "6:45", "7:00", "7:15", "7:30", "7:45", "8:00", "8:15", "8:30", "8:45", "9:00", "9:15", "9:30", "9:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45", "16:00", "16:15", "16:30", "16:45", "17:00", "17:15", "17:30", "17:45", "18:00", "18:15", "18:30", "18:45", "19:00", "19:15", "19:30", "19:45", "20:00", "20:15", "20:30", "20:45", "21:00", "21:15", "21:30", "21:45", "22:00", "22:15", "22:30", "22:45", "23:00", "23:15", "23:30", "23:45", "24:00", "24:15", "24:30", "24:45", "1:00", "1:15", "1:30", "1:45", "2:00", "2:15", "2:30", "2:45", "3:00", "3:15", "3:30", "3:45", "4:00", "4:15", "4:30", "4:45"];
-  </script>
-  <script>
-    $(document).ready(function() {
-      $('.datepicker').datepicker({
-        format: "yyyy-mm-dd"
-      });
-    });
-  </script>
-  <script>
-    //色の定義
-    var setColor = function(type) {
-      //gonでユーザー設定の色を配列で取得する
-      const user_color_array = gon.user_color_array
-      let draw_color = user_color_array[type];
-      return draw_color;
-    }
-    var setId = function(id) {
-      var time_id = 'time_' + id;
-      return time_id;
-      //$( ".ui-selected", this ).addClass(time_id);
-    }
-  </script>
-  <script>
-    //tooltipに入力したown_timeのnameを追加するメソッド
-    function setToolTip(block_selector, time_id) {
-      let index = Number(block_selector.slice(10))
-      let new_title = block_li_id_list[index] + " " + own_time_list[time_id];
-      $(block_selector).attr('data-tooltip', new_title);
-    }
-  </script>
-  <script>
-    $(function() {
-      showInputTime();
-    });
-  </script>
-
-  <script>
-    function showInputTime() {
-      //inputフォームに入力されたown_time_idをカウントする
-      let time_array = Array(gon.own_time_count); //配列の長さを確定(idの数だけ確保)
-      time_array.fill(0); //0で初期化
-      $("[id^=block_]").each(function(index, element) {
-        var time_id = $(element).val();
-        time_array[time_id] += 1; //idと一致する要素のカウントを+1
-      })
-      $('#time-show').empty();
-      $.each(time_array, function(index, val) {
-        //0番目はから文字のためスキップ
-        if (index == 0) {
-          return;
-        }
-        //0なら次のループへ
-        if (val == 0) {
-          return;
-        }
-        //15分ブロックの数から時間に変換
-        var hour = Math.floor(val / 4);
-        var minutes = (val % 4 == 0) ? "00" : val % 4 * 15; //参考演算子 0なら"00"とする
-        var show_time = hour + ":" + minutes;
-        $('#time-show').append(gon.own_time_list[index] + ":" + show_time + " ")
-      });
-      $('#tweet').val($('#time-show').text());
-    }
-  </script>
-  <script>
-    $(function() {
-      $("#selectable").selectable({
-        stop: function() {
-
-          //ここで選択箇所の色を上書き、他を選択しても消えないようにする
-          //TODO:重要度×緊急度のマトリクスの説明
-          //選択項目と同じ要領で合計時間を直後に右側に表示
-          //TODO:メソッド切り出しで処理を共通化 javascriptファイルに処理を持っていく
-          $(".ui-selected", this).css('background-color', setColor(color));
-          $(".ui-selected", this).removeClass(function(index, className) {
-            return (className.match(/\btime_\S+/g) || []).join(' ');
-          });
-          $(".ui-selected", this).addClass(setId(own_time_id));
-
-          var result = $("#select-result").empty();
-          $(".ui-selected", this).each(function() {
-            var index = $("#selectable li").index(this);
-            result.append(" #" + (index + 1));
-            var block_id = "#block_" + index;
-            var class_name = $(".ui-selected").attr('class');
-            $(block_id).val(own_time_id);
-
-            //tooltipにown_timeを追加
-            var block_li_id = "#block_li_" + index
-            setToolTip(block_li_id, own_time_id);
-
-            //own_timeのnameごとに時間を表示
-            showInputTime();
-
-          });
-
-          $('#temporary-storage').empty();
-        }
-      });
-
-      $('#reset').on("click", function() {
-        $(".ui-selectee").css('background-color', '#fff');
-        $(".ui-selectee").removeClass(function(index, className) {
-          return (className.match(/\btime_\S+/g) || []).join(' ');
-        });
-        $('[id^="block_"]').val('');
-      });
-
-      $('#red').on("click", function() {
-        color = "1";
-        var val = $('#own_time_select_time_1').val();
-        own_time_id = val;
-        //alert(val);
-        //alert(color);
-      });
-      $('#blue').on("click", function() {
-        color = "2";
-        var val = $('#own_time_select_time_2').val();
-        own_time_id = val;
-        //alert(val);
-        //alert(color);
-      });
-      $('#green').on("click", function() {
-        color = "3";
-        var val = $('#own_time_select_time_3').val();
-        own_time_id = val;
-        //alert(val);
-        //alert(color);
-      });
-      $('#yellow').on("click", function() {
-        color = "4";
-        var val = $('#own_time_select_time_4').val();
-        own_time_id = val;
-        //alert(val);
-        //alert(color);
-      });
-      $('#grey').on("click", function() {
-        color = "0";
-        own_time_id = 1;
-        //alert(own_time_id);
-        //alert(color);
-      });
-
-      $('#select_time1').on("click", function() {
-        $('#select_time1_radio').prop('checked', true);
-        color = "1";
-        var val = $('#own_time_select_time_1').val();
-        own_time_id = val;
-        //alert(own_time_id);
-      });
-      $('#select_time1').change(function() {
-        $('#select_time1_radio').prop('checked', true);
-        color = "1";
-        var val = $('#own_time_select_time_1').val();
-        own_time_id = val;
-        //alert(own_time_id);
-      });
-
-      $('#select_time2').on("click", function() {
-        $('#select_time2_radio').prop('checked', true);
-        color = "2";
-        var val = $('#own_time_select_time_2').val();
-        own_time_id = val;
-        //alert(own_time_id);
-      });
-      $('#select_time2').change(function() {
-        $('#select_time2_radio').prop('checked', true);
-        color = "2";
-        var val = $('#own_time_select_time_2').val();
-        own_time_id = val;
-        //alert(own_time_id);
-      });
-
-      $('#select_time3').on("click", function() {
-        $('#select_time3_radio').prop('checked', true);
-        color = "3";
-        var val = $('#own_time_select_time_3').val();
-        own_time_id = val;
-        //alert(own_time_id);
-      });
-      $('#select_time3').change(function() {
-        $('#select_time3_radio').prop('checked', true);
-        color = "3";
-        var val = $('#own_time_select_time_3').val();
-        own_time_id = val;
-        //alert(own_time_id);
-      });
-
-      $('#select_time4').on("click", function() {
-        $('#select_time4_radio').prop('checked', true);
-        color = "4";
-        var val = $('#own_time_select_time_4').val();
-        own_time_id = val;
-        //alert(own_time_id);
-      });
-      $('#select_time4').change(function() {
-        $('#select_time4_radio').prop('checked', true);
-        color = "4";
-        var val = $('#own_time_select_time_4').val();
-        own_time_id = val;
-        //alert(own_time_id);
-      });
-
-      $('#select_time0').on("click", function() {
-        $('#select_time0_radio').prop('checked', true);
-        color = "0";
-        //var val = $('#select0').val();
-        own_time_id = 1;
-        //alert(own_time_id);
-      });
-      $('#select_time0').change(function() {
-        $('#select_time0_radio').prop('checked', true);
-        color = "0";
-        //var val = $('#select0').val();
-        own_time_id = 1;
-        //alert(own_time_id);
-      });
-    });
-  </script>
-  <script>
-    $(function() {
-      //gon.result_times_type
-      Object.keys(gon.result_times_type).forEach(function(key) {
-        var val = this[key]; // this は gon.result_times_type
-
-        var selector = "#block_li_" + key;
-        $(selector).css('background-color', setColor(val));
-
-      }, gon.result_times_type);
-
-      Object.keys(gon.result_times).forEach(function(key) {
-        let val = this[key]; // this は gon.result_times
-        let selector = "#block_li_" + key;
-        setToolTip(selector, val);
-      }, gon.result_times);
-    });
-
-    // 画面表示時にgon.result_timesが値ありで帰ってきた場合に
-    // 「入力されていません」の文字を削除する
-    $(function() {
-      if(Object.keys(gon.result_times).length != 0){
-        $('#temporary-storage').empty();
-      }
-    });
-  </script>
-  <script>
-    // datepickerのテキストボックスで変更があった場合に
-    $(function() {
-      $('.datepicker').change(function() {
-        let date_val = $('.datepicker').val();
-        let link = '/users/' + gon.user_id + '.' + date_val;
-        $('#date_link').attr('href', link);
-        $('#date-link-btn').click();
-      });
-    })
-  </script>
-  <script>
-    $(document).ready(function() {
-      $('.tooltipped').tooltip({
-        exitDelay: 0,
-        enterDelay: 0,
-        inDuration: 0,
-        outDuration: 0,
-        position: 'top',
-        margin: 0,
-        transitionMovement: 0,
-      });
-    });
-  </script>
-
-</head>
-
-<div class='row'>
-  <div class="user-icon-area col s4 l4 offset-l1">
-    <div class="card-panel">
-      <% if @user.icon.attached? %>
-        <%= image_tag @user.icon, width: 90, height: 90, class: :circle %>
-      <% else %>
-        <%= image_tag "icon/icon.jpg", height: 90, width: 90, class: :circle %>
-      <% end %>
-      <%= @user.name %>さん
-      <% if @user.id == current_user.id %>
-      <% else %>
-        <% if @isRoom == true %>
-          <a href="/rooms/<%= @roomId %>">チャットへ</a>
-        <% else %>
-          <%= form_with model: @room do |f| %>
-          <%= fields_for @entry do |e| %>
-          <%= e.hidden_field :user_id, value: @user.id %>
-          <% end %>
-          <%= f.submit "チャットを始める" %>
-          <% end %>
-        <% end %>
-      <% end %>
-    </div>
+  <div class="col s3" id="side">
+    <%= render partial: "template/side_navi" %>
   </div>
-
-  <div class="date-link-area col s6 l6">
-    <div class="card-panel">
+  <div class="col s9">
+    <div class="date-link-area col s12 l12">
       <div class='row'>
-        <div class="date-link-area col s8 l8">
-          <h4>
+        <div class="date-link-area col s4 l4">
+          <h4 id="input-date-show">
             <%= link_to user_path(current_user.id, @date.to_date-1) do %>
-            <button id="previous" class='btn'>＜</button>
+            <i class="material-icons">chevron_left</i>
             <% end %>
 
             <%= @date %>
 
             <%= link_to user_path(current_user.id, @date.to_date+1) do %>
-            <button id="next" class='btn'>＞</button>
+            <i class="material-icons">chevron_right</i>
             <% end %>
+            <i class="material-icons input-date-button">date_range</i>
+            <input type='text' class='datepicker' autocomplete="off" style="display:none;" />
+            <a id='date_link' href=''>
+              <button id="date-link-btn" class='btn' style="display:none;">Go</button>
+            </a>
           </h4>
         </div>
-        <div class="date-link-area col s4 l4">
-          <p>入力日に遷移:</p>
-          <input type='text' class='datepicker' autocomplete="off" />
-          <a id='date_link' href=''>
-            <button id="date-link-btn" class='btn' style="display:none;">Go</button>
-          </a>
+        <div class="todo-area col s6 l6 offset-s1 offset-l1">
+          <p>ToDoリスト</p>
+          <table class="striped">
+            <tbody>
+              <% if current_user.projects.exists? %>
+              <% current_user.projects.each do |project| %>
+              <% if project.done_flg == 0 %>
+              <tr>
+                <td><%= project.name %></td>
+                <td>目標日：<%= project.limit_date %></td>
+                <td>残り日数<%= (project.limit_date.to_date - Date.today).round %>日</td>
+                <%= form_with model: project, local: true do |form| %>
+                <%= form.hidden_field :id, placeholder: "id", value: project.id %>
+                <td>
+                  <%= form.submit "完了", class: "btn submit-button  btn-small"%><br><br>
+                  <% end %>
+                </td>
+              </tr>
+              <% end %>
+              <% else %>
+              <% end %>
+            </tbody>
+          </table>
+          <% end %>
         </div>
-        </di>
       </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col s4 m4 l4 offset-l1">
-      <div class="card-panel">
+    <div class="row">
+      <div class="col s5 m5 l5 input-time">
         <ol id="selectable">
           <li class="ui-widget-content tooltipped 0500" id="block_li_0" data-tooltip="5:00">05:00</li>
           <li class="ui-widget-content tooltipped 0515" id="block_li_1" data-tooltip="5:15">05:15</li>
@@ -592,152 +258,270 @@ TODO: ホバー したときのカーソル ホバー したときのブロッ�
             <%= form.hidden_field :tweet, name: "text" , id: :tweet %>
           </div>
           <div>
-            <%= form.submit "入力完了", class: "btn"%>
+            <%= form.submit "入力完了", class: "btn", id: "time-submit-button", style: "display:none"%>
           </div>
           <% end %>
         </div>
       </div>
-    </div>
 
-    <% if current_user.id == @user.id %>
-    <div class="user-icon-area col s6 l6">
-      <div class="card-panel" style="position:fixed; width:48.5%">
-        <%= form_with model: @own_time do |form| %>
+      <% if current_user.id == @user.id %>
+      <div class="user-icon-area col s3 l3">
+        <div class="card-panel">
+          <%= form_with model: @own_time do |form| %>
+          <div class="row">
+            <div class="input-field col s12 l12">
+              <p id="select_time1">
+                <label>
+                  <input name="group1" type="radio" id="select_time1_radio" />
+                  <span>
+                    <%= form.collection_select :select_time_1, @select_time1, :id, :name %>
+                    <label>第一分類（緊急：高　重要：高）</label>
+                  </span>
+                  <button id="red" class='btn' type="button" style="display:none">選択</button>
+                </label>
+              </p>
+            </div>
+            <div class="input-field col s12 l12">
+              <p id="select_time2">
+                <label>
+                  <input name="group1" type="radio" id="select_time2_radio" />
+                  <span>
+                    <%= form.collection_select :select_time_2, @select_time2, :id, :name %>
+                    <label>第二分類（緊急：低　重要：高）</label>
+                  </span>
+                  <button id="blue" class='btn' type="button" style="display:none">選択</button>
+                </label>
+              </p>
+            </div>
+            <div class="input-field col s12 l12">
+              <p id="select_time3">
+                <label>
+                  <input name="group1" type="radio" id="select_time3_radio" />
+                  <span>
+                    <%= form.collection_select :select_time_3, @select_time3, :id, :name %>
+                    <label>第三分類（緊急：高　重要：低）</label>
+                  </span>
+                  <button id="green" class='btn' type="button" style="display:none">選択</button>
+                </label>
+              </p>
+            </div>
+            <div class="input-field col s12 l12">
+              <p id="select_time4">
+                <label>
+                  <input name="group1" type="radio" id="select_time4_radio" />
+                  <span>
+                    <%= form.collection_select :select_time_4, @select_time4, :id, :name %>
+                    <label>第四分類（緊急：低　重要：低）</label>
+                  </span>
+                  <button id="yellow" class='btn' type="button" style="display:none">選択</button>
+                </label>
+              </p>
+            </div>
+            <div class="input-field col s12 l12">
+              <p id="select_time0">
+                <label>
+                  <input name="group1" type="radio" checked id="select_time0_radio" />
+                  <span>
+                    <select>
+                      <option value="1" id="select0">睡眠</option>
+                    </select>
+                  </span>
+                  <button id="grey" class='btn' type="button" style="display:none">選択</button>
+                </label>
+              </p>
+            </div>
+          </div>
+          <% end %>
+          <button class="btn" id="instead-time-submit-button">入力完了</button>
+        </div>
+      </div>
+      <% end %>
+
+      <div class="date-link-area col s3 l3">
         <div class="card-panel">
           <div id="temporary-storage">まだ入力されていません</div>
           <div id="time-show"></div>
         </div>
-        <div class="row">
-          <div class="input-field col s8 l8">
-            <p id="select_time1">
-              <label>
-                <input name="group1" type="radio" id="select_time1_radio" />
-                <span>
-                  <%= form.collection_select :select_time_1, @select_time1, :id, :name %>
-                  <label>第一分類（緊急：高　重要：高）</label>
-                </span>
-                <button id="red" class='btn' type="button" style="display:none">選択</button>
-              </label>
-            </p>
-          </div>
-          <div class="input-field col s8 l8">
-            <p id="select_time2">
-              <label>
-                <input name="group1" type="radio" id="select_time2_radio" />
-                <span>
-                  <%= form.collection_select :select_time_2, @select_time2, :id, :name %>
-                  <label>第二分類（緊急：低　重要：高）</label>
-                </span>
-                <button id="blue" class='btn' type="button" style="display:none">選択</button>
-              </label>
-            </p>
-          </div>
-          <div class="input-field col s8 l8">
-            <p id="select_time3">
-              <label>
-                <input name="group1" type="radio" id="select_time3_radio" />
-                <span>
-                  <%= form.collection_select :select_time_3, @select_time3, :id, :name %>
-                  <label>第三分類（緊急：高　重要：低）</label>
-                </span>
-                <button id="green" class='btn' type="button" style="display:none">選択</button>
-              </label>
-            </p>
-          </div>
-          <div class="input-field col s8 l8">
-            <p id="select_time4">
-              <label>
-                <input name="group1" type="radio" id="select_time4_radio" />
-                <span>
-                  <%= form.collection_select :select_time_4, @select_time4, :id, :name %>
-                  <label>第四分類（緊急：低　重要：低）</label>
-                </span>
-                <button id="yellow" class='btn' type="button" style="display:none">選択</button>
-              </label>
-            </p>
-          </div>
-          <div class="input-field col s8 l8">
-            <p id="select_time0">
-              <label>
-                <input name="group1" type="radio" checked id="select_time0_radio" />
-                <span>
-                  <select>
-                    <option value="1" id="select0">睡眠</option>
-                  </select>
-                </span>
-                <button id="grey" class='btn' type="button" style="display:none">選択</button>
-              </label>
-            </p>
-          </div>
-        </div>
-        <% end %>
-        <!-- Modal Trigger -->
-        <button data-target="modal1" class="btn modal-trigger">日記の入力</button>
-        <!-- Modal Trigger -->
-        <button data-target="modal2" class="btn modal-trigger">マイルストーン</button>
       </div>
-    </div>
-  </div>
-  <% end %>
 
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-      <div class="user-icon-area col s6 l6">
-        <div class="card-panel">
-          日記の入力
-          <%= form_with model: @diary, local: true do |form|  %>
-          <%= form.hidden_field :record_date, value: @date, placeholder: "record_date" %>
-          <%= form.text_area :diary, placeholder: "日記", autocomplete: "off", rows: "5"%>
-          <%= form.submit "登録する", class: "btn"%>
-          <% end %>
+
+
+      <!-- Modal Structure -->
+      <div id="modal1" class="modal">
+        <div class="modal-content">
+          <div class="diary-input-area col s6 l6">
+            <div class="card-panel">
+              日記の入力
+              <%= form_with model: @diary, local: true do |form|  %>
+              <%= form.hidden_field :record_date, value: @date, placeholder: "record_date" %>
+              <%= form.text_area :diary, placeholder: "日記", autocomplete: "off", rows: "5", id: "diary-text-area"%>
+              <%= form.submit "登録する", class: "btn"%>
+              <% end %>
+            </div>
+          </div>
+          <div class="col s6 l6">
+            <div class="card-panel diary-show-area">
+              <p>本日の日記</p>
+              <% @today_diaries.each do |today_diary| %>
+              <%= today_diary.diary %><br>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
         </div>
       </div>
-      <div class="user-icon-area col s6 l6">
-        <div class="card-panel">
-          <p>本日の日記</p>
-          <% @today_diaries.each do |today_diary| %>
-          <%= today_diary.diary %><br>
-          <% end %>
+
+      <!-- Modal Structure -->
+      <div id="modal2" class="modal">
+        <div class="modal-content">
+          <div class="todo-input-area col s12 l12">
+            <div class="card-panel todo-input">
+              <p>ToDoの作成</p>
+              <%= form_with model: @project, local: true do |form|  %>
+              <div class="">
+                <%= form.text_field :name, placeholder: "name"%>
+                <%= form.text_field :limit_date, placeholder: "limit_date", class: :datepicker, autocomplete: "off"%>
+              </div>
+              <div>
+                <%= form.submit "登録する", class: "btn"%>
+              </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="todo-show-area col s12 l12">
+            <div class="card-panel todo-done-area">
+              <p>完了済み</p>
+              <table class="striped">
+                <tbody>
+                  <% if current_user.projects.exists? %>
+                  <% current_user.projects.each do |project| %>
+                  <% if project.done_flg == 1 %>
+                  <tr>
+                    <td><%= project.name %></td>
+                    <td>目標日：<%= project.limit_date %></td>
+                    <td>完了日<%= project.done_date %>日</td>
+                  </tr>
+                  <% end %>
+                  <% else %>
+                  <% end %>
+                </tbody>
+              </table>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
         </div>
       </div>
     </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
-    </div>
-  </div>
 
-  <!-- Modal Structure -->
-  <div id="modal2" class="modal">
-    <div class="modal-content">
+    <!-- Modal Structure -->
+    <div id="modal3" class="modal">
+      <div class="modal-content">
+        <div class="color-area col s12 l12">
+          <div class="card-panel">
 
-    <div class="user-icon-area col s6 l6">
-      <div class="card-panel">
-        <p>マイルストーン</p>
-        <% if current_user.projects.exists? %>
-        <% current_user.projects.each do |project| %>
-        <% if project.done_flg == 0 %>
-        <%= project.name %><br>
-        目標日：<%= project.limit_date %>
-        残り日数<%= (project.limit_date.to_date - Date.today).round %>日
-        <%= form_with model: project, local: true do |form| %>
-        <%= form.hidden_field :id, placeholder: "id", value: project.id %>
-        <%= form.submit "完了", class: "btn"%><br><br>
-        <% end %>
-        <% end %>
-        <% end %>
-        <% end %>
+            <p>色の設定</p>
+            <%= form_with model: @user_color, local: true do |form|  %>
+            <p><%= form.color_field :color1, value: @initial_value1 %>
+              <label for="head">第一分類（緊急：高　重要：高）</label></p>
+
+            <p><%= form.color_field :color2, value: @initial_value2 %>
+              <label for="head">第二分類（緊急：低　重要：高）</label></p>
+
+            <p><%= form.color_field :color3, value: @initial_value3 %>
+              <label for="head">第三分類（緊急：高　重要：低）</label></p>
+
+            <p><%= form.color_field :color4, value: @initial_value4%>
+              <label for="head">第四分類（緊急：低　重要：低）</label></p>
+
+            <div>
+              <%= form.submit "登録する", class: "btn"%>
+            </div>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
       </div>
     </div>
 
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
+
+    <!-- Modal Structure -->
+    <div id="modal4" class="modal">
+      <div class="modal-content">
+        <div class="color-area col s12 l12">
+
+          <!--own_timeの追加ここから-->
+          <div class="user-icon-area col s10 l10">
+            <div class="card-panel">
+              <p>時間種類の追加</p>
+
+              <!--<div>
+                第一分類（緊急：高　重要：高）
+                <% @select_time1.each do |select_time| %>
+                <%= select_time.name %>
+                <% end %>
+              </div>
+
+              <div>
+                第二分類（緊急：低　重要：高）
+                <% @select_time2.each do |select_time| %>
+                <%= select_time.name %>
+                <% end %>
+              </div>
+
+              <div>
+                第三分類（緊急：高　重要：低）
+                <% @select_time3.each do |select_time| %>
+                <%= select_time.name %>
+                <% end %>
+              </div>
+
+              <div>
+                第四分類（緊急：低　重要：低）
+                <% @select_time4.each do |select_time| %>
+                <%= select_time.name %>
+                <% end %>
+              </div>
+              -->
+
+
+              <%= form_with url: own_times_path, local: true do |form|  %>
+              <div class="">
+                <%= form.text_field :name, placeholder: "name", autocomplete: "off" %>
+                <%= form.select :time_type, 
+                [["第一分類（緊急：高　重要：高）", 1], 
+                ["第二分類（緊急：低　重要：高）", 2], 
+                ["第三分類（緊急：高　重要：低）", 3], 
+                ["第四分類（緊急：低　重要：低）", 5]], 
+                include_blank: "分類を選択して下さい" %>
+                <!--
+                <%= form.select :shareFlg, [["共有する(他の人と共有し比較ができます)", 0], ["共有しない(共有しない秘密の時間です)", 1]] %>
+                <%= form.select :publicLevel, [["公開(他の人からの閲覧を許可)", 0], ["非公開(他の人から閲覧できません)", 1]] %>
+                <%= form.select :task_flg, [["習慣", 0], ["タスク(期限あり、進捗管理ができます)", 1]] %>
+                -->
+                <%= form.text_field :estimated_time, placeholder: "見積もり時間（h）" %>
+              </div>
+
+              <div>
+                <%= form.submit "登録する", class: "btn"%>
+              </div>
+              <% end %>
+            </div>
+            <!--own_timeの追加ここまで-->
+
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
+      </div>
     </div>
   </div>
-
-<style>
-.input-field{
-  margin-bottom: 20px;
-}
-</style>

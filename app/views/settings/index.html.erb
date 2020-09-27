@@ -1,10 +1,3 @@
-<%
-=begin%>
-<%=begin%>
-TODO:設定を集約
-<%=end%>
-<%
-=end%>
 <%= render partial: "template/page_top_main",  locals: {guide_message: "入力画面"}%>
 
 <script>
@@ -32,69 +25,14 @@ TODO:設定を集約
   }
 </style>
 
-<!--アイコンここから-->
 <div class='row'>
-  <div class="user-icon-area col s2 l2">
-    <div class="card-panel">
-      <%= form_with model: @user do |form|  %>
-      <p>アイコンの設定</p>
-      <% if @user.icon.attached? %>
-      <%= image_tag @user.icon, height: 100, width: 100 , class: :circle, onClick:"$('#upfile').click()"%>
-      <% else %>
-      <%= image_tag "icon/icon.jpg", height: 100, width: 100 , class: :circle, onClick:"$('#upfile').click()"%>
-      <% end %>
-
-      <div class="">
-        <%= form.file_field :icon, style:"display:none;", id:"upfile" %>
-      </div>
-
-      <div>
-        <%= form.submit "登録する", class: "btn btn-primary"%>
-      </div>
-      <% end %>
-    </div>
-  </div>
-  <!--アイコンここまで-->
-
-  <!--色の設定ここから-->
-  <div class="user-icon-area col s2 l2">
-    <div class="card-panel">
-      <p>色の設定</p>
-      <%= form_with model: @user_color, local: true do |form|  %>
-      <div>
-        <%= form.color_field :color1, value: @initial_value1 %>
-        <label for="head">必須</label>
-      </div>
-
-      <div>
-        <%= form.color_field :color2, value: @initial_value2 %>
-        <label for="head">価値</label>
-      </div>
-
-      <div>
-        <%= form.color_field :color3, value: @initial_value3 %>
-        <label for="head">錯覚</label>
-      </div>
-
-      <div>
-        <%= form.color_field :color4, value: @initial_value4%>
-        <label for="head">無駄</label>
-      </div>
-
-      <div>
-        <%= form.submit "登録する", class: "btn"%>
-      </div>
-      <% end %>
-    </div>
-  </div>
-  <!--色の設定ここまで-->
-
-  <div class="user-icon-area col s4 l4">
+  <div class="user-icon-area col s10 l10">
     <div class="card-panel">
       <p>フォローリクエストが届いています</p>
       <table class="highlight centered responsive-table">
         <thead>
           <tr>
+            <th>id</th>
             <th>名前</th>
             <th>ボタン</th>
           </tr>
@@ -104,7 +42,8 @@ TODO:設定を集約
           <tr>
             <%= form_with url: relationship_path(current_user.id),local: true , method: "PATCH" do |form| %>
             <%= form.hidden_field :user_id, value: follower.user.id %>
-            <td><%= follower.user.name %></a></td>
+            <td><%= follower.id %><td>
+            <td><%= follower.user.name %></td>
             <td><%= form.submit "承認する", class: "btn-small"%></td>
             <% end %>
           </tr>
@@ -124,6 +63,7 @@ TODO:設定を集約
       <table class="highlight centered responsive-table">
         <thead>
           <tr>
+            <th>ID</th>
             <th>名前</th>
             <th>ステータス</th>
             <th>ボタン</th>
@@ -132,7 +72,8 @@ TODO:設定を集約
         <tbody>
           <% @users.each do |user| %>
           <tr>
-            <td><%= user.name %>さん</td>
+            <td><%= user.id %></td>
+            <td><%= user.name %></td>
             <td>
               <% if current_user.following?(user) %>
               <% if current_user.get_following_status(user) == 0 %>
@@ -154,7 +95,6 @@ TODO:設定を集約
 </div>
 
 <!--プロジェクトここから-->
-<!--TODO:プロジェクトの追加はshow画面からモーダル表示などで行うべきか検討-->
 <div class='row'>
   <div class="user-icon-area col s10 l10">
     <div class="card-panel">
@@ -228,3 +168,61 @@ TODO:設定を集約
   </div>
 </div>
 <!--own_timeの追加ここまで-->
+
+
+<!--アイコンここから-->
+<div class='row'>
+  <div class="user-icon-area col s2 l2">
+    <div class="card-panel">
+      <%= form_with model: @user do |form|  %>
+      <p>アイコンの設定</p>
+      <% if @user.icon.attached? %>
+      <%= image_tag @user.icon, height: 100, width: 100 , class: :circle, onClick:"$('#upfile').click()"%>
+      <% else %>
+      <%= image_tag "icon/icon.jpg", height: 100, width: 100 , class: :circle, onClick:"$('#upfile').click()"%>
+      <% end %>
+
+      <div class="">
+        <%= form.file_field :icon, style:"display:none;", id:"upfile" %>
+      </div>
+
+      <div>
+        <%= form.submit "登録する", class: "btn btn-primary"%>
+      </div>
+      <% end %>
+    </div>
+  </div>
+  <!--アイコンここまで-->
+
+  <!--色の設定ここから-->
+  <div class="user-icon-area col s2 l2">
+    <div class="card-panel">
+      <p>色の設定</p>
+      <%= form_with model: @user_color, local: true do |form|  %>
+      <div>
+        <%= form.color_field :color1, value: @initial_value1 %>
+        <label for="head">必須</label>
+      </div>
+
+      <div>
+        <%= form.color_field :color2, value: @initial_value2 %>
+        <label for="head">価値</label>
+      </div>
+
+      <div>
+        <%= form.color_field :color3, value: @initial_value3 %>
+        <label for="head">錯覚</label>
+      </div>
+
+      <div>
+        <%= form.color_field :color4, value: @initial_value4%>
+        <label for="head">無駄</label>
+      </div>
+
+      <div>
+        <%= form.submit "登録する", class: "btn"%>
+      </div>
+      <% end %>
+    </div>
+  </div>
+  <!--色の設定ここまで-->

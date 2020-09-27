@@ -1,37 +1,12 @@
-<nav>
+<nav class="#bdbdbd grey lighten-1">
   <div class="nav-wrapper">
-    <a href="#!" class="brand-logo">Logo</a>
-    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    <a class="brand-logo">Time Viewer</a>
+    <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     <ul class="right hide-on-med-and-down">
       <% if user_signed_in? %>
         <li>
-          <%= link_to users_path do %>
-              <%= content_tag :i, "assignment_turned_in", class: "material-icons right" %> トップへ
-          <% end %>
-        </li>
-        <li>
-          <%= link_to user_path(current_user.id) do %>
-          <%= content_tag :i, "assignment_late", class: "material-icons right" %> 入力画面へ
-          <% end %>
-        </li>
-        <li>
-          <%= link_to settings_path(current_user.id) do %>
-              <%= content_tag :i, "assignment_late", class: "material-icons right" %> 設定画面へ
-          <% end %>
-        </li>
-        <li>
-          <%= link_to chart_path(current_user.id) do %>
-              <%= content_tag :i, "assignment_late", class: "material-icons right" %> グラフ画面へ
-          <% end %>
-        </li>
-        <li>
-          <%= link_to tasks_path do %>
-              <%= content_tag :i, "assignment_late", class: "material-icons right" %> タスク管理画面へ
-          <% end %>
-        </li>
-        <li>
           <%= link_to destroy_user_session_path, method: :delete do %>
-              <%= content_tag :i, "assignment_late", class: "material-icons right" %> ログアウト
+              <%= content_tag :i, "exit_to_app", class: "material-icons right" %> ログアウト
           <% end %>
         </li>
       <% else %>
@@ -49,3 +24,9 @@
     </ul>
   </div>
 </nav>
+
+<style>
+.brand-logo{
+  margin-left: 50%;
+}
+</style>

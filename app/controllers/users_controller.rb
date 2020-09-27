@@ -1,6 +1,14 @@
 class UsersController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index]
+  skip_before_action :authenticate_user!, only: %i[index top]
   before_action :check_following_user?, only: [:show]
+
+  def top # root_pathの制御
+    if user_signed_in?
+      redirect_to user_path(current_user.id)
+    else
+      redirect_to users_path
+    end
+  end
 
   def index
     all_tweets = Tweet.all
@@ -29,6 +37,8 @@ class UsersController < ApplicationController
 
     # Diary.find_by(record_date: @date).nil? ? @diary = Diary.new : @diary = Diary.find_by(record_date: @date)
     @diary = Diary.new
+
+    @project = Project.new
 
     # own_timeの選択肢を設定
     @all_select_time = OwnTime.all
