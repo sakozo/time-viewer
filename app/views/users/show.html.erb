@@ -47,7 +47,7 @@
               <% end %>
               <% else %>
               <% end %>
-          <% end %>
+              <% end %>
 
             </tbody>
           </table>
@@ -391,6 +391,7 @@
               <% end %>
             </div>
           </div>
+
           <div class="todo-show-area col s12 l12">
             <div class="card-panel todo-done-area">
               <p>完了済み</p>
@@ -405,8 +406,11 @@
                     <td>完了日<%= project.done_date %>日</td>
                   </tr>
                   <% end %>
-                  <% else %>
                   <% end %>
+                  <% else %>
+                  <tr>
+                    <td>完了済みのToDoが表示されます</td>
+                  </tr>
                 </tbody>
               </table>
               <% end %>
@@ -417,53 +421,52 @@
           <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
         </div>
       </div>
-    </div>
 
-    <!-- Modal Structure -->
-    <div id="modal3" class="modal">
-      <div class="modal-content">
-        <div class="color-area col s12 l12">
-          <div class="card-panel">
+      <!-- Modal Structure -->
+      <div id="modal3" class="modal">
+        <div class="modal-content">
+          <div class="color-area col s12 l12">
+            <div class="card-panel">
 
-            <p>色の設定</p>
-            <%= form_with model: @user_color, local: true do |form|  %>
-            <p><%= form.color_field :color1, value: @initial_value1 %>
-              <label for="head">第一分類（緊急：高　重要：高）</label></p>
+              <p>色の設定</p>
+              <%= form_with model: @user_color, local: true do |form|  %>
+              <p><%= form.color_field :color1, value: @initial_value1 %>
+                <label for="head">第一分類（緊急：高　重要：高）</label></p>
 
-            <p><%= form.color_field :color2, value: @initial_value2 %>
-              <label for="head">第二分類（緊急：低　重要：高）</label></p>
+              <p><%= form.color_field :color2, value: @initial_value2 %>
+                <label for="head">第二分類（緊急：低　重要：高）</label></p>
 
-            <p><%= form.color_field :color3, value: @initial_value3 %>
-              <label for="head">第三分類（緊急：高　重要：低）</label></p>
+              <p><%= form.color_field :color3, value: @initial_value3 %>
+                <label for="head">第三分類（緊急：高　重要：低）</label></p>
 
-            <p><%= form.color_field :color4, value: @initial_value4%>
-              <label for="head">第四分類（緊急：低　重要：低）</label></p>
+              <p><%= form.color_field :color4, value: @initial_value4%>
+                <label for="head">第四分類（緊急：低　重要：低）</label></p>
 
-            <div>
-              <%= form.submit "登録する", class: "btn"%>
+              <div>
+                <%= form.submit "登録する", class: "btn"%>
+              </div>
+              <% end %>
+
             </div>
-            <% end %>
-
           </div>
         </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
+        </div>
       </div>
-      <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
-      </div>
-    </div>
 
 
-    <!-- Modal Structure -->
-    <div id="modal4" class="modal">
-      <div class="modal-content">
-        <div class="color-area col s12 l12">
+      <!-- Modal Structure -->
+      <div id="modal4" class="modal">
+        <div class="modal-content">
+          <div class="color-area col s12 l12">
 
-          <!--own_timeの追加ここから-->
-          <div class="user-icon-area col s10 l10">
-            <div class="card-panel">
-              <p>時間種類の追加</p>
+            <!--own_timeの追加ここから-->
+            <div class="user-icon-area col s10 l10">
+              <div class="card-panel">
+                <p>時間種類の追加</p>
 
-              <!--<div>
+                <!--<div>
                 第一分類（緊急：高　重要：高）
                 <% @select_time1.each do |select_time| %>
                 <%= select_time.name %>
@@ -493,36 +496,36 @@
               -->
 
 
-              <%= form_with url: own_times_path, local: true do |form|  %>
-              <div class="">
-                <%= form.text_field :name, placeholder: "name", autocomplete: "off" %>
-                <%= form.select :time_type, 
+                <%= form_with url: own_times_path, local: true do |form|  %>
+                <div class="">
+                  <%= form.text_field :name, placeholder: "name", autocomplete: "off" %>
+                  <%= form.select :time_type, 
                 [["第一分類（緊急：高　重要：高）", 1], 
                 ["第二分類（緊急：低　重要：高）", 2], 
                 ["第三分類（緊急：高　重要：低）", 3], 
                 ["第四分類（緊急：低　重要：低）", 5]], 
                 include_blank: "分類を選択して下さい" %>
-                <!--
+                  <!--
                 <%= form.select :shareFlg, [["共有する(他の人と共有し比較ができます)", 0], ["共有しない(共有しない秘密の時間です)", 1]] %>
                 <%= form.select :publicLevel, [["公開(他の人からの閲覧を許可)", 0], ["非公開(他の人から閲覧できません)", 1]] %>
                 <%= form.select :task_flg, [["習慣", 0], ["タスク(期限あり、進捗管理ができます)", 1]] %>
                 -->
-                <%= form.text_field :estimated_time, placeholder: "見積もり時間（h）" %>
-              </div>
+                  <%= form.text_field :estimated_time, placeholder: "見積もり時間（h）" %>
+                </div>
 
-              <div>
-                <%= form.submit "登録する", class: "btn"%>
+                <div>
+                  <%= form.submit "登録する", class: "btn"%>
+                </div>
+                <% end %>
               </div>
-              <% end %>
+              <!--own_timeの追加ここまで-->
+
+
             </div>
-            <!--own_timeの追加ここまで-->
-
-
           </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
+        </div>
       </div>
     </div>
-  </div>
