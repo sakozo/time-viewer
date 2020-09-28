@@ -1,4 +1,5 @@
 class SettingsController < ApplicationController
+#  before_action :set_user
   def index
     @user = User.find(current_user.id)
 
@@ -33,4 +34,10 @@ class SettingsController < ApplicationController
 
     @users = User.all
   end
+
+  # private
+  # def set_currentuser
+  #   @user=User.find(current_user.id)
+  # end
+
 end

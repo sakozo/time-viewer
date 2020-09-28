@@ -1,4 +1,5 @@
 class ChartsController < ApplicationController
+  before_action :set_currentuser
   def show
     # 棒グラフ 1週間 ここから
     @all_select_time = OwnTime.all
@@ -31,4 +32,9 @@ class ChartsController < ApplicationController
   def date_params
     params[:date]
   end
+
+  def set_currentuser
+    @user=User.find(current_user.id)
+  end
+
 end

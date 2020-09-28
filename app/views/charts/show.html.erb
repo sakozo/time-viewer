@@ -1,17 +1,43 @@
-<script>
-  $(document).ready(function() {
-    $('select').formSelect();
-  });
+<%= render partial: "template/page_top_main"%>
+<div class="row">
 
-  $(document).ready(function() {
-    $('.datepicker').datepicker({
-      format: "yyyy-mm-dd"
-    });
-  });
-</script>
+  <div class="col s3" id="side">
+    <%= render partial: "template/side_navi" %>
+  </div>
+  <div class="col s9">
 
+    <div class='row'>
+      <div class="user-icon-area col s12 l12">
+        <div class='row'>
+
+          <div class="user-icon-area col s5 l5">
+            <%= form_with url: chart_path, method: 'get', local: true do |form|  %>
+            <%= form.collection_select :select_time_0, @all_select_time, :id, :name %>
+            <%= form.text_field :date, placeholder: "基準日を選択",class: :datepicker , autocomplete: "off"%>
+            <%= form.submit "表示", class: "btn"%>
+            <% end %>
+          </div>
+        </div>
+        <div class='row'>
+
+          <div class="user-icon-area col s12 l12">
+            <canvas id="myChart2"></canvas>
+            </dic>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.row{
+  margin-bottom: 0;
+}
+</style>
 <script>
-  $(function() {
+
+$(function() {
     function drawChart() {
       var ctx = document.getElementById("myChart2");
       var Bar = new Chart(ctx, {
@@ -77,32 +103,5 @@
     }
     drawChart();
   });
+
 </script>
-
-<%= render partial: "template/page_top_main",  locals: {guide_message: "グラフ画面"}%>
-
-
-<div class='row'>
-  <div class="user-icon-area col s10 l10">
-    <div class="card-panel">
-      <div class='row'>
-
-        <div class="user-icon-area col s5 l5">
-          <%= form_with url: chart_path, method: 'get', local: true do |form|  %>
-          <%= form.collection_select :select_time_0, @all_select_time, :id, :name %>
-          <%= form.text_field :date, placeholder: "1週間前から入力日まで",class: :datepicker , autocomplete: "off"%>
-          <%= form.submit "完了", class: "btn"%>
-          <% end %>
-        </div>
-      </div>
-      <div class='row'>
-
-        <div class="user-icon-area col s10 l10">
-
-          <canvas id="myChart2"></canvas>
-          </dic>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
