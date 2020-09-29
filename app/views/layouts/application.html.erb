@@ -20,8 +20,7 @@
 
   </head>
 
-  <body>
-    <!--ここから下を追加しています。----------------------- -->
+  <body id = "body" data-controller="<%= controller_name %>" data-action="<%= action_name %>">
     <% if flash.any? %>
       <script type="text/javascript">
         <% flash.each do |key, value| %>
@@ -31,7 +30,6 @@
         <% end %>
       </script>
     <% end %>
-    <!--ここまでです----------------------------------- -->
     <%= yield %>
   </body>
 </html>
