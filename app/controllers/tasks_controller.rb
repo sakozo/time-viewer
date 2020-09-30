@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :set_currentuser
   def index
     tasks = OwnTime.where(user_id: current_user.id).where(task_flg: 1)
 
@@ -8,6 +9,14 @@ class TasksController < ApplicationController
       task_count = ResultTime.where(own_time_id: task.id).count / 4.to_f
       @task_result_time_list[task] = task_count
     end
+
+    # own_timeの選択肢を設定
+    @all_select_time = OwnTime.all
+    @select_time1 = OwnTime.where(time_type: 1)
+    @select_time2 = OwnTime.where(time_type: 2)
+    @select_time3 = OwnTime.where(time_type: 3)
+    @select_time4 = OwnTime.where(time_type: 4)
+
   end
 
   def update
@@ -38,4 +47,9 @@ class TasksController < ApplicationController
   def get_task_id
     params[:task_id]
   end
+
+  def set_currentuser
+    @user=User.find(current_user.id)
+  end
+
 end
