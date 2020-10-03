@@ -9,7 +9,7 @@
     <div class="date-link-area col s12 l12">
       <div class='row'>
         <div class="date-link-area col s4 l4">
-          <h3 id="input-date-show">
+          <h4 id="input-date-show">
             <%= link_to user_path(current_user.id, @date.to_date-1) do %>
             <i class="material-icons">chevron_left</i>
             <% end %>
@@ -24,7 +24,7 @@
             <a id='date_link' href=''>
               <button id="date-link-btn" class='btn' style="display:none;">Go</button>
             </a>
-          </h3>
+          </h4>
         </div>
         <div class="todo-area col s6 l6 offset-s1 offset-l1">
           <p>ToDoリスト</p>
