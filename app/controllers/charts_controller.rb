@@ -34,7 +34,6 @@ class ChartsController < ApplicationController
   end
 
   def set_currentuser
-    @user=User.find(current_user.id)
+    @user = User.find(current_user.id)
   end
-
 end

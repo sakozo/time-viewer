@@ -16,7 +16,6 @@ class TasksController < ApplicationController
     @select_time2 = OwnTime.where(time_type: 2)
     @select_time3 = OwnTime.where(time_type: 3)
     @select_time4 = OwnTime.where(time_type: 4)
-
   end
 
   def update
@@ -49,7 +48,6 @@ class TasksController < ApplicationController
   end
 
   def set_currentuser
-    @user=User.find(current_user.id)
+    @user = User.find(current_user.id)
   end
-
 end
