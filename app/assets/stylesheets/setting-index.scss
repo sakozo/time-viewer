@@ -1,5 +1,5 @@
 .time-line {
-  height: 80vh;
+  height: 75vh;
   overflow: auto;
   overscroll-behavior-y: contain;
 }
@@ -19,7 +19,7 @@
 .follow-request::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
 
 .follower {
-  height: 55vh;
+  height: 45vh;
   overflow: auto;
   overscroll-behavior-y: contain;
 }
@@ -29,7 +29,7 @@
 .follower::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
 
 .follow-list {
-  height: 75vh;
+  height: 70vh;
   overflow: auto;
   overscroll-behavior-y: contain;
 }
@@ -39,7 +39,7 @@
 .follow-list::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
 
 .user-list {
-  height: 75vh;
+  height: 70vh;
   overflow: auto;
   overscroll-behavior-y: contain;
 }
