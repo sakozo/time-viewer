@@ -45,7 +45,7 @@
 
             </div>
             <div id="test1" class="col s12">
-              <h5>フォローリクエストが届いています　[<%= @request_followers.length %>件]</h5>
+              <h5>フォローリクエストが届いています</h5>
               <div class="follow-request">
                 <table class="highlight centered responsive-table">
                   <thead>
@@ -71,7 +71,7 @@
                 </table>
               </div>
               <br>
-              <h5>フォロワー　[<%= @followers.length %>人]</h5>
+              <h5>フォロワー</h5>
               <div class="follower">
                 <table class="highlight centered responsive-table">
                   <thead>
@@ -100,8 +100,38 @@
           </div>
 
           <div id="test2" class="col s12">
+            <h5>フォローリクエスト中</h5>
+            <div class="follow-request">
+              <table class="highlight centered responsive-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>名前</th>
+                    <th>ステータス</th>
+                    <th>ボタン</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @users.each do |user| %>
+                  <% if current_user.following?(user) %>
+                  <% if current_user.get_following_status(user) == 0 %>
+                  <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.name %></td>
+                    <td>
+                      承認待ち
+                    </td>
+                    <td><%= render "relationships/follow_button", class: "btn-small secondary-content", user: user %></td>
+                  </tr>
+                  <% end %>
+                  <% end %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+            <br>
             <h5>フォロー</h5>
-            <div class="follow-list">
+            <div class="follower">
               <table class="highlight centered responsive-table">
                 <thead>
                   <tr>
