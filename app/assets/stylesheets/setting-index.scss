@@ -1,0 +1,49 @@
+.time-line {
+  height: 80vh;
+  overflow: auto;
+  overscroll-behavior-y: contain;
+}
+.time-line{overflow-y:scroll;}
+.time-line::-webkit-scrollbar{width:3px;}/*バーの太さ*/
+.time-line::-webkit-scrollbar-track{background:#dddddd;}/*バーの背景色*/
+.time-line::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
+
+.follow-request {
+  height: 15vh;
+  overflow: auto;
+  overscroll-behavior-y: contain;
+}
+.follow-request{overflow-y:scroll;}
+.follow-request::-webkit-scrollbar{width:3px;}/*バーの太さ*/
+.follow-request::-webkit-scrollbar-track{background:#dddddd;}/*バーの背景色*/
+.follow-request::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
+
+.follower {
+  height: 55vh;
+  overflow: auto;
+  overscroll-behavior-y: contain;
+}
+.follower{overflow-y:scroll;}
+.follower::-webkit-scrollbar{width:3px;}/*バーの太さ*/
+.follower::-webkit-scrollbar-track{background:#dddddd;}/*バーの背景色*/
+.follower::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
+
+.follow-list {
+  height: 75vh;
+  overflow: auto;
+  overscroll-behavior-y: contain;
+}
+.follow-list{overflow-y:scroll;}
+.follow-list::-webkit-scrollbar{width:3px;}/*バーの太さ*/
+.follow-list::-webkit-scrollbar-track{background:#dddddd;}/*バーの背景色*/
+.follow-list::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
+
+.user-list {
+  height: 75vh;
+  overflow: auto;
+  overscroll-behavior-y: contain;
+}
+.user-list{overflow-y:scroll;}
+.user-list::-webkit-scrollbar{width:3px;}/*バーの太さ*/
+.user-list::-webkit-scrollbar-track{background:#dddddd;}/*バーの背景色*/
+.user-list::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
