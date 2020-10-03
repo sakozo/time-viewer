@@ -28,6 +28,7 @@
         </div>
         <div class="todo-area col s6 l6 offset-s1 offset-l1">
           <p>ToDoリスト</p>
+          <% if current_user.id == @user.id %>
           <table class="striped">
             <tbody>
               <% if current_user.projects.exists? %>
@@ -51,6 +52,7 @@
 
             </tbody>
           </table>
+          <% end %>
         </div>
       </div>
     </div>
@@ -411,9 +413,9 @@
                   <tr>
                     <td>完了済みのToDoが表示されます</td>
                   </tr>
+                  <% end %>
                 </tbody>
               </table>
-              <% end %>
             </div>
           </div>
         </div>
@@ -465,37 +467,6 @@
             <div class="user-icon-area col s10 l10">
               <div class="card-panel">
                 <p>時間種類の追加</p>
-
-                <!--<div>
-                第一分類（緊急：高　重要：高）
-                <% @select_time1.each do |select_time| %>
-                <%= select_time.name %>
-                <% end %>
-              </div>
-
-              <div>
-                第二分類（緊急：低　重要：高）
-                <% @select_time2.each do |select_time| %>
-                <%= select_time.name %>
-                <% end %>
-              </div>
-
-              <div>
-                第三分類（緊急：高　重要：低）
-                <% @select_time3.each do |select_time| %>
-                <%= select_time.name %>
-                <% end %>
-              </div>
-
-              <div>
-                第四分類（緊急：低　重要：低）
-                <% @select_time4.each do |select_time| %>
-                <%= select_time.name %>
-                <% end %>
-              </div>
-              -->
-
-
                 <%= form_with url: own_times_path, local: true do |form|  %>
                 <div class="">
                   <%= form.text_field :name, placeholder: "name", autocomplete: "off" %>
@@ -505,11 +476,6 @@
                 ["第三分類（緊急：高　重要：低）", 3], 
                 ["第四分類（緊急：低　重要：低）", 5]], 
                 include_blank: "分類を選択して下さい" %>
-                  <!--
-                <%= form.select :shareFlg, [["共有する(他の人と共有し比較ができます)", 0], ["共有しない(共有しない秘密の時間です)", 1]] %>
-                <%= form.select :publicLevel, [["公開(他の人からの閲覧を許可)", 0], ["非公開(他の人から閲覧できません)", 1]] %>
-                <%= form.select :task_flg, [["習慣", 0], ["タスク(期限あり、進捗管理ができます)", 1]] %>
-                -->
                   <%= form.text_field :estimated_time, placeholder: "見積もり時間（h）" %>
                 </div>
 
@@ -520,6 +486,36 @@
               </div>
               <!--own_timeの追加ここまで-->
 
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
+        </div>
+      </div>
+
+      <!-- Modal Structure -->
+      <div id="modal5" class="modal">
+        <div class="modal-content">
+          <div class="color-area col s12 l12">
+            <div class="card-panel">
+
+              <%= form_with model: @user, local: true do |form|  %>
+              <p>アイコンの設定</p>
+              <% if @user.icon.attached? %>
+              <%= image_tag @user.icon, height: 100, width: 100 , class: :circle, onClick:"$('#upfile').click()"%>
+              <% else %>
+              <%= image_tag "icon/icon.jpg", height: 100, width: 100 , class: :circle, onClick:"$('#upfile').click()"%>
+              <% end %>
+
+              <div class="">
+                <%= form.file_field :icon, id:"upfile" %>
+              </div>
+
+              <div>
+                <%= form.submit "登録する", class: "btn btn-primary"%>
+              </div>
+              <% end %>
 
             </div>
           </div>
