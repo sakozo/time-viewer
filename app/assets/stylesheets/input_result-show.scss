@@ -1,0 +1,23 @@
+.input-result {
+  height: 80vh;
+  overflow: auto;
+  overscroll-behavior-y: contain;
+}
+
+.input-result {
+  overflow-y: scroll;
+}
+
+.input-result::-webkit-scrollbar {
+  width: 3px;
+}
+
+/*バーの太さ*/
+.input-result::-webkit-scrollbar-track {
+  background: #dddddd;
+}
+
+/*バーの背景色*/
+.input-result::-webkit-scrollbar-thumb {
+  background: #2cc2e4;
+}

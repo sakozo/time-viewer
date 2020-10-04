@@ -3,23 +3,32 @@
 <div class="row">
 
   <div class="col s3" id="side">
-    <%= render partial: "template/side_navi" %>
+    <%= render partial: "template/side_navi-input_result" %>
   </div>
   <div class="col s9">
 
     <ul class="collection with-header">
-      <li class="collection-header">
-        <h5>入力結果</h5>
-      </li>
-      <% @tweets.reverse_each do |tweet| %>
-      <li class="collection-item avatar">
-        <p><%= tweet.record_date %>の入力<br>
-          <%= tweet.text %>
-        </p>
-        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-      </li>
-      <% end %>
+      <h5>入力結果</h5>
+      <div class="input-result">
+        <% @input_results.reverse_each do |input_result| %>
+        <li class="collection-item avatar">
+          <% if input_result.length == 1 %>
+          <p><%= input_result[0].record_date %><br>
+            <%= input_result[0].text %>
+          </p>
+          <a class="secondary-content"><span class="badge"><%=l input_result[0].created_at %></span></a>
+          <% elsif input_result.length == 2 %>
+          <p><%= input_result[0].record_date %><br>
+            <%= input_result[0].text %>
+            <hr>
+            <% input_result[1].each do |diary| %>
+            <br><%= diary.diary %>
+            <% end %>
+          </p>
+          <a class="secondary-content"><span class="badge"><%=l input_result[0].created_at %></span></a>
+          <% end %>
+        </li>
+        <% end %>
     </ul>
-
   </div>
 </div>
