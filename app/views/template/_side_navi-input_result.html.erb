@@ -9,7 +9,7 @@
       <% else %>
       <%= image_tag "icon/icon.jpg", class: :circle %>
       <% end %>
-      <a href="#name"><span class="white-text name"><%= @user.name %></span></a>
+      <a><span class="white-text name"><%= @user.name %><% if current_user.id != @user.id %>のページ<% end %></span></a>
       <span class="white-text email">
         <% if @user.id == current_user.id %>
         <% else %>

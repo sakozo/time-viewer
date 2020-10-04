@@ -66,5 +66,6 @@ Rails.application.routes.draw do
   resources :rooms, only: %i[create show index]
   resources :tasks, only: %i[update show index]
   resources :relationships, only: %i[create destroy update]
+  resources :input_result, only: [:show]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

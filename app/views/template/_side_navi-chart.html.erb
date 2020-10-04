@@ -32,10 +32,13 @@
     <%= link_to user_path(current_user.id) do %><i class="material-icons">border_color</i>入力画面<% end %>
   </li>
   <li>
+    <%= link_to input_result_path(current_user.id) do %><i class="material-icons">local_library</i>入力結果<% end %>
+  </li>
+  <li>
     <%= link_to chart_path(current_user.id) do %><i class="material-icons">show_chart</i>グラフ表示<% end %></li>
   <li>
     <%= link_to tasks_path do %>
-    <i class="material-icons">check</i>タスク管理
+    <i class="material-icons">av_timer</i>時間管理
     <% end %>
   </li>
   <li>

@@ -32,10 +32,13 @@
     <%= link_to user_path(current_user.id) do %><i class="material-icons">border_color</i>入力画面<% end %>
   </li>
   <li>
+    <%= link_to input_result_path(current_user.id) do %><i class="material-icons">local_library</i>入力結果<% end %>
+  </li>
+  <li>
     <%= link_to chart_path(current_user.id) do %><i class="material-icons">show_chart</i>グラフ表示<% end %></li>
   <li>
     <%= link_to tasks_path do %>
-    <i class="material-icons">check</i>タスク管理
+    <i class="material-icons">av_timer</i>時間管理
     <% end %>
   </li>
   <li>
@@ -45,6 +48,6 @@
     <div class="divider"></div>
   </li>
   <li><a class="subheader">Functions</a></li>
-  <li data-target="modal4" class="modal-trigger"><a><i class="material-icons">av_timer</i><span>時間の追加</span></a></li>
+  <li data-target="modal4" class="modal-trigger"><a><i class="material-icons">library_add</i><span>時間の追加</span></a></li>
 </ul>
 <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
