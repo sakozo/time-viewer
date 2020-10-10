@@ -25,10 +25,17 @@
         <i class="material-icons right">person_add</i>ユーザー登録
         <% end %>
         <br><br>
-        <%= link_to new_user_session_path, class: "waves-light btn-large" do %>
-        <i class="material-icons right">arrow_forward</i>テストユーザーでログイン
-        <% end %>
-      </div>
+
+
+        <div class="test_login_label">
+          <%= form_for(User.new, url:"/users/sign_in") do |f|  %>
+          <%= f.hidden_field :name, value: "test1" %>
+          <%= f.hidden_field :email, value: "aa@aa" %>
+          <%= f.hidden_field :password, value: "11111111" %>
+          <%= f.submit "テストユーザーでログイン", class: "waves-light btn-large"%> 
+          <% end %>
+        </div>
+        </div>
       <!--  <div class="card">
         <div class="tweet-card">
 
