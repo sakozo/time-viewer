@@ -1,7 +1,7 @@
-<nav>
+<nav class="#bdbdbd grey lighten-1">
   <div class="nav-wrapper">
-    <a href="#!" class="brand-logo">Logo</a>
-    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    <a class="brand-logo">Time Viewer</a>
+    <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     <ul class="right hide-on-med-and-down">
       <% if user_signed_in? %>
       <li>
@@ -37,12 +37,12 @@
       <% else %>
       <li>
         <%= link_to new_user_session_path do %>
-        <%= content_tag :i, "assignment_turned_in", class: "material-icons right" %> ログイン
+        <%= content_tag :i, "arrow_forward", class: "material-icons right" %> ログイン
         <% end %>
       </li>
       <li>
         <%= link_to new_user_registration_path do %>
-        <%= content_tag :i, "assignment_late", class: "material-icons right" %> ユーザー登録
+        <%= content_tag :i, "person_add", class: "material-icons right" %> ユーザー登録
         <% end %>
       </li>
       <% end %>

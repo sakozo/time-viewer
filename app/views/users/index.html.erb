@@ -13,7 +13,23 @@
 <div id="top-row">
   <div class="row">
     <div class="col s8 m8 l8 offset-l2">
-      <div class="card">
+      <br>
+      <img alt="title" src="/assets/title.png" />
+      <br>
+      <div class="col s8 offset-l4">
+        <%= link_to new_user_session_path, class: "waves-light btn-large" do %>
+        <i class="material-icons right">arrow_forward</i>ログイン　　
+        <% end %>
+
+        <%= link_to new_user_registration_path , class: "waves-light btn-large" do %>
+        <i class="material-icons right">person_add</i>ユーザー登録
+        <% end %>
+        <br><br>
+        <%= link_to new_user_session_path, class: "waves-light btn-large" do %>
+        <i class="material-icons right">arrow_forward</i>テストユーザーでログイン
+        <% end %>
+      </div>
+      <!--  <div class="card">
         <div class="tweet-card">
 
           <ul class="collection with-header">
@@ -39,6 +55,7 @@
           </ul>
         </div>
       </div>
+-->
     </div>
   </div>
 </div>
