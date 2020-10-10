@@ -180,13 +180,17 @@
                     <td><%= user.name %></td>
                     <td>
                       <% if current_user.following?(user) %>
-                      <% if current_user.get_following_status(user) == 0 %>
-                      承認待ち
-                      <% elsif current_user.get_following_status(user) == 1 %>
-                      フォロー中
-                      <% end %>
+                        <% if current_user.get_following_status(user) == 0 %>
+                          承認待ち
+                        <% elsif current_user.get_following_status(user) == 1 %>
+                          フォロー中
+                        <% end %>
                       <% else %>
-                      未フォロー
+                        <% if current_user.id == user.id %>
+                          自分
+                        <% else %>
+                          未フォロー
+                        <% end %>
                       <% end %>
                     </td>
                     <td><%= render "relationships/follow_button", class: "btn-small secondary-content", user: user %></td>
