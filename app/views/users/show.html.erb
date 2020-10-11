@@ -508,8 +508,14 @@
               <%= image_tag "icon/icon.jpg", height: 100, width: 100 , class: :circle, onClick:"$('#upfile').click()"%>
               <% end %>
 
-              <div class="">
-                <%= form.file_field :icon, id:"upfile" %>
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>File</span>
+                  <%= form.file_field :icon, id:"upfile" %>
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text">
+                </div>
               </div>
 
               <div>
