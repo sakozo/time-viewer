@@ -9,11 +9,12 @@
 
     <div class='row'>
       <div class="follower-area col s12 l12">
+  <div class="time-list">
         <table class="highlight centered responsive-table">
           <thead>
             <tr>
-              <th>ステータス</th>
               <th>名前</th>
+              <th>ステータス</th>
               <th>推定時間</th>
               <th>取り組み時間</th>
               <th>進捗率</th>
@@ -21,10 +22,11 @@
             </tr>
           </thead>
           <tbody>
+
             <% @task_result_time_list.each do |task, value| %>
             <tr>
-              <td><%= task.done_task_flg == 0 ? "取り組み中" : "完了" %></td>
               <td><%= task.name %></td>
+              <td><%= task.done_task_flg == 0 ? "取り組み中" : "完了" %></td>
               <td><%= task.estimated_time %>時間</td>
               <td><%= value %>時間</td>
               <td><%= ((value / task.estimated_time) * 100).round(3) %>%</td>
@@ -38,7 +40,9 @@
             </tr>
             <% end %>
           </tbody>
+
         </table>
+  </div>
 
       </div>
     </div>

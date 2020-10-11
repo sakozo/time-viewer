@@ -1,0 +1,9 @@
+.time-list {
+  height: 75vh;
+  overflow: auto;
+  overscroll-behavior-y: contain;
+}
+.time-list{overflow-y:scroll;}
+.time-list::-webkit-scrollbar{width:3px;}/*バーの太さ*/
+.time-list::-webkit-scrollbar-track{background:#dddddd;}/*バーの背景色*/
+.time-list::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/

@@ -42,10 +42,10 @@ class UsersController < ApplicationController
 
     # own_timeの選択肢を設定
     @all_select_time = OwnTime.all
-    @select_time1 = OwnTime.where(time_type: 1)
-    @select_time2 = OwnTime.where(time_type: 2)
-    @select_time3 = OwnTime.where(time_type: 3)
-    @select_time4 = OwnTime.where(time_type: 4)
+    @select_time1 = OwnTime.where(time_type: 1, user_id: [1, current_user.id], done_task_flg: 0)
+    @select_time2 = OwnTime.where(time_type: 2, user_id: [1, current_user.id], done_task_flg: 0)
+    @select_time3 = OwnTime.where(time_type: 3, user_id: [1, current_user.id], done_task_flg: 0)
+    @select_time4 = OwnTime.where(time_type: 4, user_id: [1, current_user.id], done_task_flg: 0)
 
     # own_timeの数をJSに渡してカウント用配列を作る
     # own_time_idは1インデックス、配列は0インデックスのため1インデックスに合わせるため+1している
